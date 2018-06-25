@@ -1,0 +1,12 @@
+{
+    "orgName": "ELTOROIT - LDS Demos",
+    "edition": "Developer",
+    "orgPreferences": {
+        "enabled": [
+            "S1DesktopEnabled"
+        ],
+        "disabled": [
+            "S1EncryptedStoragePref2"
+        ]
+    }
+}
