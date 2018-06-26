@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <lightning:tabset class="slds-p-horizontal_medium" selectedTabId="defaultTab">
+        <lightning:tab label="F_RecordData" id="defaultTab">
+            <c:F_RecordData recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="L_RecordForm">
+            <c:L_RecordForm recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="L_RecordForm2">
+            <c:L_RecordForm2 recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="L_RecordEditForm">
+            <c:L_RecordEditForm recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="L_RecordViewForm">
+            <c:L_RecordViewForm recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="F_RecordEdit">
+            <c:F_RecordEdit recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="F_RecordView">
+            <c:F_RecordView recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="E_CreateRecord">
+            <c:E_CreateRecord recordId="{!v.recordId}" />
+        </lightning:tab>
+        <lightning:tab label="E_EditRecord">
+            <c:E_EditRecord recordId="{!v.recordId}" />
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

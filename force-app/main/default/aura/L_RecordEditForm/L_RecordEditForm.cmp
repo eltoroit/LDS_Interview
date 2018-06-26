@@ -1,0 +1,16 @@
+<aura:component implements="force:hasRecordId">
+    <aura:attribute name="record" type="Object" />
+    
+    <lightning:recordEditForm aura:id="recordEditForm" recordId="{!v.recordId}" objectApiName="Contact" onload="{!c.onLoad}"
+                              onsubmit="{!c.onSubmit}" onsuccess="{!c.onSuccess}" onerror="{!c.onError}">
+        <lightning:messages />
+        <lightning:inputField fieldName="FirstName" />
+        <lightning:inputField fieldName="LastName" />
+        <lightning:inputField fieldName="Birthdate" />
+        <lightning:inputField fieldName="AccountId" />
+        <lightning:inputField fieldName="Account.Name" />
+        <lightning:button label="Manual Update" onclick="{!c.onManualSubmit}" />
+        <lightning:button variant="brand" type="submit" label="Update" aura:id="button" onclick="{!c.onSubmit}" />
+        <lightning:button variant="destructive" type="reset" label="Reset" />
+    </lightning:recordEditForm>
+</aura:component>

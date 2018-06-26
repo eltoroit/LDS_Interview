@@ -1,0 +1,56 @@
+<aura:component implements="force:hasRecordId">
+    <aura:attribute name="targetRecord" type="Object" />
+    <aura:attribute name="targetFields" type="Object" />
+    <aura:attribute name="targetError" type="Object" />
+    
+    <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}"  mode="VIEW" layoutType="FULL"
+                      targetRecord="{!v.targetRecord}" targetFields="{!v.targetFields}" targetError="{!v.targetError}"
+                      recordUpdated="{!c.recordUpdated}" />
+    
+    <aura:if isTrue="{!not(empty(v.targetError))}">
+        <lightning:layout horizontalAlign="center">
+        	<lightning:layoutItem padding="horizontal-large">
+                <lightning:card variant="narrow" class="errorCard">
+                    <aura:set attribute="title">
+                        <lightning:icon iconName="utility:error" alternativeText="Error!" variant="error" size="small"/>
+                        Error Loading Data
+                    </aura:set>
+                    <div class="slds-m-horizontal_large">
+                        {!v.targetError}
+                    </div>
+                </lightning:card>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <table>
+    	<tr>
+        	<th>targetFields</th>
+            <td>{!v.targetFields.Name}</td>
+        </tr>
+    	<tr>
+        	<th>targetRecord</th>
+            <td>{!v.targetRecord.fields.Name.value}</td>
+        </tr>
+    </table>
+    
+</aura:component>
+
+<!--
+
+fields="" 
+=== METHODS ===
+https://inspiration-dream-3366-dev-ed.lightning.force.com/docs/component-library/bundle/force:recordData/specification
+https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/data_service_delete_record.htm?search_text=force:recordData
+getNewRecord:
+ Loads a record template and sets it to the targetRecord attribute, including predefined values for the object and record type.
+reloadRecord:
+ Performs the same load function as on init using the current configuration values (recordId, layoutType, mode, and others). Doesn’t force a server trip unless required.
+saveRecord:
+ Saves the record.
+deleteRecord:
+ Deletes the record.
+
+=== EVENTS ===
+recordUpdated	COMPONENT	Event fired when the record has changed.
+-->

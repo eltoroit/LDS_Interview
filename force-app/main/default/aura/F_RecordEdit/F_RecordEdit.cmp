@@ -1,0 +1,8 @@
+<aura:component implements="force:hasRecordId">
+    <aura:handler name="onSaveSuccess" event="force:recordSaveSuccess" action="{!c.saveSuccess}" />
+    
+    <force:recordEdit aura:id="RecordEdit" recordId="{!v.recordId}" />
+    <lightning:buttonGroup class="slds-p-top_small">
+        <lightning:button label="Save" variant="brand" onclick="{!c.save}" />
+    </lightning:buttonGroup>
+</aura:component>

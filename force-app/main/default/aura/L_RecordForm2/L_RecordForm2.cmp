@@ -1,0 +1,28 @@
+<aura:component implements="force:hasRecordId">
+    <aura:attribute name="valOperation" type="String" default="ViewEdit"/>
+    <aura:attribute name="optsOperation" type="List" default="[{label: 'View/Edit', value: 'ViewEdit'},
+                                                             {label: 'Read Only', value: 'ReadOnly'},
+                                                             {label: 'Create', value: 'Create'}]"/>
+
+    <aura:attribute name="valDisplay" type="String" default="Full"/>
+    <aura:attribute name="optsDisplay" type="List" default="[{label: 'Full', value: 'Full'},
+                                                           {label: 'Compact', value: 'Compact'},
+                                                           {label: 'Fields Only', value: '_Fields'},
+                                                           {label: 'Full + Fields', value: 'Full_Fields'},
+                                                           {label: 'Compact + Fields', value: 'Compact_Fields'}]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.makeComponent}" />
+    
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem padding="around-medium" size="6">
+            <lightning:radioGroup name="Operation" label="Operation" options="{!v.optsOperation}" value="{!v.valOperation}"
+                                  onchange="{!c.makeComponent}" type="button"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-medium" size="6">
+            <lightning:radioGroup name="Display" label="Display" options="{!v.optsDisplay}" value="{!v.valDisplay}"
+                                  onchange="{!c.makeComponent}" type="button" />
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div aura:id="placeHolder" class="slds-m-top_xx-large" />    
+</aura:component>

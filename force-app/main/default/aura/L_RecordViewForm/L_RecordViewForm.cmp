@@ -1,0 +1,8 @@
+<aura:component implements="force:hasRecordId">
+    <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Contact">
+        <lightning:outputField fieldName="FirstName" />
+        <lightning:outputField fieldName="LastName" />
+        <lightning:outputField fieldName="Birthdate" />
+        <lightning:outputField fieldName="AccountId" />
+    </lightning:recordViewForm>
+</aura:component>

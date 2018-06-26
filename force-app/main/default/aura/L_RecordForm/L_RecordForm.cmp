@@ -1,0 +1,4 @@
+<aura:component implements="force:hasRecordId">
+    <lightning:recordForm recordId="{!v.recordId}" objectApiName="Contact" columns="4" mode="view" layoutType="Full" 
+                          onload="{!c.onload}" onsubmit="{!c.onsubmit}" onsuccess="{!c.onsuccess}" onerror="{!c.onerror}" />
+</aura:component>
