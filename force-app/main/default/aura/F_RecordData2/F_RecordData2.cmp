@@ -7,11 +7,22 @@
         targetFields="{!v.targetFields}" targetError="{!v.targetError}" recordUpdated="{!c.recordUpdated}"
     />
 
+    <aura:if isTrue="{!not(empty(v.targetError))}">
+        <lightning:layout horizontalAlign="center">
+            <lightning:layoutItem padding="horizontal-large">
+                <lightning:card variant="narrow" class="errorCard">
+                    <aura:set attribute="title">
+                        <lightning:icon iconName="utility:error" alternativeText="Error!" variant="error" size="small" /> Error Loading Data
+                    </aura:set>
+                    <div class="slds-m-horizontal_large">
+                        {!v.targetError}
+                    </div>
+                </lightning:card>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+
     <table>
-        <tr>
-            <th>targetError</th>
-            <td>{!v.targetError}</td>
-        </tr>
         <tr>
             <th>targetFields</th>
             <td>{!v.targetFields.Name}</td>
@@ -21,6 +32,7 @@
             <td>{!v.targetRecord.fields.Name.value}</td>
         </tr>
     </table>
+
 </aura:component>
 
 <!--
