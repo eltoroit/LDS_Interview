@@ -1,17 +1,34 @@
 ({
+    makeComponent: function (component, event, helper) {
+        var valFields = component.get("v.valFields");
+        var allFields = ['Name', 'Birthdate', 'AccountId'];
+        var F_RecordData = component.find("F_RecordData");
+
+        var parts = valFields.split("_");
+        F_RecordData.set("v.mode", component.get("v.valOperation"));
+        F_RecordData.set("v.layoutType", parts[0]);
+        if (parts[1]) {
+            component.set("v.fields", allFields);
+        } else {
+            component.set("v.fields", ['Id']);
+        }
+        F_RecordData.reloadRecord();
+    },
     recordUpdated: function (component, event, helper) {
-        debugger;
+        // debugger;
         var eventParams = event.getParams();
         if (eventParams.changeType === "CHANGED") {
-            console.log("Record is changed");
+            alert("Record is changed");
         } else if (eventParams.changeType === "LOADED") {
-            console.log("Record is loaded in the cache");
+            alert("Record is loaded in the cache");
         } else if (eventParams.changeType === "REMOVED") {
-            console.log("Record is deleted");
+            alert("Record is deleted");
         } else if (eventParams.changeType === "ERROR") {
-            console.log("There’s an error while loading, saving, or deleting the record");
+            alert("There’s an error while loading, saving, or deleting the record");
         } else {
             alert("What changed type? [" + eventParams.changeType + "]");
         }
-    }
+        console.log("BirthDate: " + component.get("v.targetFields").BirthDate);
+    },
+
 })

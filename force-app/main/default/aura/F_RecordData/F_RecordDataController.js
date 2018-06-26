@@ -1,6 +1,5 @@
 ({
-    recordUpdated: function(component, event, helper) {
-        debugger;
+    recordUpdated: function (component, event, helper) {
         var eventParams = event.getParams();
         if (eventParams.changeType === "CHANGED") {
             console.log("Record is changed");

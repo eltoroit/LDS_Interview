@@ -1,6 +1,6 @@
 <aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
     <lightning:tabset class="slds-p-horizontal_medium" selectedTabId="defaultTab">
-        <lightning:tab label="F_RecordData" id="defaultTab">
+        <lightning:tab label="F_RecordData">
             <c:F_RecordData recordId="{!v.recordId}" />
         </lightning:tab>
         <lightning:tab label="F_RecordData2" id="defaultTab">

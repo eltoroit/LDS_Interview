@@ -1,11 +1,29 @@
 <aura:component implements="force:hasRecordId">
+    <aura:attribute name="fields" type="String[]" default="['Id']" />
     <aura:attribute name="targetRecord" type="Object" />
     <aura:attribute name="targetFields" type="Object" />
     <aura:attribute name="targetError" type="Object" />
 
-    <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" mode="VIEW" layoutType="FULL" targetRecord="{!v.targetRecord}"
-        targetFields="{!v.targetFields}" targetError="{!v.targetError}" recordUpdated="{!c.recordUpdated}"
-    />
+    <aura:attribute name="valOperation" type="String" default="VIEW" />
+    <aura:attribute name="optsOperation" type="List" default="[
+        {label: 'View', value: 'VIEW'},
+        {label: 'Edit', value: 'EDIT'}
+    ]" />
+
+    <aura:attribute name="valFields" type="String" default="FULL" />
+    <aura:attribute name="optsFields" type="List" default="[
+        {label: 'Full', value: 'FULL'},
+        {label: 'Compact', value: 'COMPACT'},
+        {label: 'Fields Only', value: '_Fields'}, 
+        {label: 'Full + Fields', value: 'FULL_Fields'},
+        {label: 'Compact + Fields', value: 'COMPACT_Fields'}
+    ]" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.makeComponent}" />
+
+    <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="" fields="{!v.fields}"
+        mode="VIEW" targetRecord="{!v.targetRecord}" targetFields="{!v.targetFields}" targetError="{!v.targetError}"
+        recordUpdated="{!c.recordUpdated}" />
 
     <aura:if isTrue="{!not(empty(v.targetError))}">
         <lightning:layout horizontalAlign="center">
@@ -22,6 +40,27 @@
         </lightning:layout>
     </aura:if>
 
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem padding="around-medium">
+            <lightning:radioGroup name="Operation" label="Operation" options="{!v.optsOperation}" value="{!v.valOperation}"
+                onchange="{!c.makeComponent}" type="button" />
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-medium">
+            <lightning:radioGroup name="Fields" label="Fields" options="{!v.optsFields}" value="{!v.valFields}" onchange="{!c.makeComponent}"
+                type="button" />
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-medium">
+            <legend class="slds-form-element__legend slds-form-element__label">Operation</legend>
+            <lightning:buttonGroup>
+                <lightning:button label="New" onclick="{!c.new}" />
+                <lightning:button label="Save" onclick="{!c.save}" />
+                <lightning:button label="Reload" onclick="{!c.reload}" />
+                <lightning:button label="Delete" onclick="{!c.delete}" />
+            </lightning:buttonGroup>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+
     <table>
         <tr>
             <th>targetFields</th>
@@ -32,10 +71,11 @@
             <td>{!v.targetRecord.fields.Name.value}</td>
         </tr>
     </table>
-
 </aura:component>
 
 <!--
+
+    
 === METHODS ===
 https://inspiration-dream-3366-dev-ed.lightning.force.com/docs/component-library/bundle/force:recordData/specification
 https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/data_service_delete_record.htm?search_text=force:recordData

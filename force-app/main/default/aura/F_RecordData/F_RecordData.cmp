@@ -3,7 +3,7 @@
     <aura:attribute name="targetFields" type="Object" />
     <aura:attribute name="targetError" type="Object" />
 
-    <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" mode="VIEW" layoutType="FULL" targetRecord="{!v.targetRecord}"
+    <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="FULL" mode="VIEW" targetRecord="{!v.targetRecord}"
         targetFields="{!v.targetFields}" targetError="{!v.targetError}" recordUpdated="{!c.recordUpdated}"
     />
 

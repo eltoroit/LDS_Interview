@@ -1,9 +1,9 @@
 ({
     makeComponent: function (component, event, helper) {
-        var valDisplay = component.get("v.valDisplay");
+        var valFields = component.get("v.valFields");
         var valOperation = component.get("v.valOperation");
         var fields = ['Name', 'Birthdate', 'AccountId'];
-        
+
         var attributes = {
             "aura:id": "L_RecordForm",
             recordId: component.get("v.recordId"),
@@ -14,23 +14,23 @@
             onsuccess: component.getReference("c.onsuccess"),
             onerror: component.getReference("c.onerror")
         }
-        
+
         switch (valOperation) {
             case "ViewEdit":
                 attributes.mode = "view";
-                break; 
+                break;
             case "ReadOnly":
                 attributes.mode = "readonly";
-                break; 
+                break;
             case "Create":
                 attributes.recordId = null;
                 attributes.mode = "edit";
-                break; 
-            default: 
+                break;
+            default:
                 alert("Invalid Operation");
         }
-        
-        var parts = valDisplay.split("_");
+
+        var parts = valFields.split("_");
         if (parts[0]) {
             attributes.layoutType = parts[0];
             console.log("Layout: " + parts[0]);
@@ -39,11 +39,11 @@
             attributes.fields = fields;
             console.log("With fields");
         }
-        
+
         $A.createComponent(
-            "lightning:recordForm", 
-            attributes, 
-            function(newComponent, status, errorMessage) {
+            "lightning:recordForm",
+            attributes,
+            function (newComponent, status, errorMessage) {
                 // debugger;
                 if (status === "SUCCESS") {
                     component.find("placeHolder").set("v.body", [newComponent]);
