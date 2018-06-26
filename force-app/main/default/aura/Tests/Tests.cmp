@@ -3,6 +3,9 @@
         <lightning:tab label="F_RecordData" id="defaultTab">
             <c:F_RecordData recordId="{!v.recordId}" />
         </lightning:tab>
+        <lightning:tab label="F_RecordData2" id="defaultTab">
+            <c:F_RecordData2 recordId="{!v.recordId}" />
+        </lightning:tab>
         <lightning:tab label="L_RecordForm">
             <c:L_RecordForm recordId="{!v.recordId}" />
         </lightning:tab>
