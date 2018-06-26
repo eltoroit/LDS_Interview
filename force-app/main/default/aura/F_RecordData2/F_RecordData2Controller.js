@@ -28,7 +28,13 @@
         } else {
             alert("What changed type? [" + eventParams.changeType + "]");
         }
-        console.log("BirthDate: " + component.get("v.targetFields").BirthDate);
+        console.log("BirthDate: " + component.get("v.targetFields").Birthdate);
+        console.log(JSON.parse(JSON.stringify(component.get("v.targetFields"))));
     },
+
+
+
+
+
 
 })
