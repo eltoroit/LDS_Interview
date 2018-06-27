@@ -19,6 +19,7 @@
         {label: 'Compact + Fields', value: 'COMPACT_Fields'}
     ]" />
 
+    <lightning:navigation aura:id="navService" />
     <aura:handler name="init" value="{!this}" action="{!c.makeComponent}" />
 
     <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="" fields="{!v.fields}"
@@ -27,15 +28,12 @@
 
     <aura:if isTrue="{!not(empty(v.targetError))}">
         <lightning:layout horizontalAlign="center">
-            <lightning:layoutItem padding="horizontal-large">
-                <lightning:card variant="narrow" class="errorCard">
-                    <aura:set attribute="title">
-                        <lightning:icon iconName="utility:error" alternativeText="Error!" variant="error" size="small" /> Error Loading Data
-                    </aura:set>
-                    <div class="slds-m-horizontal_large">
-                        {!v.targetError}
-                    </div>
-                </lightning:card>
+            <lightning:layoutItem padding="horizontal-large" class="slds-box errorCard ">
+                <div class="slds-text-heading_medium slds-m-bottom_medium">
+                    <lightning:icon iconName="utility:error" alternativeText="Error!" variant="error" size="small" />
+                    <span class="slds-m-horizontal_medium">Error Loading Data</span>
+                </div>
+                {!v.targetError}
             </lightning:layoutItem>
         </lightning:layout>
     </aura:if>
@@ -52,8 +50,8 @@
         <lightning:layoutItem padding="around-medium">
             <legend class="slds-form-element__legend slds-form-element__label">Operation</legend>
             <lightning:buttonGroup>
-                <lightning:button label="New" onclick="{!c.new}" />
-                <lightning:button label="Save" onclick="{!c.save}" />
+                <lightning:button label="New" onclick="{!c.new}" disabled="{!v.valOperation=='VIEW'}" />
+                <lightning:button label="Save" onclick="{!c.save}" disabled="{!v.valOperation=='VIEW'}" />
                 <lightning:button label="Reload" onclick="{!c.reload}" />
                 <lightning:button label="Delete" onclick="{!c.delete}" />
             </lightning:buttonGroup>
@@ -69,6 +67,27 @@
         <tr>
             <th>targetRecord</th>
             <td>{!v.targetRecord.fields.Name.value}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>
+                <lightning:input type="text" value="{!v.targetFields.FirstName}" disabled="{!v.valOperation=='VIEW'}"
+                />
+            </td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>
+                <lightning:input type="text" value="{!v.targetFields.LastName}" disabled="{!v.valOperation=='VIEW'}"
+                />
+            </td>
+        </tr>
+        <tr>
+            <th>Birthdate</th>
+            <td>
+                <lightning:input type="date" value="{!v.targetFields.Birthdate}" disabled="{!v.valOperation=='VIEW'}"
+                />
+            </td>
         </tr>
     </table>
 </aura:component>
