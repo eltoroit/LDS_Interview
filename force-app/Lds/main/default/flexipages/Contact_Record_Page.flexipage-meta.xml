@@ -9,7 +9,10 @@
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
         <componentInstances>
-            <componentName>Tests</componentName>
+            <componentName>AuraTests</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentName>lwcTests</componentName>
         </componentInstances>
         <mode>Replace</mode>
         <name>header</name>

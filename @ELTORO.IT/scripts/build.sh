@@ -80,7 +80,10 @@ else
 			echo "What mode (4)?"
 			exit 4;
 		fi
-		jq ".result.${jsonSection}[]" ${outputFile} | jq -r .filePath
+		# jq ".result.${jsonSection}[]" ${outputFile} | jq -r .filePath
+		cmd="cat ${outputFile} | jq -r '.result.${jsonSection}[] | .state + \" > \" + .filePath'"
+		# echo ${cmd}
+		eval ${cmd}
 	else
 		echo -e "${GREEN}No changes made!${NO_COLOR}"
 	fi

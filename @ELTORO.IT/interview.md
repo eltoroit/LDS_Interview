@@ -1,35 +1,37 @@
-# Interview With EL TORO on Lightning Data Service
-## Updated for Lightning Web Components
+# Interview With EL TORO on Lightning Data Service (Updated for Lightning Web Components)
 
 **READER:**	El Toro, I have heard that a Lightning Component runs on the client side, without requiring Apex… is that true?
 
-**EL TORO:**	Actually, that is 100% true. That’s what makes it run “lightning fast” ;-) *(Pun indented)*
+**EL TORO:** Actually, that is 100% true. That’s what makes it run “lightning fast” ;-) *(Pun indented)*
 
 **READER:**	Ok, so if I do not make calls to the server how do I work with Salesforce data? Do I need to write Apex controllers?
 
-**EL TORO:**	Great question, I am glad you asked… Let me show you the different ways you can work with Salesforce data without writing Apex. Oh, but let me warn you, Lightning Components offers few different ways...
+**EL TORO:** Great question, I am glad you asked… Let me show you the different ways you can work with Salesforce data with and without writing Apex. Oh, but let me warn you, Lightning Components offers few different ways...
 
-**READER:** 	Why is that a warning?
+**READER:** Why is that a warning?
 
-**EL TORO:** 	Well, it can be confusing to choose the best way for your needs.
+**EL TORO:** Well, it can be confusing to choose the best way for your needs.
 
-**READER:** 	OK, I have been warned :-)
+**READER:** OK, I have been warned :-)
 
-**EL TORO:** 	One more thing, I have 
+**EL TORO:** Couple more things before we get started. I have created this repo with the examples for each method, so that you can see how they are implemented. I am going to override the view for the contact record with a component build on **Lightning Aura Components** and one build on **Lightning Web Components** so you can compare the similarities and differences between them when dealing with data.
 
+**READER:** So, are we going to be comparing both Aura and Web components? Cool!
 
+**EL TORO:** yes, very cool indeed. I will try to keep the names as similar as possible in order to make it easier to compare. So let's get started!
 
-**READER:**	Before you start, are we discussing Aura or Web components?
-**EL TORO:** 	Let's do both, shall we?
+## **Event: e.force:editRecord** (*E_EditRecord*)
+**EL TORO:** The easiest way to work with data is by letting Salesforce handle everything. In Aura components, you fire an event like this:
 
-## Event: e.force:editRecord
-**EL TORO:**	The easiest way to work with data is by letting Salesforce handle everything. In Aura components, you fire an event like this:
-
+```
 var editRecordEvent = $A.get("e.force:editRecord");
 editRecordEvent.setParams({
 	recordId: component.get("v.recordId")
 });
 editRecordEvent.fire();
+```
+
+
 
 
 

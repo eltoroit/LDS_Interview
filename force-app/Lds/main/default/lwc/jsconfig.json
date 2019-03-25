@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/lwc-tests": [
+                "lwcTests/lwcTests.js"
+            ],
+            "c/we-edit-record": [
+                "weEditRecord/weEditRecord.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ]
+}
