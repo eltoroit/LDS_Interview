@@ -96,7 +96,7 @@
         <actionName>ViewSelfService</actionName>
         <type>Default</type>
     </actionOverrides>
-    <compactLayoutAssignment>Minimalist</compactLayoutAssignment>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
     <searchLayouts>
