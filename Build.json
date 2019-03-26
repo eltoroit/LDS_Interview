@@ -1,1 +1,1 @@
-{"status":0,"result":{"pushedSource":[{"state":"Changed","fullName":"AuraTests/AuraTests.cmp","type":"AuraDefinitionBundle","filePath":"force-app/Lds/main/default/aura/AuraTests/AuraTests.cmp"},{"state":"Changed","fullName":"lwcTests/lwcTests.html","type":"LightningComponentBundle","filePath":"force-app/Lds/main/default/lwc/lwcTests/lwcTests.html"}]}}
+{"status":0,"result":{"pushedSource":[{"state":"Changed","fullName":"weEditRecord/weEditRecord.js","type":"LightningComponentBundle","filePath":"force-app/Lds/main/default/lwc/weEditRecord/weEditRecord.js"}]}}

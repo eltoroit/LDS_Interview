@@ -3,7 +3,7 @@
 		<div class="slds-p-horizontal_medium">
 			<lightning:tabset selectedTabId="defaultTab">
 				<!-- Building this... -->
-				<lightning:tab label="Event: EditRecord" id="defaultTab">
+				<lightning:tab label="Event: Edit Record" id="defaultTab">
 					<c:aeEditRecord recordId="{!v.recordId}" />
 				</lightning:tab>
 				<lightning:tab label="Event: CreateRecord">

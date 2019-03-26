@@ -6,11 +6,11 @@
 
 **READER:**	Ok, so if I do not make calls to the server how do I work with Salesforce data? Do I need to write Apex controllers?
 
-**EL TORO:** Great question, I am glad you asked… Let me show you the different ways you can work with Salesforce data with and without writing Apex. Oh, but let me warn you, Lightning Components offers few different ways...
+**EL TORO:** Great question, I am glad you asked… Let me show you the different ways you can work with Salesforce data with and without writing Apex. Oh, but let me warn you, Lightning Components offers quite a few different ways...
 
 **READER:** Why is that a warning?
 
-**EL TORO:** Well, it can be confusing to choose the best way for your needs.
+**EL TORO:** Well, it can be confusing when trying to choose the best way for your needs.
 
 **READER:** OK, I have been warned :-)
 
@@ -20,8 +20,8 @@
 
 **EL TORO:** yes, very cool indeed. I will try to keep the names as similar as possible in order to make it easier to compare. So let's get started!
 
-## **Event: e.force:editRecord** (*E_EditRecord*)
-**EL TORO:** The easiest way to work with data is by letting Salesforce handle everything. In Aura components, you fire an event like this:
+## **Event: Edit Record** (*_eEditRecord*)
+**EL TORO:** The easiest way to work with data is by letting Salesforce handle everything. This first example opens a pop-up modal window so that your users can edit a record. In Aura components, you fire an event like this:
 
 ```
 var editRecordEvent = $A.get("e.force:editRecord");
@@ -31,15 +31,50 @@ editRecordEvent.setParams({
 editRecordEvent.fire();
 ```
 
+In Lightning Web components, you navigate to the edit page like this:
 
+```
+this[NavigationMixin.Navigate]({
+	type: 'standard__recordPage',
+	attributes: {
+		recordId: this.recordId,
+		actionName: 'edit'
+	}
+});
+```
 
+but in order to get this working in Lightning Web Components, you need to do few things:
 
+1. Import the **NavigationMixin** library (`import { NavigationMixin } from 'lightning/navigation';`)
+2. Extend the navigation mixing (`...extends NavigationMixin(LightningElement)`)
 
+So your JavaScript needs to look like this:
 
+```
+import { LightningElement, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 
-throwing events, so let’s start with that. The first event we’ll take a look, opens a pop-up modal window so that your users can edit a record. You just need to fire the application event like this:
+export default class weEditRecord extends NavigationMixin(LightningElement) {
+	@api recordId;
 
- **READER:**	That looks simple. Is there a similar way to create a record?
+	EditRecord() {
+		this[NavigationMixin.Navigate]({
+			type: 'standard__recordPage',
+			attributes: {
+				recordId: this.recordId,
+				actionName: 'edit'
+			}
+		});
+	}
+}
+```
+
+## **Event: Create Record** (*_eCreateRecord*) 
+
+# <<<< --- HERE
+
+**READER:**	That looks simple. Is there a similar way to create a record?
+
 Event: e.force:createRecord
 **EL TORO:**	Indeed, and that is the second event which allows you to create a record in a pop-up modal window.
 **READER:**	Nice, can you pre-set some fields?
