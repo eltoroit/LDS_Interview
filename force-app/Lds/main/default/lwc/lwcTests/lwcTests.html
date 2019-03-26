@@ -2,8 +2,11 @@
 	<lightning-card title="Lightning Web Components">
 		<div class="slds-p-horizontal_medium">
 			<lightning-tabset active-tab-value="defaultTab">
-				<lightning-tab label="Event: Edit Record" value="defaultTab">
+				<lightning-tab label="Event: Edit Record">
 					<c-we-edit-record record-id={recordId}></c-we-edit-record>
+				</lightning-tab>
+				<lightning-tab label="Event: Create Record" value="defaultTab">
+					<c-we-create-record record-id={recordId}></c-we-create-record>
 				</lightning-tab>
 			</lightning-tabset>
 		</div>
@@ -34,8 +37,5 @@
 			</lightning-tab>
 			<lightning-tab label="F_RecordView">
 				<c:F_RecordView recordId="{!v.recordId}" />
-			</lightning-tab>
-			<lightning-tab label="E_CreateRecord">
-				<c:E_CreateRecord recordId="{!v.recordId}" />
 			</lightning-tab>
 			 -->

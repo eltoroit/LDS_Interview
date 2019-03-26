@@ -1,3 +1,0 @@
-<aura:component implements="force:hasRecordId">
-    <force:recordView recordId="{!v.recordId}" />
-</aura:component>

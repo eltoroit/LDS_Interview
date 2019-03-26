@@ -6,6 +6,9 @@
             "c/lwc-tests": [
                 "lwcTests/lwcTests.js"
             ],
+            "c/we-create-record": [
+                "weCreateRecord/weCreateRecord.js"
+            ],
             "c/we-edit-record": [
                 "weEditRecord/weEditRecord.js"
             ]

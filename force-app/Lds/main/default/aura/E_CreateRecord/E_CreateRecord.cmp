@@ -1,3 +1,0 @@
-<aura:component implements="force:hasRecordId">
-	<lightning:button label="Create Contact" variant="brand" onclick="{!c.CreateRecord}" />
-</aura:component>

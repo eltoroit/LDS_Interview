@@ -3,17 +3,17 @@
 		<div class="slds-p-horizontal_medium">
 			<lightning:tabset selectedTabId="defaultTab">
 				<!-- Building this... -->
-				<lightning:tab label="Event: Edit Record" id="defaultTab">
+				<lightning:tab label="Event: Edit Record">
 					<c:aeEditRecord recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Event: CreateRecord">
-					<c:E_CreateRecord recordId="{!v.recordId}" />
+				<lightning:tab label="Event: CreateRecord" id="defaultTab">
+					<c:aeCreateRecord recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="F_RecordView">
-					<c:F_RecordView recordId="{!v.recordId}" />
+				<lightning:tab label="Force:RecordView">
+					<c:afRecordView recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="F_RecordEdit">
-					<c:F_RecordEdit recordId="{!v.recordId}" />
+				<lightning:tab label="Force:RecordEdit">
+					<c:afRecordEdit recordId="{!v.recordId}" />
 				</lightning:tab>
 				<lightning:tab label="L_RecordViewForm">
 					<c:L_RecordViewForm recordId="{!v.recordId}" />
