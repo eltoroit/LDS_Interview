@@ -3,19 +3,27 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/lwc-tests": [
+            "c/lwcTests": [
                 "lwcTests/lwcTests.js"
             ],
-            "c/we-create-record": [
+            "c/weCreateRecord": [
                 "weCreateRecord/weCreateRecord.js"
             ],
-            "c/we-edit-record": [
+            "c/weEditRecord": [
                 "weEditRecord/weEditRecord.js"
+            ],
+            "c/wlRecordViewForm": [
+                "wlRecordViewForm/wlRecordViewForm.js"
             ]
         }
     },
     "include": [
         "**/*",
         "../../../../../.sfdx/typings/lwc/**/*.d.ts"
-    ]
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
 }

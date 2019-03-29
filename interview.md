@@ -1,8 +1,18 @@
-# Interview With EL TORO on Lightning Data Service (Updated for Lightning Web Components)
+# Interview With EL TORO on Lightning Data Service (Updated for Lightning Web Components) <!-- omit in toc -->
+
+- [Modal: Edit Record](#modal-edit-record)
+- [Modal: Create Record](#modal-create-record)
+- [Component: force:recordView (Deprecated)](#component-forcerecordview-deprecated)
+- [Component: force:recordEdit (Deprecated)](#component-forcerecordedit-deprecated)
+- [Component: lightning:recordForm](#component-lightningrecordform)
+- [<<<< --- <<<< --- <<<< --- <<<< --- Continue HERE](#--------------------continue-here)
+- [**Components: lightning:recordViewForm**](#components-lightningrecordviewform)
+- [Components: <lightning:recordEditForm/> and <lightning:inputField/>](#components-lightningrecordeditform-and-lightninginputfield)
+
 
 **READER:**	El Toro, I have heard that a Lightning Component runs on the client side, without requiring Apex… is that true?
 
-**EL TORO:** Actually, that is 100% true. That’s what makes it run “lightning fast” ;-) *(Pun indented)*
+**EL TORO:** Actually, that is 100% true. That’s what makes it run “lightning fast” ;-) *(Pun intended)*
 
 **READER:**	Ok, so if I do not make calls to the server how do I work with Salesforce data? Do I need to write Apex controllers?
 
@@ -14,49 +24,57 @@
 
 **READER:**	Ok, thanks… you were saying?
 
-**EL TORO:** Oh yes, you can get access to Apex or LDS. You will use Apex if you want to bring a list of records, but if you need to work with only one record then you can use LDS which has many benefits including:
+**EL TORO:** Oh yes, you can get access to Apex or LDS. You will use Apex if you want to bring a list of records, but if you need to work with only one record, for example to create a new record or if you have the ID of an existing record, then you can use LDS which has many benefits including:
 
-- Data is cache. If multiple comonents in the page needs to get access to the same record, the server will only be contacted once.
+- Data is cached. If multiple components in the page need to get access to the same record, the server will only be contacted once.
 - If two components on the same page use the same record and one of those components makes a change to the record, then the other component(s) will be notified.
 - Data access is secured.
 
 **READER:**	What do you mean by secure? Doesn't Salesforce manage CRUD, FLS and Record Access?
 
-**EL TORO:** Salesforce does have relly good security, and page layouts and Visualforce respect that. But if you are using Apex then you will need to control the security yourself.
+**EL TORO:** Salesforce does have relly good security, and page layouts and Visualforce respect that. But when you are using Apex you will need to control the security yourself.
 
 **READER:**	But if I use `with sharing` in my Apex classes, then the security gets controlled, right?
 
-**EL TORO:** Oh... be very careful with that thinking. `with sharing` only respect record access, but Apex will always ignore restrictions on CRUD and FLS.
+**EL TORO:** Oh... be very careful with that thinking! `with sharing` only respect record access, but Apex will always ignore restrictions on CRUD and FLS.
 
 **READER:**	But when I have built Visualforce pages in the past, the data was secured. Including CRUD and FLS, I do not understand.
 
-**EL TORO:** You are correct, Visualforce did protect you and LDS will protect you but you have to protect yourself when using Apex.
+**EL TORO:** You are correct, Visualforce did protect you and LDS will protect you, but you have to protect your data when using Apex.
 
-**READER:**	How do I protect myself?
+**READER:**	How do I protect my data?
 
-**EL TORO:** That's a really important question, I am glad you asked... The short answer, look at this library I wrote a while back: [https://github.com/eltoroit/ETLC_ApexBridge/blob/master/ApexBride_Library/Library/main/default/classes/ETLC_SecuredDB.cls]. But remember, if you use LDS then Salesforce will protect you!
+**EL TORO:** That's a really important question, I am glad you asked... The short answer, look at this library I wrote a while back: https://github.com/eltoroit/ETLC_ApexBridge/blob/master/ApexBride_Library/Library/main/default/classes/ETLC_SecuredDB.cls. But remember, if you use LDS then Salesforce will protect you!
 
-**READER:**	Why not use LDS all the time and not bother with Apex?
+**READER:**	Why not use LDS all the time and not bother with Apex? why bother about security?
 
 **EL TORO:** Have you been paying attention? LDS = 1 record, Apex = multiple records.
 
 **READER:**	Of course, I forgot. How do I work with Salesforce Data?
 
-**EL TORO:** Let me show you the different ways you can work with Salesforce data with and without writing Apex. Oh, but let me warn you, LDS offers quite a few different ways...
+**EL TORO:** Let me show you the different methods you can work with Salesforce data with and without writing Apex. Oh, but let me warn you, LDS offers quite a few different methods... *(interrupted)*
 
 **READER:** Why is that a warning?
 
-**EL TORO:** Well, it can be confusing when trying to choose the best way for your needs.
+**EL TORO:** Well, it can be confusing when trying to choose the best method for your needs. The difference is basically a trade off between how much you want to control the UI. The most basic method is a modal dialog which shows the page layout, there is another method to use the page layout but without a modal dialog, and finally a method where there is no UI provided by LDS and you can control the UI in which ever manner you choose.
 
-**READER:** OK, I have been warned :-)
+**READER:** OK, I have been warned :-) I guess the more I want to control the UI, the more code I need to write, right? 
 
-**EL TORO:** Couple more things before we get started. I have created this repo with the examples for each method, so that you can see how they are implemented. I am going to override the view for the contact record with a component build on **Lightning Aura Components** and one build on **Lightning Web Components** so you can compare the similarities and differences between them when dealing with data.
+**EL TORO:** Yes, but no Apex unless you need to work with multiple records. Couple more things before we get started. I have created this repo with the examples for each method, so that you can see how they are implemented. I am going to override the view for the contact record with a component build on **Lightning Aura Components** and one build on **Lightning Web Components** so you can compare the similarities and differences between them when dealing with data.
 
 **READER:** So, are we going to be comparing both Aura and Web components? Cool!
 
 **EL TORO:** yes, very cool indeed. I will try to keep the names as similar as possible in order to make it easier to compare. So let's get started!
 
-# **Event: Edit Record** (*_eEditRecord*)
+# Modal: Edit Record
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:editRecord/documentation
+> - **Sample:** [aeEditRecord](./force-app/Lds/main/default/aura/aeEditRecord)
+> 
+> **Lightning Web Components:**  
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/documentation/lwc/lwc.use_navigate
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-navigation/documentation
+> - **Sample:** [weEditRecord](./force-app/Lds/main/default/lwc/weEditRecord)
 
 **EL TORO:** The easiest way to work with data is by letting Salesforce handle everything. This first example opens a pop-up modal window so that your users can edit a record. In Aura components, you fire an event like this:
 
@@ -68,7 +86,7 @@ editRecordEvent.setParams({
 editRecordEvent.fire();
 ```
 
-In Lightning Web components, you navigate to the edit page like this:
+**EL TORO:** In Lightning Web components, you navigate to the edit page like this:
 
 ```
 this[NavigationMixin.Navigate]({
@@ -82,7 +100,7 @@ this[NavigationMixin.Navigate]({
 
 But in order to get this working in Lightning Web Components, you need to do few things:
 
-1. Import the **NavigationMixin** library (`import { NavigationMixin } from 'lightning/navigation';`)
+1. Import the NavigationMixin library (`import { NavigationMixin } from 'lightning/navigation';`)
 2. Extend the navigation mixing (`...extends NavigationMixin(LightningElement)`)
 
 So your JavaScript needs to look like this:
@@ -106,7 +124,16 @@ export default class weEditRecord extends NavigationMixin(LightningElement) {
 }
 ```
 
-# **Event: Create Record** (*_eCreateRecord*) 
+# Modal: Create Record
+
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:createRecord/documentation
+> - **Sample:** [aeCreateRecord](./force-app/Lds/main/default/aura/aeCreateRecord)
+> 
+> **Lightning Web Components:**  
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/documentation/lwc/lwc.use_navigate
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-navigation/documentation
+> - **Sample:** [weCreateRecord](./force-app/Lds/main/default/lwc/weCreateRecord)
 
 **READER:**	That looks simple. Is there a similar way to create a record?
 
@@ -114,7 +141,7 @@ export default class weEditRecord extends NavigationMixin(LightningElement) {
 
 **READER:**	Nice, can you pre-set some fields?
 
-**EL TORO:** Well, good question. I am glad you asked. In Aura components, yes. But in LWC is not available yet (as of March 2019). Let's take a look at the code in Aura:
+**EL TORO:** Well, good question. I am glad you asked. In Aura components, yes. But in LWC is not available yet (as of April 2019). Let's take a look at the code in Aura:
 
 ```
 var createRecordEvent = $A.get("e.force:createRecord");
@@ -127,7 +154,7 @@ createRecordEvent.setParams({
 createRecordEvent.fire();
 ```
 
-With LWC, the code is pretty similar to above where you need to import the `NavigationMixin`, this is the code:
+With LWC, the code is pretty similar to above where you needed to import the `NavigationMixin`, this is the code:
 
 ```
 this[NavigationMixin.Navigate]({
@@ -143,9 +170,13 @@ this[NavigationMixin.Navigate]({
 
 **ELTORO:**	That's actually a very good question... You need Apex if you want to work with multiple records but there are several ways of using LDS (Lightning Data Service) to work with one record and have more power over the UI. Let’s take a look at some more examples…
 
-# **Component: force:recordView** (*afRecordView*) 
+# Component: force:recordView (Deprecated)
 
-> **Update:** This component was deprecated in Aura, do not use `<Force:recordView/>` instead please use`<lightning:recordViewForm/>`
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:recordView/documentation
+> - **Sample:** [afRecordView](./force-app/Lds/main/default/aura/afRecordView)
+> 
+> **Update:** This component was deprecated in Aura, do not use `<Force:recordView/>` instead please use`<lightning:recordForm/>`
 
 **EL TORO:** This is possible the easiest way to display a record. This component displays the record using it’s page layout on the screen.
 
@@ -163,13 +194,17 @@ this[NavigationMixin.Navigate]({
 
 **READER:**	You are right, I had forgotten about that…
 
-**READER:**	I have used `<apex:detail/>` in many of the pages I built in the past, but ...
+# Component: force:recordEdit (Deprecated)
 
-# **Component: force:recordEdit** (*afRecordEdit*) 
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:recordEdit/documentation
+> - **Sample:** [afRecordEdit](force-app/Lds/main/default/aura/afRecordEdit)
+> 
+> **Update:** This component was deprecated in Aura, do not use `<Force:RecordEdit/>` instead please use `<lightning:recordForm/>`
 
-> **Update:** This component was deprecated in Aura, do not use `<Force:RecordEdit/>` instead please use `<lightning:recordEditForm/>`
+**READER:**	I have used `<apex:detail/>` in many of the pages I built in the past, but ... *(interrupted)*
 
-**EL TORO:** One more thing, with Visualforce you were able to use `<apex:detail/>` to view a record but not to edit the records. If you wanted that, you had to write a lot of code. But Salesforce now gives us `<force:recordEdit/>` which allows the user to edit the records without too much code. This is how the markup for that looks:
+**EL TORO:** One more thing, with Visualforce you were able to use `<apex:detail/>` to view a record but not to edit the records. If you wanted that, you had to write a lot of markup code. But Salesforce now gives us `<force:recordEdit/>` which allows the user to edit the records without too much code. This is how the markup for that looks:
 
 ```
 <force:recordEdit aura:id="RE" recordId="{!v.recordId}"/>
@@ -189,7 +224,7 @@ this[NavigationMixin.Navigate]({
 
 **READER:**	What does the code for the RecordEdit_Save controller function look like?
 
-**EL TORO:**	Simple, you write something like this:
+**EL TORO:** Simple, you write something like this:
 
 ```
 RE_Save: function(component, event, helper) {
@@ -221,6 +256,43 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **EL TORO:** And remember... we do not need to write a single line of Apex!
 
+**READER:**	These last 2 components are pretty cool, but if they are deprecated ... I should not be using them, right?
+
+**EL TORO:** Correct. Let's take a look at the replacement components.
+
+# Component: lightning:recordForm
+
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning:recordForm/documentation
+> - **Sample:** [alRecordForm](./force-app/Lds/main/default/aura/alRecordForm)
+> - **Sample:** [alRecordForm2](./force-app/Lds/main/default/aura/alRecordForm2)
+> 
+> **Lightning Web Components:**  
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-record-form/documentation
+> - **Sample:** [weEditRecord](./force-app/Lds/main/default/lwc/weEditRecord)
+
+
+
+
+
+# <<<< --- <<<< --- <<<< --- <<<< --- Continue HERE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# **Components: lightning:recordViewForm**
+(*alRecordViewForm*)
+
 **READER:**	But we are stuck with page layouts defined by the administrator...
 
 **EL TORO:** Which is not necessarily a bad thing, right?
@@ -229,52 +301,54 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **EL TORO:** Not quite. Remember that you need Apex only if you want to work with multiple records. But controlling the UI with a single record is quite simple. Let me show you few more options.
 
-# **Components: lightning:recordViewForm and lightning:outputField** (_)
+**EL TORO:** There is a simple component named `<lightning:recordViewForm/>` which allows you to build the screen that you want.
 
-**EL TORO:**	There is a simple component named <lightning:recordViewForm/> which allows you to build the screen that you want. This is how the markup looks…
+This is how the Aura markup looks...
 
-<lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Account">
-	<lightning:outputField fieldName="Name"/>
-	<lightning:outputField fieldName="Rating"/>
-	<lightning:outputField fieldName="ParentId"/>
-</lightning:recordViewForm>
+```
+ <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Contact">
+     <lightning:outputField fieldName="FirstName" />
+     <lightning:outputField fieldName="LastName" />
+     <lightning:outputField fieldName="Birthdate" />
+     <lightning:outputField fieldName="AccountId" />
+ </lightning:recordViewForm>
+```
+
+And this is the LWC code:
+
+```
+<lightning-record-form
+    record-id="001XXXXXXXXXXXXXXX"
+    object-api-name="Contact"
+    fields="Name,Email__c,Phone__c,Mobile_Phone__c"
+    mode="view">
+</lightning-record-form>
+```
 
 **READER:**	What would the controller look like?
-**EL TORO:**	To display fields like this, there is no need for controller code.
-**READER:**	I also see there are some inputFields, what to the render on the screen?
-**EL TORO:**	Well, it depends on the actual field. For example if the field is of type URL, then you will see a link. If the field is of type date/time you will see the value as formatted for this particular user (time zone and locale).
+
+**EL TORO:** To display fields like this, there is no need for controller code. 
+
+```
+
+```
+
+
+
+**READER:**	I also see there are some outputFields, what do they render on the screen?
+
+**EL TORO:** Well, it depends on the actual field. For example if the field is of type URL, then you will see a link. If the field is of type date/time you will see the value as formatted for this particular user (time zone and locale).
+
 **READER:**	That is COOL!
-**EL TORO:**	Very!
+
+**EL TORO:** Very!
+
 **READER:**	Can you do something similar if you wanted to edit the record?
 
 
 
 
 
-
-
-
-
-
-
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
-# <<<< --- HERE
 
 
 
