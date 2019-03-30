@@ -1,7 +1,7 @@
 {
-    "now": "2019-03-30T15:47:28.878Z",
+    "now": "2019-03-30T15:51:57.116Z",
     "orgSource": "LDS",
-    "orgDestination": "test-zwi6qnnumhdb@example.com",
+    "orgDestination": "LDS",
     "sObjectsData": [
         {
             "name": "Account",
