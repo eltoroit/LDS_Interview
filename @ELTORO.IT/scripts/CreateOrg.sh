@@ -10,4 +10,4 @@ sfdx force:user:permset:assign --permsetname LDS
 # echo "*** Creating required users..."
 # sfdx force:apex:execute -f EXFiles/data/CreateUsers.txt
 # echo "*** Creating data using ETCopyData plugin"
-sfdx ETCopyData:import -c ./@ELTORO.IT/data --loglevel warn
+sfdx ETCopyData:import -c ./@ELTORO.IT/data
