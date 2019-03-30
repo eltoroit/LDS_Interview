@@ -1,6 +1,6 @@
 # Execute in Mac using: ./EXFiles/scripts/CreateOrg.sh
 echo "*** Creating scratch Org..."
-sfdx force:org:create --definitionfile config/project-scratch-def.json --setalias LDS --durationdays 1 --setdefaultusername
+sfdx force:org:create --definitionfile config/project-scratch-def.json --setalias LDS --setdefaultusername
 echo "*** Opening scratch Org..."
 sfdx force:org:open
 echo "*** Pushing metadata to scratch Org..."

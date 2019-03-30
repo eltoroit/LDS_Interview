@@ -1,6 +1,25 @@
 {
   "status": 0,
   "result": {
-    "pushedSource": []
+    "pushedSource": [
+      {
+        "state": "Add",
+        "fullName": "Contact-Contact Layout",
+        "type": "Layout",
+        "filePath": "force-app/Base/main/default/layouts/Contact-Contact Layout.layout-meta.xml"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "Contact-Contact Layout",
+        "type": "Layout",
+        "filePath": "force-app/Lds/main/default/layouts/Contact-Contact Layout.layout-meta.xml"
+      },
+      {
+        "state": "Changed",
+        "fullName": "alRecordForm2/alRecordForm2Controller.js",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordForm2/alRecordForm2Controller.js"
+      }
+    ]
   }
 }

@@ -2,7 +2,7 @@
 	makeComponent: function (component, event, helper) {
 		var contentSelected = component.get("v.contentSelected");
 		var operationSelected = component.get("v.operationSelected");
-		var fields = ['Name', 'Birthdate', 'AccountId'];
+		var fields = ['Name', 'Birthdate', 'AccountId', 'OtherPhone'];
 
 		var attributes = {
 			"aura:id": "L_RecordForm",

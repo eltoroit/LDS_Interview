@@ -38,9 +38,9 @@
 
 **EL TORO:** LDS is just Lightning Data Service
 
-**READER:** Ok, thanks… you were saying?
+**READER:** Ok, thanks... Please continue.
 
-**EL TORO:** Oh yes, you can get access to Apex or LDS. You will use Apex if you want to bring a list of records, but if you need to work with only one record, for example to create a new record or if you have the ID of an existing record, then you can use LDS which has many benefits including:
+**EL TORO:** Oh yes, you can get access to Apex or LDS. You will use Apex if you want to bring a list of records, but if you need to work with only one record, for example, to create a new Contact or if you have the ID of an existing MyObject__c, then you can use LDS which has many benefits including:
 
 - Data is cached. If multiple components in the page need to get access to the same record, the server will only be contacted once.
 - If two components on the same page use the same record and one of those components makes a change to the record, then the other component(s) will be notified.
@@ -876,10 +876,21 @@ export default class wNoUi extends LightningElement {
 }
 ```
 
+**READER:** It's interesting that Aura does not have a controller and mostly everything happens on the markup, but the other way around for LWC.
+
+**EL TORO:** Now that I think about it, you are right. Actually you could have Aura components without JavaScript, but you can have LWC components without markup ;-)
+
+**READER:** Can you please explain the controller?
+
+**EL TORO:** Yes, I was planning on doing that. Let's start with the import statements. The first line should be easy because we are just importing some things from `lwc`. On the second line, we are importing `getRecord` and `getFieldValue` from the `uiRecordApi` which is part of the LDS. Let's talk about these methods. The `getRecord` is used to obtain the information from the records by passing the record Id and the fields we want to get. The `getFieldValue` is an easy way to unpackage the fields from the data that it receives from LDS. The next three imports are to define a reference 
+
 
 
 **READER:** 
 **EL TORO:** 
+**READER:** 
+
+
 
 
 
