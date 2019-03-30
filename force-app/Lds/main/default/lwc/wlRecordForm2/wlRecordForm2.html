@@ -1,0 +1,33 @@
+<template>
+	<lightning-layout multiple-rows="true">
+		<lightning-layout-item padding="around-medium" size="6">
+			<lightning-radio-group name="Operation" label="Operation" options={operations} value={operationSelected}
+				onchange={onOperationChanged} type="button"></lightning-radio-group>
+		</lightning-layout-item>
+		<lightning-layout-item padding="around-medium" size="6">
+			<lightning-radio-group name="Content" label="Content" options={contents} value={contentSelected}
+				onchange={onContentChanged} type="button"></lightning-radio-group>
+		</lightning-layout-item>
+	</lightning-layout>
+
+	<div class="slds-m-top_xx-large">
+		<template if:true={attributes.hasLayoutAndFields}>
+			<lightning-record-form record-id={attributes.recordId} object-api-name="Contact" columns="4"
+				mode={attributes.mode} layout-type={attributes.layoutType} fields={attributes.fields} onload={onload}
+				onerror={onerror} onsuccess={onsuccess} oncancel={oncancel}>
+			</lightning-record-form>
+		</template>
+		<template if:true={attributes.hasLayout}>
+			<lightning-record-form record-id={attributes.recordId} object-api-name="Contact" columns="4"
+				mode={attributes.mode} layout-type={attributes.layoutType} onload={onload} onerror={onerror}
+				onsuccess={onsuccess} oncancel={oncancel}>
+			</lightning-record-form>
+		</template>
+		<template if:true={attributes.hasFields}>
+			<lightning-record-form record-id={attributes.recordId} object-api-name="Contact" columns="4"
+				mode={attributes.mode} fields={attributes.fields} onload={onload} onerror={onerror}
+				onsuccess={onsuccess} oncancel={oncancel}>
+			</lightning-record-form>
+		</template>
+	</div>
+</template>

@@ -1,40 +1,37 @@
 <aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
 	<lightning:card title="Lightning Aura Components">
 		<div class="slds-p-horizontal_medium">
-			<lightning:tabset selectedTabId="defaultTab">
-				<!-- Building this... -->
-				<lightning:tab label="Event: Edit Record">
+			<lightning:tabset variant="vertical" selectedTabId="defaultTab">
+				<lightning:tab label="Modal: Edit Record">
 					<c:aeEditRecord recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Event: CreateRecord" id="defaultTab">
+				<lightning:tab label="Modal: Create Record">
 					<c:aeCreateRecord recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Force:RecordView">
+				<lightning:tab label="Component Force / Record View (Deprecated)">
 					<c:afRecordView recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Force:RecordEdit">
+				<lightning:tab label="Component Force / Record Edit (Deprecated)">
 					<c:afRecordEdit recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Lightning:RecordForm">
+				<lightning:tab label="Component Lightning / Record Form">
 					<c:alRecordForm recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Lightning:RecordForm2">
+				<lightning:tab label="Component Lightning / Record Form (2)">
 					<c:alRecordForm2 recordId="{!v.recordId}" />
 				</lightning:tab>
-				<!--
-				<lightning:tab label="Lightning:RecordViewForm">
+				<lightning:tab label="Component Lightning / Record View Form">
 					<c:alRecordViewForm recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="L_RecordEditForm">
-					<c:L_RecordEditForm recordId="{!v.recordId}" />
-				</lightning:tab>
-				<lightning:tab label="F_RecordData2">
-					<c:F_RecordData2 recordId="{!v.recordId}" />
+				<lightning:tab label="Component Lightning / Record Edit Form" id="defaultTab">
+					<c:alRecordEditForm recordId="{!v.recordId}" />
 				</lightning:tab>
 				<lightning:tab label="F_RecordData">
-					<c:F_RecordData recordId="{!v.recordId}" />
+					<c:alRecordData recordId="{!v.recordId}" />
 				</lightning:tab>
-				-->
+				<lightning:tab label="F_RecordData2">
+					<c:alRecordData2 recordId="{!v.recordId}" />
+				</lightning:tab>
 			</lightning:tabset>
 		</div>
 	</lightning:card>

@@ -14,6 +14,15 @@
             ],
             "c/wlRecordViewForm": [
                 "wlRecordViewForm/wlRecordViewForm.js"
+            ],
+            "c/wlRecordForm": [
+                "wlRecordForm/wlRecordForm.js"
+            ],
+            "c/wlRecordForm2": [
+                "wlRecordForm2/wlRecordForm2.js"
+            ],
+            "c/wlRecordEditForm": [
+                "wlRecordEditForm/wlRecordEditForm.js"
             ]
         }
     },

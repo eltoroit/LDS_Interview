@@ -1,13 +1,29 @@
-# Interview With EL TORO on Lightning Data Service (Updated for Lightning Web Components) <!-- omit in toc -->
+# A Conversation With EL TORO About Lightning Data Service (Updated for Lightning Web Components) <!-- omit in toc -->
 
 - [Modal: Edit Record](#modal-edit-record)
+	- [Aura Components](#aura-components)
+	- [Lightning Web Components](#lightning-web-components)
 - [Modal: Create Record](#modal-create-record)
-- [Component: force:recordView (Deprecated)](#component-forcerecordview-deprecated)
-- [Component: force:recordEdit (Deprecated)](#component-forcerecordedit-deprecated)
-- [Component: lightning:recordForm](#component-lightningrecordform)
-- [<<<< --- <<<< --- <<<< --- <<<< --- Continue HERE](#--------------------continue-here)
-- [**Components: lightning:recordViewForm**](#components-lightningrecordviewform)
-- [Components: <lightning:recordEditForm/> and <lightning:inputField/>](#components-lightningrecordeditform-and-lightninginputfield)
+	- [Aura Components](#aura-components-1)
+	- [Lightning Web Components](#lightning-web-components-1)
+- [~~Component: Force / Record View~~ (Deprecated)](#component-force--record-view-deprecated)
+	- [Aura Components](#aura-components-2)
+- [~~Component: Force / Record Edit~~ (Deprecated)](#component-force--record-edit-deprecated)
+	- [Aura Components](#aura-components-3)
+- [Component: Lightning / Record Form](#component-lightning--record-form)
+	- [Aura Components](#aura-components-4)
+	- [Lightning Web Components](#lightning-web-components-2)
+- [Components: Lightning / Record View Form](#components-lightning--record-view-form)
+	- [Aura Components](#aura-components-5)
+	- [Lightning Web Components](#lightning-web-components-3)
+- [Components: Lightning / Record Edit Form](#components-lightning--record-edit-form)
+	- [Aura Components](#aura-components-6)
+	- [Lightning Web Components](#lightning-web-components-4)
+- [Components: Lightning / Record Edit Form <<>>](#components-lightning--record-edit-form-)
+	- [Aura Components: Read Data](#aura-components-read-data)
+	- [Lightning Web Components: Read Data](#lightning-web-components-read-data)
+	- [Aura Components](#aura-components-7)
+	- [Lightning Web Components](#lightning-web-components-5)
 
 
 **READER:**	El Toro, I have heard that a Lightning Component runs on the client side, without requiring Apex… is that true?
@@ -76,25 +92,31 @@
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-navigation/documentation
 > - **Sample:** [weEditRecord](./force-app/Lds/main/default/lwc/weEditRecord)
 
-**EL TORO:** The easiest way to work with data is by letting Salesforce handle everything. This first example opens a pop-up modal window so that your users can edit a record. In Aura components, you fire an event like this:
+**EL TORO:** The easiest way to work with data is by letting Salesforce handle everything. This first example opens a pop-up modal window so that your users can edit a record.
+
+## Aura Components
+
+**EL TORO:** In Aura components, you fire an event like this:
 
 ```
 var editRecordEvent = $A.get("e.force:editRecord");
 editRecordEvent.setParams({
-	recordId: component.get("v.recordId")
+   recordId: component.get("v.recordId")
 });
 editRecordEvent.fire();
 ```
+
+## Lightning Web Components
 
 **EL TORO:** In Lightning Web components, you navigate to the edit page like this:
 
 ```
 this[NavigationMixin.Navigate]({
-	type: 'standard__recordPage',
-	attributes: {
-		recordId: this.recordId,
-		actionName: 'edit'
-	}
+   type: 'standard__recordPage',
+   attributes: {
+      recordId: this.recordId,
+      actionName: 'edit'
+   }
 });
 ```
 
@@ -110,17 +132,17 @@ import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class weEditRecord extends NavigationMixin(LightningElement) {
-	@api recordId;
+   @api recordId;
 
-	EditRecord() {
-		this[NavigationMixin.Navigate]({
-			type: 'standard__recordPage',
-			attributes: {
-				recordId: this.recordId,
-				actionName: 'edit'
-			}
-		});
-	}
+   EditRecord() {
+      this[NavigationMixin.Navigate]({
+         type: 'standard__recordPage',
+         attributes: {
+            recordId: this.recordId,
+            actionName: 'edit'
+         }
+      });
+   }
 }
 ```
 
@@ -141,28 +163,34 @@ export default class weEditRecord extends NavigationMixin(LightningElement) {
 
 **READER:**	Nice, can you pre-set some fields?
 
-**EL TORO:** Well, good question. I am glad you asked. In Aura components, yes. But in LWC is not available yet (as of April 2019). Let's take a look at the code in Aura:
+**EL TORO:** Well, good question. I am glad you asked. In Aura components, yes. But in LWC is not available yet (as of April 2019).
+
+## Aura Components
+
+Let's take a look at the code in Aura:
 
 ```
 var createRecordEvent = $A.get("e.force:createRecord");
 createRecordEvent.setParams({
-	entityApiName: "Contact",
-	defaultFieldValues: {
-		AccountId: component.get("v.recordId")
-	}
+   entityApiName: "Contact",
+   defaultFieldValues: {
+      AccountId: component.get("v.recordId")
+   }
 });
 createRecordEvent.fire();
 ```
+
+## Lightning Web Components
 
 With LWC, the code is pretty similar to above where you needed to import the `NavigationMixin`, this is the code:
 
 ```
 this[NavigationMixin.Navigate]({
-	type: 'standard__objectPage',
-	attributes: {
-		objectApiName: 'Case',
-		actionName: 'new'
-	}
+   type: 'standard__objectPage',
+   attributes: {
+      objectApiName: 'Case',
+      actionName: 'new'
+   }
 });
 ```
 
@@ -170,7 +198,7 @@ this[NavigationMixin.Navigate]({
 
 **ELTORO:**	That's actually a very good question... You need Apex if you want to work with multiple records but there are several ways of using LDS (Lightning Data Service) to work with one record and have more power over the UI. Let’s take a look at some more examples…
 
-# Component: force:recordView (Deprecated)
+# ~~Component: Force / Record View~~ (Deprecated)
 
 > **Aura Components:**
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:recordView/documentation
@@ -182,7 +210,9 @@ this[NavigationMixin.Navigate]({
 
 **READER:**	Do you mean like the `<apex:detail/>` did in Visualforce pages?
 
-**EL TORO:** Exactly! This is how the markup for this component is written…
+## Aura Components
+
+**EL TORO:** Exactly! This is how the markup for this component is written in Aura
 
 ```
 <force:recordView recordId="{!v.recordId}"/>
@@ -194,7 +224,7 @@ this[NavigationMixin.Navigate]({
 
 **READER:**	You are right, I had forgotten about that…
 
-# Component: force:recordEdit (Deprecated)
+# ~~Component: Force / Record Edit~~ (Deprecated)
 
 > **Aura Components:**
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:recordEdit/documentation
@@ -204,7 +234,11 @@ this[NavigationMixin.Navigate]({
 
 **READER:**	I have used `<apex:detail/>` in many of the pages I built in the past, but ... *(interrupted)*
 
-**EL TORO:** One more thing, with Visualforce you were able to use `<apex:detail/>` to view a record but not to edit the records. If you wanted that, you had to write a lot of markup code. But Salesforce now gives us `<force:recordEdit/>` which allows the user to edit the records without too much code. This is how the markup for that looks:
+**EL TORO:** One more thing, with Visualforce you were able to use `<apex:detail/>` to view a record but not to edit the records. If you wanted that, you had to write a lot of markup code. But Salesforce now gives us `<force:recordEdit/>` which allows the user to edit the records without too much code.
+
+## Aura Components
+
+**EL TORO:** This is how the markup for Aura looks:
 
 ```
 <force:recordEdit aura:id="RE" recordId="{!v.recordId}"/>
@@ -228,7 +262,7 @@ this[NavigationMixin.Navigate]({
 
 ```
 RE_Save: function(component, event, helper) {
-	component.find("RE").get("e.recordSave").fire();
+   component.find("RE").get("e.recordSave").fire();
 }
 ```
 
@@ -244,7 +278,7 @@ RE_Save: function(component, event, helper) {
 
 ```
 RE_SaveSuccess: function(component, event, helper) {
-	$A.get('e.force:refreshView').fire();
+   $A.get('e.force:refreshView').fire();
 }
 ```
 
@@ -258,9 +292,7 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:**	These last 2 components are pretty cool, but if they are deprecated ... I should not be using them, right?
 
-**EL TORO:** Correct. Let's take a look at the replacement components.
-
-# Component: lightning:recordForm
+# Component: Lightning / Record Form
 
 > **Aura Components:**
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning:recordForm/documentation
@@ -269,136 +301,411 @@ RE_SaveSuccess: function(component, event, helper) {
 > 
 > **Lightning Web Components:**  
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-record-form/documentation
-> - **Sample:** [weEditRecord](./force-app/Lds/main/default/lwc/weEditRecord)
+> - **Sample:** [wlRecordForm](./force-app/Lds/main/default/lwc/wlRecordForm)
+> - **Sample:** [wlRecordForm2](./force-app/Lds/main/default/lwc/wlRecordForm2)
 
+**EL TORO:** Correct. I prefer you start using the other cool components provided by LDS. The first one we'll talk about is `<lightning:recordForm />`. With a little bit of code, you can get a lot out of this component. It's like the Visualforce `<apex:detail />` component that you are familiar with.
 
+## Aura Components
 
-
-
-# <<<< --- <<<< --- <<<< --- <<<< --- Continue HERE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# **Components: lightning:recordViewForm**
-(*alRecordViewForm*)
-
-**READER:**	But we are stuck with page layouts defined by the administrator...
-
-**EL TORO:** Which is not necessarily a bad thing, right?
-
-**READER:**	Indeed, but can we build our own UI? What if I just need a couple of fields? Do we need Apex then?
-
-**EL TORO:** Not quite. Remember that you need Apex only if you want to work with multiple records. But controlling the UI with a single record is quite simple. Let me show you few more options.
-
-**EL TORO:** There is a simple component named `<lightning:recordViewForm/>` which allows you to build the screen that you want.
-
-This is how the Aura markup looks...
+**EL TORO:** This is what the Aura component looks like:
 
 ```
- <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Contact">
-     <lightning:outputField fieldName="FirstName" />
-     <lightning:outputField fieldName="LastName" />
-     <lightning:outputField fieldName="Birthdate" />
-     <lightning:outputField fieldName="AccountId" />
- </lightning:recordViewForm>
+<lightning:recordForm recordId="{!v.recordId}" objectApiName="Contact" columns="4" mode="view" layoutType="Full" onload="{!c.onload}" onsubmit="{!c.onsubmit}" onsuccess="{!c.onsuccess}" onerror="{!c.onerror}" />
 ```
 
-And this is the LWC code:
+**READER:**	Wow, that's a lot more code that we had when writing the old faithful `<apex:detail />` in Visualforce.
+
+**EL TORO:** You are a very observant person, and yes indeed it's a lot more, but not everyhting is required. On the other hand, this actually gives you a bit more power than the Visualforce component. For example:
+
+- It gives you inline editing
+- You can specify how many columns you want to see
+- Events that you can handle for loading, submiting,succes, and error
+
+**READER:**	yeah, but most of that was available with the `<apex:detail />`. Except for the number of columns.
+
+**EL TORO:** true, by the way, here we are specifying 4 columns
+
+**READER:**	One thing I wish it had, was the ability to use the page layouts, and the compact layouts. Many times, I had to write tons of code because I did not wanted all the fields in the page layout.
+
+**EL TORO:** Actually, this component has the ability to specify that you want the compact layout by doing `layoutType="Compact"`. You could actually specify some fields that you want to be there (even if they are not part of the layout) or just the fields you want. That is actually what I demonstrate on the second example.
+
+**READER:**	Wow, that is awesome! And something you could not do with Visualforce. Can you do the same in LWC?
+
+## Lightning Web Components
+
+**EL TORO:** Absolutely, this is what it would look like in LWC.
 
 ```
-<lightning-record-form
-    record-id="001XXXXXXXXXXXXXXX"
-    object-api-name="Contact"
-    fields="Name,Email__c,Phone__c,Mobile_Phone__c"
-    mode="view">
+<lightning-record-form record-id={recordId} object-api-name="Contact" columns="4" mode="view" layout-type="Full" onload={onload} onerror={onerror} onsuccess={onsuccess} oncancel={oncancel}>
 </lightning-record-form>
 ```
 
-**READER:**	What would the controller look like?
+**READER:**	I took a look at the [advanced demo for Aura components](./force-app/Lds/main/default/aura/alRecordForm2) and that is pretty good. I like the way that you built a dynamic component to change the different attributes and be able to compare the different settings. Did you build a similar demo for LWC?
 
-**EL TORO:** To display fields like this, there is no need for controller code. 
+**EL TORO:** Actually, yes I did... but the [advanced demo for LWC components](./force-app/Lds/main/default/lwc/wlRecordForm2) is a bit different because you can't create components at run-time with LWC. So I reset the attributes to remove the component, then few milliseconds later I call the makeComponent() method to set the new properties.
+
+**READER:**	That was pretty clever.
+
+**EL TORO:** Thank you.
+
+# Components: Lightning / Record View Form
+
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning:recordViewForm/documentation
+> - **Sample:** [alRecordViewForm](./force-app/Lds/main/default/aura/alRecordViewForm)
+> 
+> **Lightning Web Components:**  
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation
+> - **Sample:** [wlRecordViewForm](./force-app/Lds/main/default/lwc/wlRecordViewForm)
+
+**READER:**	I have been reviewing the demos you built, and they are pretty cool, specially the second one for `<lightning-record-form />`. But we are using page layouts and those can only have one or two columns
+
+**EL TORO:** Did you see in the demo, how I defined four columns so the fields get arranged a bit better for wider screens.
+
+**READER:**	But I have noticed that some of the fields are not arranged the way I would like to have them placed on the screen. Can I move the fields around? I know that I could have the administrator re-arrange the fields on the page layouts, but those only handle 1 and 2 columns. 
+
+**EL TORO:** Well, the administrator can change the order of the fields on tha page layouts, right?
+
+**READER:**	yeah, but we are stuck with page layouts defined by the administrator...
+
+**EL TORO:** Which is not necessarily a bad thing, right?
+
+**READER:**	Indeed, but I do not want to depend on what he decides to do with the page layouts in the future. What can I do? can we build our own UI? What if I want to show / hide some fields dynamically? Do we need Apex then?
+
+**EL TORO:** Not quite. Remember that you need Apex only if you want to work with multiple records. But controlling the UI with a single record is quite simple.
+
+**READER:**	Right, I keep forgetting that part... *(interrupted)*
+
+**EL TORO:** There is a simple component named `<lightning:recordViewForm/>` which allows you to build the screen that you want, it's similar to the `<apex:outputField />` components you had in Visualforce.
+
+## Aura Components
+
+**EL TORO:** This is how you use the `<lightning:recordViewForm />` in Aura:
 
 ```
-
+<lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Contact">
+   <lightning:outputField fieldName="FirstName" />
+   <lightning:outputField fieldName="LastName" />
+   <lightning:outputField fieldName="Birthdate" />
+   <lightning:outputField fieldName="AccountId" />
+</lightning:recordViewForm>
 ```
 
+**READER:**	That's pretty simple.
 
+**EL TORO:** Indeed, and you can arrange the fields on the screen, show / hide fields depending on conditions, basically this is what you were asking... right?
 
-**READER:**	I also see there are some outputFields, what do they render on the screen?
+**READER:**	It is. I also see there are some outputField components, what do they render on the screen? a picklist? a checkbox? a calendar?
 
-**EL TORO:** Well, it depends on the actual field. For example if the field is of type URL, then you will see a link. If the field is of type date/time you will see the value as formatted for this particular user (time zone and locale).
+**EL TORO:** YES! 
 
-**READER:**	That is COOL!
+**READER:**	uhm?
 
-**EL TORO:** Very!
+**EL TORO:** well, it depends on the actual field itself. For example if the field is of type URL, then you will see a link. If the field is of type date/time you will see the value as formatted for this particular user (time zone and locale).
 
-**READER:**	Can you do something similar if you wanted to edit the record?
+**READER:**	One more question...
 
+**EL TORO:** As many as you need.
 
+**READER:**	What would the JavaScript controller look like?
 
+**EL TORO:** To display fields like this, there is no need for controller code.
 
+**READER:**	I get it... Cool! Do we have something similiar for LWC?
 
+## Lightning Web Components
 
+**EL TORO:** Absolutely, this is how you build that with LWC.
 
+```
+<lightning-record-view-form record-id={recordId} object-api-name="Contact">
+   <lightning-output-field field-name="FirstName"></lightning-output-field>
+   <lightning-output-field field-name="LastName"></lightning-output-field>
+   <lightning-output-field field-name="Birthdate"></lightning-output-field>
+   <lightning-output-field field-name="AccountId"></lightning-output-field>
+</lightning-record-view-form>
+```
 
+**READER:**	Oh, wait... these fields are read-only. Can I build a similar for to edit the records?
 
+**EL TORO:** Records or record?
 
+**READER:**	I meant record, a single one, because I would need Apex if I want to work with multiple records.
 
+**EL TORO:** Absolutely. Now you are getting it!
 
+# Components: Lightning / Record Edit Form
 
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning:recordEditForm/example
+> - **Sample:** [alRecordEditForm](./force-app/Lds/main/default/aura/alRecordEditForm)
+> 
+> **Lightning Web Components:**  
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation
+> - **Sample:** [wlRecordEditForm](./force-app/Lds/main/default/lwc/wlRecordEditForm)
 
+**EL TORO:** This component is like the previous one, but it's for editing or creating records. *(interrupted)*
 
+**READER:**	Editing or creating? How does it know what you are doing?
 
-# Components: <lightning:recordEditForm/> and <lightning:inputField/>
-**EL TORO:**	Yes, of course. Let’s take a look at the code…
+**EL TORO:** Great question, I am glad you asked... Just as the previous components `<lightning:recordForm />` which take a record Id to edit a record, if you do not pass one then it will create a record. As I was saying, this component allows you to edit or create a component, but allows you to control the UI because you will be using `<lightning:inputField />` components to define the placement of those fields on the screen.
 
-<lightning:recordEditForm aura:id="REF" recordId="{!v.recordId}" objectApiName="Account" onload="{!c.REF_OnLoad}" onsubmit="{!c.REF_OnSubmit}" onsuccess="{!c.REF_OnSuccess}" onerror="{!c.REF_OnError}">
-	<lightning:messages/>
-	<lightning:inputField fieldName="Name "/>
-	<lightning:inputField fieldName="Rating"/>
-	<lightning:inputField fieldName="ParentId"/>
-	<lightning:button variant="brand" type="submit" label="Update"/>
+## Aura Components
+
+**EL TORO:** Let me show you what the Aura code looks like
+
+```
+<lightning:recordEditForm aura:id="recordEditForm" recordId="{!v.recordId}" objectApiName="Contact" onload="{!c.onLoad}" onsubmit="{!c.onSubmit}" onsuccess="{!c.onSuccess}" onerror="{!c.onError}">
+   <lightning:messages />
+   <lightning:inputField fieldName="FirstName" />
+   <lightning:inputField fieldName="LastName" />
+   <lightning:inputField fieldName="Birthdate" />
+   <lightning:inputField fieldName="AccountId" />
+   <lightning:inputField fieldName="Account.Name" />
+   <lightning:button variant="brand" type="submit" label="Update" aura:id="button" onclick="{!c.onSubmit}" />
+   <lightning:button variant="destructive" type="reset" label="Reset" />
 </lightning:recordEditForm>
+```
 
-**READER:**	That looks a bit more complex.
-**EL TORO:**	Well, saving a record is a bit more complex than querying for it. Plus you can hook up your code with this component in several parts. Let’s take a look at the details…
-**EL TORO:**	As you can see, we are using <lightning:inputField/> to edit the values of the fields.
+**READER:**	I see there is a bit more attribute being used here, what does the controller look like?
+
+**EL TORO:** let me show you...
+
+```
+({
+   onLoad: function(component, event, helper) {
+      var record = event.getParams().recordUi.record;
+      component.set("v.record", record);
+      console.log("onLoad");
+      console.log(JSON.parse(JSON.stringify(record)));
+   },
+   onSubmit: function(component, event, helper) {
+      console.log("Submit");
+      // event.preventDefault();   
+   },
+   onSuccess: function(component, event, helper) {
+      var msg = "The record has been updated successfully.";
+      var toast = $A.get("e.force:showToast");
+      if (toast) {
+         toast.setParams({ mode: "dismissible", type: "Success", title: "Success!", message: msg });
+         toast.fire();
+      } else {
+         alert(msg);
+      }
+
+      // Refresh, since it does not do it automatically.
+      $A.get('e.force:refreshView').fire();
+   },
+   onError: function(component, event, helper) {
+      alert("Errors...");
+   }
+})
+```
+
+**READER:**	That looks a bit more complex!
+
+**EL TORO:** Well, saving a record is a bit more complex than querying for it. Plus you can hook up your code with this component in several parts, and layout the `<lightning:inputField />` in any way you wan on the screen. Let’s take a look at the details... As you can see, we are using <lightning:inputField/> to edit the values of the fields.
+
 **READER:**	And I would assume the widget used to edit the value depends on the type of the field, correct?
-**EL TORO:**	Absolutely, and it does use SLDS styles too.
+
+**EL TORO:** Absolutely, and it does use SLDS styles too.
+
 **READER:**	I see there is a <lightning:button/>, but it does not have an onclick event? How does it work?
-**EL TORO:**	You are a very good observer, actually if you nest a <lightning:button/> with a type=”Submit” attribute then when the user clicks on that button the form is submitted and the data saved in the record.
-**READER:**	Can we also talk about the attributes in the <lightning:recordEditForm/>? I see the recordId and objectApiName are used here, but what do the other attributes do?
-**EL TORO:**	Good, let’s take a look at each one at a time…
 
-•	recordId: This attribute specifies the record you want to edit. If you do not specify this field, you can create a new record.
-•	objectApiName: This attribute specifies the type of sObject you want to work with. This gives relevance to the field names on the <lightning:inputField/>.
-•	onload: The JavaScript controller function invoked when the form data is loaded.
-•	onsubmit: The JavaScript controller function invoked when the form is submitted.
-•	onsuccess: The JavaScript controller function invoked when the form data is saved.
-•	onerror: The JavaScript controller function invoked when there when there is an error on form submission.
+**EL TORO:** You are a very good observer, actually if you nest a `<lightning:button/>` with a `type=”Submit”` attribute inside the `<lightning:recordEditForm />` then when the user clicks on such button the form is submitted and the data saved in the record. But you could also "manually submit" the form, and manually submit the form when you detect an event. Something like this:
 
-**EL TORO:**	There is one more component that we have not talked about. Do not forget to include the <lightning:messages/> so that any errors or messages are displayed if saving the record fails.
+```
+onManualSubmit: function(component, event, helper) {
+   console.log("Manual Submit");
+   var recordEditForm = component.find("recordEditForm");
+   recordEditForm.submit();
+}
+```
+
+**READER:**	I see in the code above that you are using a component named `<<lightning:messages />`, I assume that works similiarly to `<apex:pageMessages />` which it's automatically populated if there were any errors that happened when the record was being saved. Correct? 
+
+**EL TORO:** Absolutely! So do not forget to include the `<lightning:messages/>` so that any errors or messages are displayed if saving the record fails.
+
 **READER:**	Thanks for the tip.
-**EL TORO:**	No problem.
-**READER:**	This is a really cool component that gives you a lot of power for building forms, breaking out of the page layouts. But what if I want something that is not just viewing or editing a field? For example, I want to work with the record data in JavaScript but I will build my own UI. How can I do that?
-**EL TORO:**	Well, that’s when LDS comes into the picture.
-**READER:**	Lightning Data Service?
-**EL TORO:**	Exactly… 
-Lightning Data Service
-**EL TORO:**	LDS is based on one single component: <force:recordData/>. This simple but powerful component allows you to read, create, edit and delete a single record. Because the component does not provide any UI, you can use the data in any way you want in the markup or JavaScript.
+
+**EL TORO:** No problem.
+
+## Lightning Web Components
+
+**EL TORO:** Let's take a look at what the markup code looks like in LWC:
+
+```
+<lightning-record-edit-form record-id={recordId} object-api-name="Contact" onload={onLoad} onsubmit={onSubmit} onsuccess={onSuccess} onerror={onError}>
+   <lightning-messages></lightning-messages>
+   <lightning-input-field field-name="FirstName"></lightning-input-field>
+   <lightning-input-field field-name="LastName"></lightning-input-field>
+   <lightning-input-field field-name="Birthdate"></lightning-input-field>
+   <lightning-input-field field-name="AccountId"></lightning-input-field>
+   <lightning-input-field field-name="Account.Name"></lightning-input-field>
+   <lightning-button label="Manual Update" onclick={onManualSubmit}></lightning-button>
+   <lightning-button variant="brand" type="submit" label="Update" onclick={onSubmit}></lightning-button>
+   <lightning-button variant="destructive" type="reset" label="Reset"></lightning-button>
+</lightning-record-edit-form>
+```
+
+**EL TORO:** And this is what the controller code looks like in LWC:
+
+```
+import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+export default class WlRecordEditForm extends LightningElement {
+   @api recordId;
+
+   onLoad(event) {
+      console.log("Load", event.detail);
+   }
+
+   onSubmit(event) {
+      console.log("onSubmit", JSON.stringify(event.detail.fields));
+	  this.showSuccess();
+   }
+
+   onSuccess(event) {
+      console.log("Success", event.detail);
+   }
+
+   onError(event) {
+      alert("Errors...");
+   }
+
+   onManualSubmit(event) {
+      this.template.querySelector('lightning-record-edit-form').submit();
+      this.showSuccess();
+   }
+
+   showSuccess() {
+      const msg = "The record has been updated successfully.";
+      const toast = new ShowToastEvent({
+         mode: "dismissible",
+         variant: "success",
+         title: "Success!",
+         message: msg
+      });
+      this.dispatchEvent(toast);
+   }
+}
+```
+
+**READER:**	I guess that if you want a lot of control, you need to write a lot of code!
+
+**EL TORO:** Absolutely.
+
+# Without UI
+
+> **Aura Components:**
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning:recordEditForm/example
+> - **Sample:** [alRecordEditForm](./force-app/Lds/main/default/aura/alRecordEditForm)
+> 
+> **Lightning Web Components:**  
+> - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation
+> - **Sample:** [wlRecordEditForm](./force-app/Lds/main/default/lwc/wlRecordEditForm)
+
+**READER:**	I am afraid to ask you the next question...
+
+**EL TORO:** Why?
+
+**READER:**	Because I think you are going to tell me that it needs a lot of code
+
+**EL TORO:** Now I am intrigued, what could be the question...
+
+**READER:**	So far we have seen how to write with a single record but either providing the name of the field, or by doing an `<lightning:inputfield>`. I have a requirement from my users to create a form where I need to have special widget for a field. Can we do that?
+
+**EL TORO:** Sorry, but I think I am lost. What exactly were you trying to accomplish?
+
+**READER:**	Let me explain, one of the fields in a form is a single numeric field to evaluate the rating of a lead. The possible values range from 1 for an awful lead to 5 for an awesome one. The page layout the users are using has a textbox where the users can enter a single digit, but they can enter a value less than 1 or greater than 5, there is a validation rule that prevents the data from being entered but the form data can still be submited (not saved) with any single digit number. Also, a crazy user thought the value "1" was for their best leads because those are the leads he wants to call first. I guess it kind of make sense... but I would prefer to have a picklist or a set of radio buttons but so far I have not seen this is possible. Can this be accompished?
+
+**EL TORO:** Oh yes, this is a very common issue where you need toal control of the UI. This can definetly be done using the `<force:recordData />` component in Aura, which was actually the first components we had with LDS. Unlike all the components we have seen, this component does not provide any UI, so you have full control.
+
 **READER:**	That sounds very powerful.
-**EL TORO:**	Yes, and the code is not that complex. Let me show you an example…
+
+**EL TORO:** Yes, and the code is not that complex. Do you want to see how it's done?
+
+**READER:**	Yes!
+
+**EL TORO:** Ok, but let's approach this in steps. The first step is read the data, then we will edit it with a special widget, and finally we'll see all the options you can do with this component. Deal?
+
+**READER:**	I like the idea... I am ready!
+
+## Aura Components: Read Data
+
+**EL TORO:** Let me show you first how to read data with Aura.
+
+```
+
+```
+
+
+
+
+## Lightning Web Components: Read Data
+
+
+
+
+
+
+
+
+
+
+
+
+## Aura Components
+## Lightning Web Components
+
+
+
+
+
+**EL TORO:**	
+**READER:**	
+**EL TORO:**	
+**READER:**	
+**EL TORO:**	
+**EL TORO:**	
+**READER:**	
+**EL TORO:**	
+**READER:**	
+**EL TORO:**	
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+**READER:**	
+**EL TORO:** 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <force:recordData aura:id="RD" recordId="{!v.recordId}"}" mode="EDIT" layoutType="COMPACT" fields="ParentId"  targetRecord="{!v.RD_FullRecord}" targetFields="{!v.RD_SimpleRecord}" targetError="{!v.RD_Error}" recordUpdated="{!c.RD_Updated}"/>
 

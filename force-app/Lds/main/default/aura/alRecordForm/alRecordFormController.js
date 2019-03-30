@@ -1,14 +1,14 @@
 ({
-    onload: function (component, event, helper) {
-        console.log("Load");
-    },
-    onsubmit: function (component, event, helper) {
-        console.log("Submit");
-    },
-    onsuccess: function (component, event, helper) {
-        console.log("Success");
-    },
-    onerror: function (component, event, helper) {
-        console.log("Error");
-    }
+	onload: function (component, event, helper) {
+		console.log("Aura: Load", event);
+	},
+	onsubmit: function (component, event, helper) {
+		console.log("Aura: Submit", event);
+	},
+	onsuccess: function (component, event, helper) {
+		console.log("Aura: Success", event);
+	},
+	onerror: function (component, event, helper) {
+		console.log("Aura: Error", event);
+	}
 })

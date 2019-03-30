@@ -1,1 +1,103 @@
-{"status":0,"result":{"pushedSource":[]}}
+{
+  "status": 0,
+  "result": {
+    "pushedSource": [
+      {
+        "state": "Add",
+        "fullName": "alRecordData/alRecordData.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData/alRecordData.cmp"
+      },
+      {
+        "state": "Add",
+        "fullName": "alRecordData/alRecordData.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData/alRecordData.cmp-meta.xml"
+      },
+      {
+        "state": "Add",
+        "fullName": "alRecordData/alRecordDataController.js",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData/alRecordDataController.js"
+      },
+      {
+        "state": "Add",
+        "fullName": "alRecordData2/alRecordData2.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData2/alRecordData2.cmp"
+      },
+      {
+        "state": "Add",
+        "fullName": "alRecordData2/alRecordData2.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData2/alRecordData2.cmp-meta.xml"
+      },
+      {
+        "state": "Add",
+        "fullName": "alRecordData2/alRecordData2.css",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData2/alRecordData2.css"
+      },
+      {
+        "state": "Add",
+        "fullName": "alRecordData2/alRecordData2Controller.js",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/alRecordData2/alRecordData2Controller.js"
+      },
+      {
+        "state": "Changed",
+        "fullName": "AuraTests/AuraTests.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/AuraTests/AuraTests.cmp"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData/F_RecordData.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData/F_RecordData.cmp"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData/F_RecordData.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData/F_RecordData.cmp-meta.xml"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData/F_RecordDataController.js",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData/F_RecordDataController.js"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData2/F_RecordData2.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData2/F_RecordData2.cmp"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData2/F_RecordData2.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData2/F_RecordData2.cmp-meta.xml"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData2/F_RecordData2.css",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData2/F_RecordData2.css"
+      },
+      {
+        "state": "Deleted",
+        "fullName": "F_RecordData2/F_RecordData2Controller.js",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/Lds/main/default/aura/F_RecordData2/F_RecordData2Controller.js"
+      },
+      {
+        "state": "Changed",
+        "fullName": "wlRecordEditForm/wlRecordEditForm.js",
+        "type": "LightningComponentBundle",
+        "filePath": "force-app/Lds/main/default/lwc/wlRecordEditForm/wlRecordEditForm.js"
+      }
+    ]
+  }
+}
