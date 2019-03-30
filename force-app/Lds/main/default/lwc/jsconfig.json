@@ -23,6 +23,9 @@
             ],
             "c/wlRecordEditForm": [
                 "wlRecordEditForm/wlRecordEditForm.js"
+            ],
+            "c/wNoUi": [
+                "wNoUi/wNoUi.js"
             ]
         }
     },

@@ -1,0 +1,26 @@
+<template>
+	<template if:true={error}>
+		<table>
+			<tr>
+				<th>Error</th>
+				<td>{error}</td>
+			</tr>
+		</table>
+	</template>
+	<template if:true={contact}>
+		<table>
+			<tr>
+				<th>FName</th>
+				<td>{contact.FirstName}</td>
+			</tr>
+			<tr>
+				<th>LName</th>
+				<td>{contact.LastName}</td>
+			</tr>
+			<tr>
+				<th>OtherPhone</th>
+				<td>{contact.OtherPhone}</td>
+			</tr>
+		</table>
+	</template>
+</template>

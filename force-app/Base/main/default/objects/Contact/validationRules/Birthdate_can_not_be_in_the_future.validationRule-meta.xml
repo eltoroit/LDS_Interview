@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Birthdate_can_not_be_in_the_future</fullName>
+    <active>true</active>
+    <errorConditionFormula>Birthdate &gt; TODAY()</errorConditionFormula>
+    <errorMessage>The birthdate can&#39;t be in the future</errorMessage>
+</ValidationRule>

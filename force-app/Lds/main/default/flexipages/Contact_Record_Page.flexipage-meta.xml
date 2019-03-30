@@ -2,6 +2,18 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>collapsed</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentName>force:highlightsPanel</componentName>
+        </componentInstances>
+        <mode>Replace</mode>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
             <componentName>AuraTests</componentName>
         </componentInstances>
         <name>Facet-c0f41602-ef16-45ab-aab6-8fe7b5a4a016</name>
@@ -47,20 +59,13 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
-                <name>collapsed</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
                 <name>tabs</name>
                 <value>Facet-35def6ae-745a-4376-89e6-8cefc7002d2f</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
         </componentInstances>
         <mode>Replace</mode>
-        <name>header</name>
+        <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -96,6 +101,20 @@
         </componentInstances>
         <mode>Replace</mode>
         <name>newsTabContent</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentName>runtime_sales_activities:activityPanel</componentName>
+        </componentInstances>
+        <name>Facet-b010c78d-4fc2-4d96-b979-352e9c436f33</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentName>forceChatter:recordFeedContainer</componentName>
+        </componentInstances>
+        <name>Facet-uae7jlrwwgl</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -140,47 +159,10 @@
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
-        <mode>Replace</mode>
-        <name>maintabs</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <componentInstances>
-            <componentInstanceProperties>
-                <name>tabs</name>
-                <value>maintabs</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tabset</componentName>
-        </componentInstances>
-        <mode>Replace</mode>
-        <name>main</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentName>runtime_sales_activities:activityPanel</componentName>
-        </componentInstances>
-        <mode>Replace</mode>
-        <name>activityTabContent</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentName>forceChatter:recordFeedContainer</componentName>
-        </componentInstances>
-        <mode>Replace</mode>
-        <name>feedTabContent</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>active</name>
-                <value>true</value>
-            </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>activityTabContent</value>
+                <value>Facet-b010c78d-4fc2-4d96-b979-352e9c436f33</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -191,7 +173,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>feedTabContent</value>
+                <value>Facet-uae7jlrwwgl</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -200,14 +182,14 @@
             <componentName>flexipage:tab</componentName>
         </componentInstances>
         <mode>Replace</mode>
-        <name>sidebartabs</name>
+        <name>maintabs</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
                 <name>tabs</name>
-                <value>sidebartabs</value>
+                <value>maintabs</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
         </componentInstances>

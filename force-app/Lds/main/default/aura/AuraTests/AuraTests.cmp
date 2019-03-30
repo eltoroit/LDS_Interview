@@ -26,11 +26,11 @@
 				<lightning:tab label="Component Lightning / Record Edit Form" id="defaultTab">
 					<c:alRecordEditForm recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="F_RecordData">
-					<c:alRecordData recordId="{!v.recordId}" />
+				<lightning:tab label="Without UI">
+					<c:aNoUI recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="F_RecordData2">
-					<c:alRecordData2 recordId="{!v.recordId}" />
+				<lightning:tab label="Without UI (3)">
+					<c:aNoUI3 recordId="{!v.recordId}" />
 				</lightning:tab>
 			</lightning:tabset>
 		</div>

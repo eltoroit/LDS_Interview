@@ -1,0 +1,28 @@
+<aura:component implements="force:hasRecordId">
+	<aura:attribute name="targetRecord" type="Object" />
+	<aura:attribute name="targetFields" type="Object" />
+	<aura:attribute name="targetError" type="Object" />
+
+	<force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="FULL" mode="VIEW"
+		fields="FirstName,LastName,OtherPhone" targetRecord="{!v.targetRecord}" targetFields="{!v.targetFields}"
+		targetError="{!v.targetError}" recordUpdated="{!c.recordUpdated}" />
+
+	<table>
+		<tr>
+			<th>targetError</th>
+			<td>{!v.targetError}</td>
+		</tr>
+		<tr>
+			<th>FName</th>
+			<td>{!v.targetFields.FirstName}</td>
+		</tr>
+		<tr>
+			<th>LName</th>
+			<td>{!v.targetRecord.fields.LastName.value}</td>
+		</tr>
+		<tr>
+			<th>OtherPhone</th>
+			<td>{!v.targetFields.OtherPhone}</td>
+		</tr>
+	</table>
+</aura:component>
