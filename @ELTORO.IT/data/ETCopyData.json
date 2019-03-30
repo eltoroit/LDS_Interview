@@ -1,0 +1,29 @@
+{
+    "now": "2019-03-30T15:47:28.878Z",
+    "orgSource": "LDS",
+    "orgDestination": "test-zwi6qnnumhdb@example.com",
+    "sObjectsData": [
+        {
+            "name": "Account",
+            "ignoreFields": "",
+            "maxRecords": -1,
+            "orderBy": null,
+            "where": null
+        },
+        {
+            "name": "Contact",
+            "ignoreFields": "",
+            "maxRecords": -1,
+            "orderBy": null,
+            "where": null
+        }
+    ],
+    "sObjectsMetadata": [],
+    "rootFolder": "ETCopyData",
+    "includeAllCustom": false,
+    "stopOnErrors": true,
+    "ignoreFields": null,
+    "maxRecordsEach": -1,
+    "deleteDestination": true,
+    "pollingTimeout": 100000
+}
