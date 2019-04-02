@@ -6,14 +6,17 @@
             "c/lwcTests": [
                 "lwcTests/lwcTests.js"
             ],
+            "c/wNoUi": [
+                "wNoUi/wNoUi.js"
+            ],
             "c/weCreateRecord": [
                 "weCreateRecord/weCreateRecord.js"
             ],
             "c/weEditRecord": [
                 "weEditRecord/weEditRecord.js"
             ],
-            "c/wlRecordViewForm": [
-                "wlRecordViewForm/wlRecordViewForm.js"
+            "c/wlRecordEditForm": [
+                "wlRecordEditForm/wlRecordEditForm.js"
             ],
             "c/wlRecordForm": [
                 "wlRecordForm/wlRecordForm.js"
@@ -21,11 +24,8 @@
             "c/wlRecordForm2": [
                 "wlRecordForm2/wlRecordForm2.js"
             ],
-            "c/wlRecordEditForm": [
-                "wlRecordEditForm/wlRecordEditForm.js"
-            ],
-            "c/wNoUi": [
-                "wNoUi/wNoUi.js"
+            "c/wlRecordViewForm": [
+                "wlRecordViewForm/wlRecordViewForm.js"
             ]
         }
     },

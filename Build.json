@@ -3,22 +3,10 @@
   "result": {
     "pushedSource": [
       {
-        "state": "Add",
-        "fullName": "Contact-Contact Layout",
-        "type": "Layout",
-        "filePath": "force-app/Base/main/default/layouts/Contact-Contact Layout.layout-meta.xml"
-      },
-      {
-        "state": "Deleted",
-        "fullName": "Contact-Contact Layout",
-        "type": "Layout",
-        "filePath": "force-app/Lds/main/default/layouts/Contact-Contact Layout.layout-meta.xml"
-      },
-      {
         "state": "Changed",
-        "fullName": "alRecordForm2/alRecordForm2Controller.js",
-        "type": "AuraDefinitionBundle",
-        "filePath": "force-app/Lds/main/default/aura/alRecordForm2/alRecordForm2Controller.js"
+        "fullName": "wNoUi/wNoUi.html",
+        "type": "LightningComponentBundle",
+        "filePath": "force-app/Lds/main/default/lwc/wNoUi/wNoUi.html"
       }
     ]
   }

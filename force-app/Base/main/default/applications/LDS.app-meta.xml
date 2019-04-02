@@ -19,8 +19,8 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>LDS</label>
     <navType>Standard</navType>
-    <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
+    <tabs>standard-Account</tabs>
     <tabs>standard-Case</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>DS_UtilityBar</utilityBar>

@@ -4,13 +4,15 @@
 		{
 			"attributes": {
 				"type": "Contact",
-				"url": "/services/data/v45.0/sobjects/Contact/0030q00000N8T0TAAV"
+				"url": "/services/data/v45.0/sobjects/Contact/0033F00000C4mFYQAZ"
 			},
-			"AccountId": "0010q00000N5ciuAAB",
+			"AccountId": "0013F00000HIjPuQAL",
 			"Birthdate": "1968-10-03",
 			"Department": "Salesforce",
+			"Description": "Andrés Pérez (ElToro) is a Salesforce architect and instructor who built this demo, and has a huge ego so his name is here for generations to remember him ;-)",
+			"Email": "andres@eltoro.it",
 			"FirstName": "Andrés",
-			"Id": "0030q00000N8T0TAAV",
+			"Id": "0033F00000C4mFYQAZ",
 			"LastName": "Pérez",
 			"MailingCity": "Markham",
 			"MailingCountry": "Canada",

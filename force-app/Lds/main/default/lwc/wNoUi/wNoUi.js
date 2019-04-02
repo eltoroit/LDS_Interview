@@ -1,26 +1,43 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import CONTACT_FNAME_FIELD from '@salesforce/schema/Contact.FirstName';
-import CONTACT_LNAME_FIELD from '@salesforce/schema/Contact.LastName';
-import CONTACT_OTHERPHONE_FIELD from '@salesforce/schema/Contact.OtherPhone';
+import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
+import FIELD_Contact_FirstName from '@salesforce/schema/Contact.FirstName';
+import FIELD_Contact_LastName from '@salesforce/schema/Contact.LastName';
+import FIELD_Contact_AccountId from '@salesforce/schema/Contact.AccountId';
+import FIELD_Contact_Account_Name from '@salesforce/schema/Contact.Account.Name';
+import FIELD_Contact_Account_Website from '@salesforce/schema/Contact.Account.Website';
+import FIELD_Contact_Birthdate from '@salesforce/schema/Contact.Birthdate';
+import FIELD_Contact_OtherPhone from '@salesforce/schema/Contact.OtherPhone';
+import FIELD_Contact_Description from '@salesforce/schema/Contact.Description';
 
 export default class wNoUi extends LightningElement {
 	@api recordId;
-	@track contact;
 	@track error;
+	@track contact;
 
-	@wire(getRecord, { recordId: '$recordId', fields: [CONTACT_FNAME_FIELD, CONTACT_LNAME_FIELD, CONTACT_OTHERPHONE_FIELD] })
+	@wire(getRecord, { recordId: '$recordId', fields: [FIELD_Contact_FirstName, FIELD_Contact_LastName, FIELD_Contact_AccountId, FIELD_Contact_Account_Name, FIELD_Contact_Account_Website, FIELD_Contact_Birthdate, FIELD_Contact_OtherPhone, FIELD_Contact_Description] })
 	wired_getContact({ error, data }) {
 		if (data) {
 			this.contact = {
-				FirstName: getFieldValue(data, CONTACT_FNAME_FIELD),
-				LastName: getFieldValue(data, CONTACT_LNAME_FIELD),
-				OtherPhone: getFieldValue(data, CONTACT_OTHERPHONE_FIELD),
+				FirstName: this._getDisplayValue(data, FIELD_Contact_FirstName),
+				LastName: this._getDisplayValue(data, FIELD_Contact_LastName),
+				AccountId: this._getDisplayValue(data, FIELD_Contact_AccountId),
+				Account: {
+					Name: this._getDisplayValue(data, FIELD_Contact_Account_Name),
+					Website: this._getDisplayValue(data, FIELD_Contact_Account_Website)
+				},
+				Birthdate: this._getDisplayValue(data, FIELD_Contact_Birthdate),
+				OtherPhone: this._getDisplayValue(data, FIELD_Contact_OtherPhone),
+				Description: this._getDisplayValue(data, FIELD_Contact_Description)
 			};
 			this.error = undefined;
 		} else if (error) {
 			this.contact = undefined;
 			this.error = error;
 		}
+	}
+
+	_getDisplayValue(data, field) {
+		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
+
 	}
 }
