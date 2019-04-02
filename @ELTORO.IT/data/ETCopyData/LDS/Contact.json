@@ -4,15 +4,15 @@
 		{
 			"attributes": {
 				"type": "Contact",
-				"url": "/services/data/v45.0/sobjects/Contact/0033F00000C4mFYQAZ"
+				"url": "/services/data/v45.0/sobjects/Contact/0035C00000HfQljQAF"
 			},
-			"AccountId": "0013F00000HIjPuQAL",
+			"AccountId": "0015C00000N89GSQAZ",
 			"Birthdate": "1968-10-03",
 			"Department": "Salesforce",
 			"Description": "Andrés Pérez (ElToro) is a Salesforce architect and instructor who built this demo, and has a huge ego so his name is here for generations to remember him ;-)",
 			"Email": "andres@eltoro.it",
 			"FirstName": "Andrés",
-			"Id": "0033F00000C4mFYQAZ",
+			"Id": "0035C00000HfQljQAF",
 			"LastName": "Pérez",
 			"MailingCity": "Markham",
 			"MailingCountry": "Canada",
@@ -22,7 +22,16 @@
 			"OtherPhone": "+1 (905) 471-0277",
 			"Phone": "+1 (647_ 456-3799",
 			"Salutation": "Mr.",
-			"Title": "Global Master Instructor"
+			"Title": "Global Master Instructor",
+			"myCheckbox__c": true,
+			"myCurrency__c": 123.45,
+			"myGeolocation__Latitude__s": 37.789839,
+			"myGeolocation__Longitude__s": -122.3975722,
+			"myNumber__c": 123.45,
+			"myPercent__c": 75.01,
+			"myRich__c": "<p><u>This</u> is <s style=\"color: rgb(62, 62, 60);\">not</s><span style=\"color: rgb(62, 62, 60);\"> </span>a <b>note</b></p>",
+			"myTime__c": "00:15:00.000Z",
+			"myURL__c": "http://eltoro.it"
 		}
 	],
 	"total": 1

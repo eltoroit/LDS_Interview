@@ -1,5 +1,5 @@
 {
-	"now": "2019-03-30T16:22:52.004Z",
+	"now": "2019-04-02T14:02:14.893Z",
 	"alias": "LDS",
 	"importOrder": [
 		"Account",
@@ -77,11 +77,14 @@
 				"CleanStatus",
 				"Department",
 				"Description",
+				"DoNotCall",
 				"Email",
 				"EmailBouncedDate",
 				"EmailBouncedReason",
 				"Fax",
 				"FirstName",
+				"HasOptedOutOfEmail",
+				"HasOptedOutOfFax",
 				"HomePhone",
 				"Id",
 				"Jigsaw",
@@ -107,7 +110,16 @@
 				"OtherStreet",
 				"Phone",
 				"Salutation",
-				"Title"
+				"Title",
+				"myCheckbox__c",
+				"myCurrency__c",
+				"myGeolocation__Latitude__s",
+				"myGeolocation__Longitude__s",
+				"myNumber__c",
+				"myPercent__c",
+				"myRich__c",
+				"myTime__c",
+				"myURL__c"
 			],
 			"keyPrefix": "003",
 			"label": "Contact",
@@ -297,11 +309,14 @@
 			"CreatedDate",
 			"Department",
 			"Description",
+			"DoNotCall",
 			"Email",
 			"EmailBouncedDate",
 			"EmailBouncedReason",
 			"Fax",
 			"FirstName",
+			"HasOptedOutOfEmail",
+			"HasOptedOutOfFax",
 			"HomePhone",
 			"Id",
 			"IsDeleted",
@@ -345,7 +360,17 @@
 			"ReportsToId",
 			"Salutation",
 			"SystemModstamp",
-			"Title"
+			"Title",
+			"myCheckbox__c",
+			"myCurrency__c",
+			"myGeolocation__Latitude__s",
+			"myGeolocation__Longitude__s",
+			"myGeolocation__c",
+			"myNumber__c",
+			"myPercent__c",
+			"myRich__c",
+			"myTime__c",
+			"myURL__c"
 		],
 		"ContactChangeEvent": [],
 		"ContactCleanInfo": [],
@@ -917,6 +942,9 @@
 				"Must be createable"
 			],
 			"Contact.JigsawContactId": [
+				"Must be createable"
+			],
+			"Contact.myGeolocation__c": [
 				"Must be createable"
 			]
 		},
