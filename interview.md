@@ -1074,34 +1074,165 @@ export default class wNoUi extends LightningElement {
 
 **READER:** Shortcut?
 
-**EL TORO:** yes, because you can also ddo it the long way by typing `data.fields.Birthdate.value`. Which actually brings me to the next lines in the code. 
+**EL TORO:** Yes, because you can also ddo it the long way by typing `data.fields.Birthdate.value`. Which actually brings me to the next lines in the code. 
 
 **READER:** The lines that look like this `import FIELD_Contact_* from '@salesforce/schema/Contact.*';`?
 
-**EL TORO:** yes, it's a lot better to use this format when refernecing the fields rather than hard-wiring the name of the fields in the code because this format is actually compiled and if there are changes to the field API names your code wil automatically reflect those new changes.
+**EL TORO:** Exactly, it's a lot better to use this format when refernecing the fields rather than hard coding the name of the fields in the code because this format is actually compiled.
 
+**READER:** Nice! I also see there is a function imported named `getFieldDisplayValue`. What is this about?
 
+**EL TORO:** `getFieldDisplayValue` is similar to the `getFieldValue` but for some fields, like dates for example, the value in the database and the value displayed is not the same.
 
+**READER:** How can they be different dates?
 
+**EL TORO:** Not different dates, the value is the same! The way it's displayed is different. For example `1968-10-03` could be displaed as `October 3, 1968`.
 
-**EL TORO:** `getFieldValue` is a shortcut used to obtain the value stored in the field.
+**READER:** Oh, that makes sense!
 
+**EL TORO:** Continuing with the code... This is the next statement I want to talk about:
 
+```
+@wire(getRecord, { recordId: '$recordId', fields: [...] })
+wired_getContact({ error, data }) { ... }
+```
 
+**READER:** Yes, what does the function @wire do?
 
+**EL TORO:** This is not a function, it's a decorator.
 
+**READER:** But it has parenthesis...
 
-#FINISH THIS STATEMENT WHEN YOU ARE IN THE GROUND.
-**EL TORO:** The `getFieldValue` is an easy way to unpackage the fields from the data that it receives from LDS. You do not have to use that function, you can just do `data....` 
+**EL TORO:** True, most of the time, the presense of a parenthesis indicate a function... but not always. Let's explain this by comparing to Apex. How do you decorate a test calss in Apex?
 
+**READER:** `@IsTest`
 
+**EL TORO:** Does this test class have access to the data in the database.
 
+**READER:** Never!
 
+**EL TORO:** But what if you want it to have access?
 
-The next three imports are to define a reference 
+**READER:** For those few exceptions where you need access then you decorate with `@IsTest(SeeAllData=true)`
 
+**EL TORO:** Is that a function?
 
+**READER:** I got it! Thanks.
 
+**EL TORO:** Let's break this code in pieces. First let's write it like this...
+
+```
+@wire(...)
+wired_getContact
+```
+
+**READER:** That looks cleaner
+
+**EL TORO:** It does
+
+**READER:** But, on the second line, you left out `() { ... }`. Was that to make the example simpler?
+
+**EL TORO:** Actually, that was on purpose.
+
+**READER:** But the first example is a decorated function
+
+**EL TORO:** Indeed, but you can wired properties or functions. I just like to use functions because you have more control, and you can also but a breakpoint when you are running your code to inspect the data that is being returned. 
+
+**READER:** That is a great idea.
+
+**EL TORO:** Thanks. Let's go back to the original code and talk about it.
+
+```
+@wire(getRecord, { recordId: '$recordId', fields: [...] })
+wired_getContact({ error, data }) { ... }
+```
+
+**READER:** Why does the recordId variable is prefixed with $?
+
+**EL TORO:** This is an important feature of the `@wire` decorator. This basically passes the recordId by reference. So any update to the value of the recordId gets the new record!
+
+**READER:** Really, without having to manually requery?
+
+**EL TORO:** Really! One more thing, I do not like the word 'requery' because that implies that Salesforce servers are invoked to bring the data.
+
+**READER:** True, but where else is the data? You have to call the server.
+
+**EL TORO:** Not necesarily, it could use the cache.
+
+**READER:** True, I forgot about that part.
+
+**EL TORO:** The second part of that decorator is the list of fields. As we have said, it's better to use the imported schema reference because it provides error detection at compile time.
+
+**READER:** Yes, we talked about that. the next line is funny.
+
+**EL TORO:** What do you mean? How is it funny?
+
+**READER:** The main purpose of this function is to fetch data and if there are any errors, then provide access to the error.
+
+**EL TORO:** Yes, and how is that funny.
+
+**READER:** Because the order of the two parameters should be reversed. I would of have written it like this: `wired_getContact(data, error)`
+
+**EL TORO:** I see your point, but there is only one parameter passed to this function... *(interrupted)*
+
+**READER:** There are two: `data` and `error`.
+
+**EL TORO:** Actually, pay closer attention and you will see the curly brackets.
+
+**READER:** You are right!
+
+**EL TORO:** Yes, so it only has one parameter, which is a JavaScript object `{error, data}` and could of have been written as `{data, error}` and would be exactly the same thing! 
+
+**READER:** So are you passing an object as reference, and wired will populate the data in those fields?
+
+**EL TORO:** Yes, it's pretty clever. Everything else in the code, is just getting the values into a simpler object to be able to work easier in the HTML code.
+
+**READER:** Yes, but I do not quite understand the `if` statement?
+
+**EL TORO:** It's a regular if, what's confusing about it?
+
+**READER:** I would of have written it like this:
+
+```
+if (data) {
+	// Handle if there is data
+...
+} else {
+	// No data then an error occurred
+...
+}
+```
+
+**EL TORO:** Be careful with that thinking.
+
+**READER:** Why?
+
+**EL TORO:** The `@wire` decorated function gets called when it gets initialized and in that first case, both the data and the error variables are undefined.
+
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
 **READER:** 
 **EL TORO:** 
 **READER:** 

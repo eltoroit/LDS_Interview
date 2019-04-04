@@ -15,7 +15,7 @@ export default class wNoUi extends LightningElement {
 	@track contact;
 
 	@wire(getRecord, { recordId: '$recordId', fields: [FIELD_Contact_FirstName, FIELD_Contact_LastName, FIELD_Contact_AccountId, FIELD_Contact_Account_Name, FIELD_Contact_Account_Website, FIELD_Contact_Birthdate, FIELD_Contact_OtherPhone, FIELD_Contact_Description] })
-	wired_getContact({ error, data }) {
+	wired_getContact({ data, error }) {
 		if (data) {
 			this.contact = {
 				FirstName: this._getDisplayValue(data, FIELD_Contact_FirstName),
@@ -32,7 +32,7 @@ export default class wNoUi extends LightningElement {
 			this.error = undefined;
 		} else if (error) {
 			this.contact = undefined;
-			this.error = error;
+			this.error = JSON.stringify(error);
 		}
 	}
 

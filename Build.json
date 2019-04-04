@@ -4,9 +4,9 @@
     "pushedSource": [
       {
         "state": "Changed",
-        "fullName": "wNoUi/wNoUi.html",
+        "fullName": "wNoUi/wNoUi.js",
         "type": "LightningComponentBundle",
-        "filePath": "force-app/Lds/main/default/lwc/wNoUi/wNoUi.html"
+        "filePath": "force-app/Lds/main/default/lwc/wNoUi/wNoUi.js"
       }
     ]
   }
