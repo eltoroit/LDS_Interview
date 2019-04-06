@@ -1,11 +1,11 @@
 {
 	"packageDirectories": [
 		{
-			"path": "force-app/Base",
+			"path": "force-app/baseMetadata",
 			"default": false
 		},
 		{
-			"path": "force-app/Lds",
+			"path": "force-app/deployableMetadata",
 			"default": true
 		}
 	],

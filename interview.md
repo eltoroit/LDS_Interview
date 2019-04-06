@@ -1,5 +1,7 @@
+# --- DRAFT ---
 # A Conversation With EL TORO About Lightning Data Service (Updated for Lightning Web Components) <!-- omit in toc -->
 
+- [--- DRAFT ---](#----draft----)
 - [Modal: Edit Record](#modal-edit-record)
 	- [Aura Components](#aura-components)
 	- [Lightning Web Components](#lightning-web-components)
@@ -20,8 +22,10 @@
 	- [Aura Components](#aura-components-6)
 	- [Lightning Web Components](#lightning-web-components-4)
 - [Without UI](#without-ui)
-	- [Aura Components: Read Data](#aura-components-read-data)
-	- [Lightning Web Components: Read Data](#lightning-web-components-read-data)
+	- [Aura Components: Reading Data](#aura-components-reading-data)
+	- [Lightning Web Components: Reading Data](#lightning-web-components-reading-data)
+	- [Aura Components: Editing Data](#aura-components-editing-data)
+	- [Web Components: Creating a new record](#web-components-creating-a-new-record)
 	- [Aura Components](#aura-components-7)
 	- [Lightning Web Components](#lightning-web-components-5)
 
@@ -48,7 +52,7 @@
 
 **READER:** What do you mean by secure? Doesn't Salesforce manage security using CRUD, FLS and Record Access?
 
-**EL TORO:** Salesforce does have relly good security, and page layouts and Visualforce respect that. But when you are using Apex you will need to control the security yourself.
+**EL TORO:** Salesforce does have really good security, and page layouts and Visualforce respect that. But when you are using Apex you will need to control the security yourself.
 
 **READER:** But if I use `with sharing` in my Apex classes, then the security gets controlled, right?
 
@@ -163,11 +167,11 @@ export default class weEditRecord extends NavigationMixin(LightningElement) {
 
 **READER:** Nice, can you pre-set some fields?
 
-**EL TORO:** Well, good question. I am glad you asked. In Aura components, yes. But in LWC is not available yet (as of April 2019).
+**EL TORO:** Well, good question. I am glad you asked. In Aura components, yes. But in LWC is not available yet (as of Spring 19).
 
 ## Aura Components
 
-Let's take a look at the code in Aura:
+Let's take a look at the code in Aura components:
 
 ```
 var createRecordEvent = $A.get("e.force:createRecord");
@@ -182,7 +186,7 @@ createRecordEvent.fire();
 
 ## Lightning Web Components
 
-With LWC, the code is pretty similar to above where you needed to import the `NavigationMixin`. This is the JavaScript controller code:
+With LWC, the code is pretty similar to above where you needed to import the `NavigationMixin`. This is the JavaScript controller code for the navigation:
 
 ```
 this[NavigationMixin.Navigate]({
@@ -220,7 +224,7 @@ this[NavigationMixin.Navigate]({
 <force:recordView recordId="{!v.recordId}"/>
 ```
 
-**READER:** The `<apex:detail/>` tag in Visualforce was pretty useful, if you wanted to have the page layout and add additional things to the page. Is that used a lot in Lightning Components?
+**READER:** The `<apex:detail/>` tag in Visualforce was pretty useful, if you wanted to have the page layout and add additional things to the page anround the layout. Is that used a lot in Lightning Components?
 
 **EL TORO:** Great question, I am glad you asked... I actually, do not think this is that useful in Lightning components, remember, you could work much simpler, without writing code, by using the the Lightning App Builder.
 
@@ -242,7 +246,7 @@ this[NavigationMixin.Navigate]({
 
 **READER:** I have used `<apex:detail/>` in many of the pages I built in the past, but ... *(interrupted)*
 
-**EL TORO:** One more thing, with Visualforce you were able to use `<apex:detail/>` to view a record but not to edit the records. If you wanted that, you had to write a lot of markup code. But Salesforce now gives us `<force:recordEdit/>` which allows the user to edit the records without too much code.
+**EL TORO:** One more thing. With Visualforce you were able to use `<apex:detail/>` to view a record but not to edit a record. If you wanted that, you had to write a lot of markup code. But Salesforce now gives us `<force:recordEdit/>` which allows the user to edit the records without too much code.
 
 ## Aura Components
 
@@ -338,23 +342,27 @@ RE_SaveSuccess: function(component, event, helper) {
 - You can specify how many columns you want to see
 - It allows you to decide which fields you want to see / edit. *(interrupted)*
 
-**READER:** You can epecify the number of columns, not just one or two deined by the page layout?
+**READER:** Can you specify the number of columns? Not just one or two as defined by the page layout?
 
 **EL TORO:** Absolutely! in the previous example we were using four columns.
 
-**READER:** But I am 'confused, you said it uses page layouts but you are stating you can control the fields displayed? Aren't you contradicting yourself?
+**READER:** But I am confused, you said it uses page layouts but you are stating you can control the fields displayed! And the number of columns! Aren't you contradicting yourself?
 
-**EL TORO:** Let me explain. You can decide which fields to use based on a page layout (which is based on profile, record type and FLS), a compact layout, or providing the list of fields. Actually you can have the layout and have a list of fields.
+**EL TORO:** Let me explain. You can decide which fields to use based on a different things, including: The page layout (which is based on profile, record type and FLS), the compact layout, or providing the list of fields. Actually you can have both the layout (full or compact) and a list of fields.
 
 **READER:** What is a Compact layout?
 
 **EL TORO:** A compact layout displays a record’s key fields at a glance in both the Salesforce mobile app and Lightning Experience.
 
-**READER:** That's cool... Many times I wished the `<apex:detail />` would give me the ability to use compact layouts. Many times, I had to write tons of code because I did not wanted all the fields in the page layout.
+**READER:** That's cool... Many times I wished the `<apex:detail />` would give me the ability to use compact layouts.
+
+**EL TORO:** Now you can.
+
+**READER:** Also, few times, I've had to write tons of code because I did not wanted all the fields in the page layout.
 
 **EL TORO:** This component gives the ability to specify you want the compact layout by doing `layoutType="Compact"`. You could actually specify some fields that you want to be there (even if they are not part of the layout) or just the fields you want. That is actually what I'll demonstrate on the second example.
 
-**READER:** Wow, that is awesome! Can't wait to see that happening... Definetly something you could not do with Visualforce. Can you do the same in LWC?
+**READER:** Wow, that is awesome! Can't wait to see that code... Definetly something you could not do with Visualforce. Can you do the same in LWC?
 
 **EL TORO:** Absolutely.
 
@@ -391,13 +399,13 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** But I have noticed that some of the fields are not arranged the way I would like to have them placed on the screen. Can I move the fields around? I know that I could have the administrator re-arrange the fields on the page layouts, but those only handle 1 and 2 columns. 
 
-**EL TORO:** Well, the administrator can change the order of the fields on tha page layouts, right?
+**EL TORO:** Well, the administrator can change the order of the fields on the page layouts, right?
 
 **READER:** yeah, but we are stuck with page layouts defined by the administrator...
 
 **EL TORO:** Which is not necessarily a bad thing, right?
 
-**READER:** Indeed, but I do not want to depend on what he decides to do with the page layouts in the future. What can I do? Can we build our own UI? What if I want to show / hide some fields dynamically? Do we need Apex then?
+**READER:** Indeed, but I do not want to depend on what she decides to do with the page layouts in the future. What can I do? Can we build our own UI? What if I want to show / hide some fields dynamically? Do we need Apex then?
 
 **EL TORO:** Not quite. Remember that you need Apex only if you want to work with multiple records. But controlling the UI with a single record is quite simple.
 
@@ -666,11 +674,15 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** Sorry, but I think I am lost. What exactly were you trying to accomplish?
 
-**READER:** Let me explain. I have one form with some fields to edit/create a lead, and one of those fields is a single numeric value to evaluate the rating of a lead. The possible values range from 1 for an awful lead to 5 for an awesome one. The page layout the users are using has a textbox where the users can enter a single digit, but they can enter a value less than 1 or greater than 5, there is a validation rule that prevents the data from being entered but the form data can still be submited (not saved) with any single digit number. Also, a crazy user thought the value "1" was for their best leads because those are the leads he wants to call first. I guess it kind of make sense... but I would prefer to have a picklist or a set of radio buttons but so far I have not seen this is possible. Can this be accompished?
+**READER:** Let me explain. I have one form with some fields to edit/create a lead, and one of those fields is a single numeric value to evaluate the rating of a lead. The possible values range from 1 for an awful lead to 5 for an awesome one. The page layout the users are using has a textbox where the users can enter a single digit, but they can enter a value less than 1 or greater than 5, there is a validation rule that prevents the data from being entered but the form data can still be submited (not saved) with any single digit number.
 
-**EL TORO:** Have you thought about converting this field in the database from a number to a piclist? Because if I understand correctly that's what you would like to have, right?
+**EL TORO:** Sure, you can actually... *(interrupted)*
 
-**READER:** Yes, I tried that, but they are also doing math (averages, max, min) with the value so it needs to be a number but not a textbox!
+**READER:** Sorry. I just remember a funny story. A crazy user thought the value "1" was for their best leads because those are the leads he wants to call first. I guess it kind of make sense... but I would prefer to have a picklist or a set of radio buttons but so far I have not seen this is possible. Can this be accompished?
+
+**EL TORO:** That is funny. Have you thought about converting this field in the database from a number to a piclist? Because if I understand correctly that's what you would like to have, right?
+
+**READER:** Yes, I tried that, but they are also doing math (averages, max, min) with the value so it needs to be a number not a pick list. I just do not want it to display a textbox!
 
 **EL TORO:** Oh yes, this is a very common issue where you need toal control of the UI. This can definetly be done using the `<force:recordData />` component in Aura, which was actually the first components we had with LDS. Unlike all the components we have seen, this component does not provide any UI, so you have full control.
 
@@ -682,13 +694,13 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** Ok, but let's approach this in steps.
 
-- Read a record
-- Edit it with a special widget
-- All the options you can do with this component.
+- Reading Data
+- Creating a new record
+- Other options you can do with this component.
 
 **READER:** I like the idea... I am ready!
 
-## Aura Components: Read Data
+## Aura Components: Reading Data
 
 **EL TORO:** Let me show you first how to read data with Aura.
 
@@ -796,13 +808,13 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** What happened?
 
-**READER:** You have told me 157 times that LDS works with one record, and that if we wanted to work with multiple records we need Apex, right?
+**READER:** You have told me "157" times that LDS works with one record, and that if we wanted to work with multiple records we need Apex, right?
 
 **EL TORO:** Yes, that is correct.
 
 **READER:** But in the sample above, you are reading data from 2 sObjects: Account and Contact. So you are workig with multiple records! Didn't you just contradicted yourself! I wonder what else you have lied to me about.
 
-**EL TORO:** I do understnad your confusion, but I have not lied. Let me explain. How many contacts are we retrieving?
+**EL TORO:** I do understand your confusion, but I have not lied. Let me explain. How many contacts are we retrieving?
 
 **READER:** One.
 
@@ -816,7 +828,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** Ok, let's take a different approach. Open up the developer console and execute this query `SELECT FirstName, LastName, AccountId, Account.Name, Account.Website, Birthdate, OtherPhone, Description FROM Contact LIMIT 1`. When you execute it, how many rows are shown?
 
-**READER:**  Just one, but this does not sound right, there are two objects. This could be the developer console rendering it like this.
+**READER:**  Just one, but this does not sound right, there are two objects. This could be the developer console rendering it like that.
 
 **EL TORO:** I understand your confusion. It's a weird behaviour in Salesforce. Let's take a different approach. In the developer console, open the Execute Anonimous window and execute this code
 
@@ -834,7 +846,11 @@ System.debug([SELECT FirstName, LastName, AccountId, Account.Name, Account.Websi
 
 **EL TORO:** What do you mean?
 
-**READER:** I am thinking about a query in the account where you get the contact records. Oh wait... Did I just say "records"? I guess I would have to do the `LIMIT 1` thing...
+**READER:** I am thinking about a query in the account where you get the contact records. 
+
+**EL TORO:** Records? Multiple records, you need Apex.
+
+**READER:** Ok, but lets supose we use `LIMIT 1`
 
 **EL TORO:** Great question, let's try the Apex code since that seemed to help you understand. Let's use this code:
 
@@ -854,7 +870,7 @@ System.debug([SELECT Name, Website, (SELECT Id, FirstName, LastName, AccountId, 
 
 **READER:** Just when I was getting the hung of this, but plese continue...
 
-**EL TORO:** Let's go back to Apex and you make the query for 1 single record. The contact record but you bring information about the parent record. The first example when we were getting only one record. Let's suppose and you want to edit both records.
+**EL TORO:** Let's go back to Apex and you make the query for 1 single record. The contact record and you bring information about the parent record. The first example when we were getting only one record. Let's suppose and you want to edit both records.
 
 **READER:** OK, I am listening...
 
@@ -862,7 +878,7 @@ System.debug([SELECT Name, Website, (SELECT Id, FirstName, LastName, AccountId, 
 
 **READER:** Two?
 
-**EL TORO:** Correct. So you can use this technique to display a record, but not to edit them.
+**EL TORO:** Correct. So you can use this technique to display a record, but not to edit it.
 
 **READER:** That makes sense now. Please continue...
 
@@ -967,7 +983,7 @@ System.debug([SELECT Name, Website, (SELECT Id, FirstName, LastName, AccountId, 
 
 **READER:** Duh, of course!
 
-## Lightning Web Components: Read Data
+## Lightning Web Components: Reading Data
 
 **READER:** Can we use a component like that in LWC?
 
@@ -1074,11 +1090,11 @@ export default class wNoUi extends LightningElement {
 
 **READER:** Shortcut?
 
-**EL TORO:** Yes, because you can also ddo it the long way by typing `data.fields.Birthdate.value`. Which actually brings me to the next lines in the code. 
+**EL TORO:** Yes, because you can also do it the long way by typing `data.fields.Birthdate.value`. Which actually brings me to the next lines in the code. 
 
 **READER:** The lines that look like this `import FIELD_Contact_* from '@salesforce/schema/Contact.*';`?
 
-**EL TORO:** Exactly, it's a lot better to use this format when refernecing the fields rather than hard coding the name of the fields in the code because this format is actually compiled.
+**EL TORO:** Exactly, it's a lot better to use this format when referencing the fields rather than hard coding their names in the code because this format is actually verified at compilation time.
 
 **READER:** Nice! I also see there is a function imported named `getFieldDisplayValue`. What is this about?
 
@@ -1103,7 +1119,7 @@ wired_getContact({ error, data }) { ... }
 
 **READER:** But it has parenthesis...
 
-**EL TORO:** True, most of the time, the presense of a parenthesis indicate a function... but not always. Let's explain this by comparing to Apex. How do you decorate a test calss in Apex?
+**EL TORO:** True, most of the time, the presense of a parenthesis indicate a function... but not always. Let's explain this by comparing to Apex. How do you decorate a test class in Apex?
 
 **READER:** `@IsTest`
 
@@ -1117,34 +1133,34 @@ wired_getContact({ error, data }) { ... }
 
 **EL TORO:** Is that a function?
 
-**READER:** I got it! Thanks.
+**READER:** No, it's a decorator. I got it! Thanks.
 
-**EL TORO:** Let's break this code in pieces. First let's write it like this...
+**EL TORO:** Let's break this code in pieces. First let's re-write it like this...
 
 ```
 @wire(...)
 wired_getContact
 ```
 
-**READER:** That looks cleaner
+**READER:** That looks cleaner.
 
-**EL TORO:** It does
+**EL TORO:** It does.
 
 **READER:** But, on the second line, you left out `() { ... }`. Was that to make the example simpler?
 
-**EL TORO:** Actually, that was on purpose.
+**EL TORO:** Not only to make the code simpler, but show a difference in the code. You can have decorated properties or decorated functions. In the later case, we are using a decorated property.
 
-**READER:** But the first example is a decorated function
+**READER:** Was the original example was a decorated function?
 
-**EL TORO:** Indeed, but you can wired properties or functions. I just like to use functions because you have more control, and you can also but a breakpoint when you are running your code to inspect the data that is being returned. 
+**EL TORO:** Correct. I like to use functions because you have more control, and you can also but a breakpoint when you are running your code to inspect the data that is being returned. 
 
 **READER:** That is a great idea.
 
-**EL TORO:** Thanks. Let's go back to the original code and talk about it.
+**EL TORO:** Thanks. Let's add a bit more code to the previous example.
 
 ```
-@wire(getRecord, { recordId: '$recordId', fields: [...] })
-wired_getContact({ error, data }) { ... }
+@wire(getRecord, { recordId: '$recordId', fields: [FIELD_Contact_FirstName, FIELD_Contact_LastName, ...] })
+wired_getContact
 ```
 
 **READER:** Why does the recordId variable is prefixed with $?
@@ -1161,9 +1177,18 @@ wired_getContact({ error, data }) { ... }
 
 **READER:** True, I forgot about that part.
 
-**EL TORO:** The second part of that decorator is the list of fields. As we have said, it's better to use the imported schema reference because it provides error detection at compile time.
+**EL TORO:** The second part of that decorator is the list of fields. As we have said, it's better to use the imported schema references because they provide error detection when the code gets compiled.
 
-**READER:** Yes, we talked about that. the next line is funny.
+**READER:** Yes, we talked about that.
+
+**EL TORO:** Let's add more code to the previous example:
+
+```
+@wire(getRecord, { recordId: '$recordId', fields: [...] })
+wired_getContact({ error, data }) { ... }
+```
+
+**READER:** That's a funny line.
 
 **EL TORO:** What do you mean? How is it funny?
 
@@ -1183,7 +1208,7 @@ wired_getContact({ error, data }) { ... }
 
 **EL TORO:** Yes, so it only has one parameter, which is a JavaScript object `{error, data}` and could of have been written as `{data, error}` and would be exactly the same thing! 
 
-**READER:** So are you passing an object as reference, and wired will populate the data in those fields?
+**READER:** So are you passing an object as reference, and LDS will populate the data in those fields?
 
 **EL TORO:** Yes, it's pretty clever. Everything else in the code, is just getting the values into a simpler object to be able to work easier in the HTML code.
 
@@ -1207,9 +1232,16 @@ if (data) {
 
 **READER:** Why?
 
-**EL TORO:** The `@wire` decorated function gets called when it gets initialized and in that first case, both the data and the error variables are undefined.
+**EL TORO:** The `@wire` decorated function gets called when the component gets initialized and in that first case, both the data and the error variables are undefined.
 
-**READER:** 
+**READER:** Really?
+
+**EL TORO:** Yes, so your `if` statement could actually create a serious bug.
+
+**READER:** Ok, Thanks. I will be careful with that.
+
+## Aura Components: Editing Data
+
 **EL TORO:** 
 **READER:** 
 **EL TORO:** 
@@ -1246,48 +1278,30 @@ if (data) {
 **READER:** 
 **EL TORO:** 
 **READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
+**READER:** 
+**EL TORO:** 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+## Web Components: Creating a new record
 ## Aura Components
 ## Lightning Web Components
-
-
-
-
-
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
-**READER:** 
-**EL TORO:** 
 
 
 
@@ -1418,3 +1432,18 @@ recordData.saveRecord(
 **READER:**	Wow, that’s a bit of work...
 
 **EL TORO:** Actually, there is also a simpler way to accomplish this, but you do not have a lot of control on how the pop-up looks.
+
+
+=== Things to talk about
+1. Dependent picklists
+2. Apex ways.
+3. Account and the contacts. Should I use Apex or LDS? (Bring the Id with Apex and the record data with LDS -- unless bringing many records)
+4. More advance force:recordData
+   1. Reading Data
+   2. Creating a new record
+   3. Other options you can do with this component.
+   4. validate input form
+5. Update code.
+
+---
+LWC: 

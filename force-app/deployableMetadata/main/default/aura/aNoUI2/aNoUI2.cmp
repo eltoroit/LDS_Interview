@@ -1,0 +1,29 @@
+<aura:component implements="force:hasRecordId">
+	<aura:attribute name="newCaseRecord" type="Object" />
+	<aura:attribute name="newCaseFields" type="Object" />
+	<aura:attribute name="newCaseError" type="Object" />
+	<aura:attribute name="loaded" type="Boolean" default="false" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	<force:recordData aura:id="newCaseCreator" recordId="" layoutType="COMPACT" mode="EDIT"
+		targetRecord="{!v.newCaseRecord}" targetFields="{!v.newCaseFields}" targetError="{!v.newCaseError}"
+		recordUpdated="{!c.recordUpdated}" />
+
+	<aura:if isTrue="{!v.loaded}">
+		<aura:if isTrue="{!v.newCaseError}">
+			<div class="slds-notify_alert slds-theme_error">
+				{!v.newCaseError}
+			</div>
+			<aura:set attribute="else">
+				<lightning:input label="Subject" value="{!v.newCaseFields.Subject}" />
+				<lightning:input label="Origin" value="{!v.newCaseFields.Origin}" />
+				<lightning:input label="Description" value="{!v.newCaseFields.Description}" />
+				<lightning:button label="Save" variant="brand" aura:id="btnSave" onclick="{!c.saveRecord}"
+					class="slds-m-top_x-small slds-align_absolute-center" />
+			</aura:set>
+		</aura:if>
+	</aura:if>
+
+	<lightning:spinner aura:id="spinner" class="slds-hide" />
+</aura:component>
