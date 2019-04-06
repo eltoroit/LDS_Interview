@@ -6,10 +6,13 @@
 				var rec = component.get("v.newCaseRecord");
 				var error = component.get("v.newCaseError");
 				if (error || (rec === null)) {
+					const message = `Error initializing record template: ${error}`;
+					component.set("v.newCaseError", message);
 					helper.showToast({
 						type: "error",
+						mode: "sticky",
 						title: "Failed",
-						message: `Error initializing record template: ${error}`
+						message
 					});
 				}
 			})
@@ -24,13 +27,32 @@
 				component.find("btnSave").set("v.disabled", false);
 				helper.spinnerVisible(component, false);
 				if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-					helper.showToast({ type: "success", title: `Saved ${saveResult.state}`, message: "The record was saved." });
+					component.set("v.caseId", saveResult.recordId);
+					const message = `The record [${saveResult.recordId}] was saved.`;
+					helper.showToast({ type: "success", title: `Saved ${saveResult.state}`, message });
 				} else if (saveResult.state === "INCOMPLETE") {
 					helper.showToast({ type: "warning", title: "Offline", message: "User is offline, device doesn't support drafts." });
 				} else if (saveResult.state === "ERROR") {
-					helper.showToast({ type: "error", title: "Failed", message: `Problem saving record: ${JSON.stringify(saveResult.error)}` });
+					let message = JSON.stringify(saveResult.error).replace(/,/g, ", ");
+					helper.showToast({
+						type: "error",
+						mode: "sticky",
+						title: "Failed",
+						message: 'Message is required, but will not be shown',
+						messageTemplate: 'Problem saving record: {0}',
+						messageTemplateData: [message],
+
+					});
 				} else {
-					helper.showToast({ type: "error", title: "Unknown error", message: `Unknown problem, state: ${saveResult.state}, error: ${JSON.stringify(saveResult.error)}` });
+					let message = JSON.stringify(saveResult.error).replace(/,/g, ", ");
+					helper.showToast({
+						type: "error",
+						mode: "sticky",
+						title: "Unknown error",
+						message: 'Message is required, but will not be shown',
+						messageTemplate: "Unknown problem, state: {0}, error: {1}` })",
+						messageTemplateData: [saveResult.state, message]
+					});
 				}
 			});
 		}
