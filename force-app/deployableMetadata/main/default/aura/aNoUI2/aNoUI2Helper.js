@@ -1,5 +1,5 @@
 ({
-	validateNewCaseForm: function () {
+	validateCaseForm: function () {
 		return true;
 	},
 	showToast: function (params) {

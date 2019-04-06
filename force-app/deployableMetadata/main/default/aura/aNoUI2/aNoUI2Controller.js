@@ -1,13 +1,13 @@
 ({
 	doInit: function (component, event, helper) {
-		component.find("newCaseCreator").getNewRecord("Case", null, false,
+		component.find("caseCreator").getNewRecord("Case", null, false,
 			$A.getCallback(() => {
 				component.set("v.loaded", true);
-				var rec = component.get("v.newCaseRecord");
-				var error = component.get("v.newCaseError");
+				var rec = component.get("v.caseRecord");
+				var error = component.get("v.caseError");
 				if (error || (rec === null)) {
 					const message = `Error initializing record template: ${error}`;
-					component.set("v.newCaseError", message);
+					component.set("v.caseError", message);
 					helper.showToast({
 						type: "error",
 						mode: "sticky",
@@ -19,17 +19,18 @@
 		);
 	},
 	saveRecord: function (component, event, helper) {
-		if (helper.validateNewCaseForm(component)) {
+		if (helper.validateCaseForm(component)) {
 			component.find("btnSave").set("v.disabled", true);
 			helper.spinnerVisible(component, true);
-			component.set("v.newCaseFields.ContactId", component.get("v.recordId"));
-			component.find("newCaseCreator").saveRecord((saveResult) => {
+			component.set("v.caseFields.ContactId", component.get("v.recordId"));
+			component.find("caseCreator").saveRecord((saveResult) => {
 				component.find("btnSave").set("v.disabled", false);
 				helper.spinnerVisible(component, false);
 				if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
 					component.set("v.caseId", saveResult.recordId);
 					const message = `The record [${saveResult.recordId}] was saved.`;
 					helper.showToast({ type: "success", title: `Saved ${saveResult.state}`, message });
+					component.find("caseCreator").reloadRecord();
 				} else if (saveResult.state === "INCOMPLETE") {
 					helper.showToast({ type: "warning", title: "Offline", message: "User is offline, device doesn't support drafts." });
 				} else if (saveResult.state === "ERROR") {
@@ -57,7 +58,7 @@
 			});
 		}
 	},
-	recordUpdated: function (component, event, helper) {
+	caseUpdated: function (component, event, helper) {
 		var eventParams = event.getParams();
 		if (eventParams.changeType === "CHANGED") {
 			helper.showToast({ type: "info", title: "CHANGED", message: "Record is changed" });
@@ -72,5 +73,13 @@
 		} else {
 			helper.showToast({ type: "error", title: "Unknown State", message: `What changed type? [${eventParams.changeType}]` });
 		}
+	},
+	goToCase: function (component, event, helper) {
+		var navEvt = $A.get("e.force:navigateToSObject");
+		navEvt.setParams({
+			recordId: component.get("v.caseId"),
+			slideDevName: "related"
+		});
+		navEvt.fire();
 	}
 })

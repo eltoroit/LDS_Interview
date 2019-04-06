@@ -1,46 +1,68 @@
 <aura:component implements="force:hasRecordId">
-	<aura:attribute name="newCaseRecord" type="Object" />
-	<aura:attribute name="newCaseFields" type="Object" />
-	<aura:attribute name="newCaseError" type="Object" />
 	<aura:attribute name="caseId" type="String" />
+	<aura:attribute name="caseError" type="Object" />
+	<aura:attribute name="caseRecord" type="Object" />
+	<aura:attribute name="caseFields" type="Object" />
 	<aura:attribute name="loaded" type="Boolean" default="false" />
 
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-	<force:recordData aura:id="newCaseCreator" recordId="{!v.caseId}" layoutType="COMPACT" mode="EDIT"
-		targetRecord="{!v.newCaseRecord}" targetFields="{!v.newCaseFields}" targetError="{!v.newCaseError}"
-		recordUpdated="{!c.recordUpdated}" />
+	<force:recordData aura:id="caseCreator" recordId="{!v.caseId}" layoutType="FULL" mode="EDIT"
+		targetRecord="{!v.caseRecord}" targetFields="{!v.caseFields}" targetError="{!v.caseError}"
+		recordUpdated="{!c.caseUpdated}" />
+
+	<aura:if isTrue="{!and(v.loaded, v.caseError)}">
+		<div class="slds-notify_alert slds-theme_error">
+			{!v.caseError}
+		</div>
+	</aura:if>
 
 	<aura:if isTrue="{!v.caseId}">
-		<lightning:recordForm recordId="{!v.caseId}" objectApiName="Case" columns="4" mode="view"
-			layoutType="Compact" />
+		<table>
+			<tr>
+				<th>Case Id</th>
+				<td>
+					<lightning:button label="{!'Go to: ' + v.caseFields.CaseNumber}" variant="base"
+						onclick="{!c.goToCase}" />
+				</td>
+			</tr>
+			<tr>
+				<th>Case Number</th>
+				<td>{!v.caseFields.CaseNumber}</td>
+			</tr>
+			<tr>
+				<th>Subject</th>
+				<td>{!v.caseFields.Subject}</td>
+			</tr>
+			<tr>
+				<th>Origin</th>
+				<td>{!v.caseFields.Origin}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>
+					<lightning:formattedRichText value="{!v.caseFields.Description}" />
+				</td>
+			</tr>
+		</table>
 		<aura:set attribute="else">
-			<aura:if isTrue="{!v.loaded}">
-				<aura:if isTrue="{!v.newCaseError}">
-					<div class="slds-notify_alert slds-theme_error">
-						{!v.newCaseError}
-					</div>
-					<aura:set attribute="else">
-						<div style="position:relative">
-							<lightning:input label="Subject" value="{!v.newCaseFields.Subject}" />
-							<lightning:select label="Origin" value="{!v.newCaseFields.Origin}">
-								<option value="">choose one...</option>
-								<option value="Lightning Component">Lightning Component</option>
-								<option value="Phone">Phone</option>
-								<option value="Email">Email</option>
-								<option value="Web">Web</option>
-							</lightning:select>
-							<label class="slds-form-element__label">Description</label>
-							<lightning:inputRichText value="{!v.newCaseFields.Description}" />
+			<div style="position:relative">
+				<lightning:input label="Subject" value="{!v.caseFields.Subject}" />
+				<lightning:select label="Origin" value="{!v.caseFields.Origin}">
+					<option value="">choose one...</option>
+					<option value="Lightning Component">Lightning Component</option>
+					<option value="Phone">Phone</option>
+					<option value="Email">Email</option>
+					<option value="Web">Web</option>
+				</lightning:select>
+				<label class="slds-form-element__label">Description</label>
+				<lightning:inputRichText value="{!v.caseFields.Description}" />
 
-							<lightning:button label="Save" variant="brand" aura:id="btnSave" onclick="{!c.saveRecord}"
-								class="slds-m-top_x-small slds-align_absolute-center" />
+				<lightning:button label="Save" variant="brand" aura:id="btnSave" onclick="{!c.saveRecord}"
+					class="slds-m-top_x-small slds-align_absolute-center" />
 
-							<lightning:spinner aura:id="spinner" variant="brand" class="slds-hide" />
-						</div>
-					</aura:set>
-				</aura:if>
-			</aura:if>
+				<lightning:spinner aura:id="spinner" variant="brand" class="slds-hide" />
+			</div>
 		</aura:set>
 	</aura:if>
 

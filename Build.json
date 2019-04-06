@@ -1,6 +1,13 @@
 {
   "status": 0,
   "result": {
-    "pushedSource": []
+    "pushedSource": [
+      {
+        "state": "Changed",
+        "fullName": "aNoUI2/aNoUI2.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUI2/aNoUI2.cmp"
+      }
+    ]
   }
 }
