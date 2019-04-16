@@ -35,6 +35,9 @@
 				<lightning:tab label="Without UI: Create">
 					<c:aNoUiCreate recordId="{!v.recordId}" />
 				</lightning:tab>
+				<lightning:tab label="Without UI: Full">
+					<c:aNoUiFull recordId="{!v.recordId}" />
+				</lightning:tab>
 			</lightning:tabset>
 		</div>
 	</lightning:card>

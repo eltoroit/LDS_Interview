@@ -35,7 +35,7 @@
 
 ---
 # Welcome
-For a long time I have had an idea of writing a document explaining **Lightning Data Services** and the different ways that you can work with data in Salesforce with and without writing Apex code.
+For a long time I have had an idea of writing a document explaining **Lightning Data Services** and the different ways that you can work with data in Salesforce with and without writing Apex code. Now that LWC components has been released and we are starting to work on this new awesome platform, I thought this article is very relevant again.
 
 Since this is a complex and lengthy topic, I decided to write it in the form of an interview, where the reader (you) is interviewing me. Hopefully this is fun to read as it was to write.
 
@@ -47,19 +47,27 @@ These are instructions for a Mac, but they can easily be executd in a Windows ma
 1. Clone the repo `git clone https://github.com/eltoroit/LDS_Interview.git`
 2. Open the project in VS Code.
 3. Execute this Mac script `./@ELTORO.IT/scripts/CreateOrg.sh`
+
+	This script will perform several tasks:
+
+		1. Creates and opens a scratch Org
+		2. Pushes the metadata to the new org
+		3. Assigns the permission set to your user
+		4. Executes some Apex code to set up the users
+		5. Imports the data using `ETCopyData`
+
+	You can find the `ETCopyData` SFDX plugin [here](https://github.com/eltoroit/ETCopyData).
+
 4. In the Org, use the *App Launcher* to open the `LDS` app
 5. Navigate to the contact which was created by the script
 
-Once the contact (Andrés Pérez) is displayed, you should see a tabset with two tabs: Aura and LWC. Each of these tabs has a vertical sub-tab to change between different demos.
+	Once the contact (Andrés Pérez) is displayed, you should see a tabset with two tabs: Aura and LWC. Each of these tabs has a vertical sub-tab to change between different demos.
 
-This script will perform several tasks:  
-   1. Creates and opens a scratch Org
-   2. Pushes the metadata to the new org
-   3. Assigns the permission set to your user
-   4. Executes some Apex code to set up the users
-   5. Imports the data using `ETCopyData`
+6. Rebuild the project whenever you write more code.
 
-You can find the `ETCopyData` SFDX plugin [here](https://github.com/eltoroit/ETCopyData).
+	When you have made changes to the samples, the easiest way to push the code to your scratch org is by rebuilding the project. VS Code has a defaul builder (Mac: ⌘⇧B Windows: CTRL-SHIFT-B) that will save the files and push the code.
+
+
 
 # Interview
 **READER:** El Toro, I have heard that a Lightning Component runs on the client side, without requiring Apex... is that true?

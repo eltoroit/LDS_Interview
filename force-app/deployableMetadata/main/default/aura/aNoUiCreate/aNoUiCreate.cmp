@@ -1,109 +1,69 @@
 <aura:component implements="force:hasRecordId">
-	<aura:attribute name="fields" type="String[]" default="['Id']" />
-	<aura:attribute name="targetRecord" type="Object" />
-	<aura:attribute name="targetFields" type="Object" />
-	<aura:attribute name="targetError" type="Object" />
+	<aura:attribute name="caseId" type="String" />
+	<aura:attribute name="caseError" type="Object" />
+	<aura:attribute name="caseRecord" type="Object" />
+	<aura:attribute name="caseFields" type="Object" />
+	<aura:attribute name="loaded" type="Boolean" default="false" />
 
-	<aura:attribute name="valOperation" type="String" default="VIEW" />
-	<aura:attribute name="optsOperation" type="List" default="[
-        {label: 'View', value: 'VIEW'},
-        {label: 'Edit', value: 'EDIT'}
-    ]" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-	<aura:attribute name="valFields" type="String" default="FULL" />
-	<aura:attribute name="optsFields" type="List" default="[
-        {label: 'Full', value: 'FULL'},
-        {label: 'Compact', value: 'COMPACT'},
-        {label: 'Fields Only', value: '_Fields'}, 
-        {label: 'Full + Fields', value: 'FULL_Fields'},
-        {label: 'Compact + Fields', value: 'COMPACT_Fields'}
-    ]" />
+	<force:recordData aura:id="caseCreator" recordId="{!v.caseId}" layoutType="FULL" mode="EDIT"
+		targetRecord="{!v.caseRecord}" targetFields="{!v.caseFields}" targetError="{!v.caseError}"
+		recordUpdated="{!c.caseUpdated}" />
 
-	<lightning:navigation aura:id="navService" />
-	<aura:handler name="init" value="{!this}" action="{!c.makeComponent}" />
-
-	<force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="" fields="{!v.fields}" mode="VIEW"
-		targetRecord="{!v.targetRecord}" targetFields="{!v.targetFields}" targetError="{!v.targetError}"
-		recordUpdated="{!c.recordUpdated}" />
-
-	<aura:if isTrue="{!not(empty(v.targetError))}">
-		<lightning:layout horizontalAlign="center">
-			<lightning:layoutItem padding="horizontal-large" class="slds-box errorCard ">
-				<div class="slds-text-heading_medium slds-m-bottom_medium">
-					<lightning:icon iconName="utility:error" alternativeText="Error!" variant="error" size="small" />
-					<span class="slds-m-horizontal_medium">Error Loading Data</span>
-				</div>
-				{!v.targetError}
-			</lightning:layoutItem>
-		</lightning:layout>
+	<aura:if isTrue="{!and(v.loaded, v.caseError)}">
+		<div class="slds-notify_alert slds-theme_error">
+			{!v.caseError}
+		</div>
 	</aura:if>
 
-	<lightning:layout multipleRows="true">
-		<lightning:layoutItem padding="around-medium">
-			<lightning:radioGroup name="Operation" label="Operation" options="{!v.optsOperation}"
-				value="{!v.valOperation}" onchange="{!c.makeComponent}" type="button" />
-		</lightning:layoutItem>
-		<lightning:layoutItem padding="around-medium">
-			<lightning:radioGroup name="Fields" label="Fields" options="{!v.optsFields}" value="{!v.valFields}"
-				onchange="{!c.makeComponent}" type="button" />
-		</lightning:layoutItem>
-		<lightning:layoutItem padding="around-medium">
-			<legend class="slds-form-element__legend slds-form-element__label">Operation</legend>
-			<lightning:buttonGroup>
-				<lightning:button label="New" onclick="{!c.new}" disabled="{!v.valOperation=='VIEW'}" />
-				<lightning:button label="Save" onclick="{!c.save}" disabled="{!v.valOperation=='VIEW'}" />
-				<lightning:button label="Reload" onclick="{!c.reload}" />
-				<lightning:button label="Delete" onclick="{!c.delete}" />
-			</lightning:buttonGroup>
-		</lightning:layoutItem>
-	</lightning:layout>
+	<aura:if isTrue="{!v.caseId}">
+		<table>
+			<tr>
+				<th>Case Id</th>
+				<td>
+					<lightning:button label="{!'Go to: ' + v.caseFields.CaseNumber}" variant="base"
+						onclick="{!c.goToCase}" />
+				</td>
+			</tr>
+			<tr>
+				<th>Case Number</th>
+				<td>{!v.caseFields.CaseNumber}</td>
+			</tr>
+			<tr>
+				<th>Subject</th>
+				<td>{!v.caseFields.Subject}</td>
+			</tr>
+			<tr>
+				<th>Origin</th>
+				<td>{!v.caseFields.Origin}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>
+					<lightning:formattedRichText value="{!v.caseFields.Description}" />
+				</td>
+			</tr>
+		</table>
+		<aura:set attribute="else">
+			<div style="position:relative">
+				<lightning:input label="Subject" value="{!v.caseFields.Subject}" />
+				<lightning:select label="Origin" value="{!v.caseFields.Origin}">
+					<option value="">choose one...</option>
+					<option value="Lightning Component">Lightning Component</option>
+					<option value="Phone">Phone</option>
+					<option value="Email">Email</option>
+					<option value="Web">Web</option>
+				</lightning:select>
+				<label class="slds-form-element__label">Description</label>
+				<lightning:inputRichText value="{!v.caseFields.Description}" />
 
+				<lightning:button label="Save" variant="brand" aura:id="btnSave" onclick="{!c.saveRecord}"
+					class="slds-m-top_x-small slds-align_absolute-center" />
 
-	<table>
-		<tr>
-			<th>targetFields</th>
-			<td>{!v.targetFields.Name}</td>
-		</tr>
-		<tr>
-			<th>targetRecord</th>
-			<td>{!v.targetRecord.fields.Name.value}</td>
-		</tr>
-		<tr>
-			<th>First Name</th>
-			<td>
-				<lightning:input type="text" value="{!v.targetFields.FirstName}" disabled="{!v.valOperation=='VIEW'}" />
-			</td>
-		</tr>
-		<tr>
-			<th>Last Name</th>
-			<td>
-				<lightning:input type="text" value="{!v.targetFields.LastName}" disabled="{!v.valOperation=='VIEW'}" />
-			</td>
-		</tr>
-		<tr>
-			<th>Birthdate</th>
-			<td>
-				<lightning:input type="date" value="{!v.targetFields.Birthdate}" disabled="{!v.valOperation=='VIEW'}" />
-			</td>
-		</tr>
-	</table>
+				<lightning:spinner aura:id="spinner" variant="brand" class="slds-hide" />
+			</div>
+		</aura:set>
+	</aura:if>
+
 </aura:component>
-
-<!--
-
-    
-=== METHODS ===
-https://inspiration-dream-3366-dev-ed.lightning.force.com/docs/component-library/bundle/force:recordData/specification
-https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/data_service_delete_record.htm?search_text=force:recordData
-getNewRecord:
- Loads a record template and sets it to the targetRecord attribute, including predefined values for the object and record type.
-reloadRecord:
- Performs the same load function as on init using the current configuration values (recordId, layoutType, mode, and others). Doesn’t force a server trip unless required.
-saveRecord:
- Saves the record.
-deleteRecord:
- Deletes the record.
-
-=== EVENTS ===
-recordUpdated	COMPONENT	Event fired when the record has changed.
--->

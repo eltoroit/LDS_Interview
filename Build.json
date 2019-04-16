@@ -1,23 +1,31 @@
 {
-    "status": 1,
-    "result": [
-        {
-            "error": "This lightning web component bundle is referenced elsewhere in salesforce.com.  Remove the usage and try again. : Lightning Web Component Bundle \"c:lwcTests\" - MODULE - lwcTests.",
-            "type": "LightningComponentBundle",
-            "filePath": "N/A"
-        }
-    ],
-    "name": "DeployFailed",
-    "message": "Push failed.",
-    "exitCode": 1,
-    "commandName": "SourcePushCommand",
-    "data": [
-        {
-            "error": "This lightning web component bundle is referenced elsewhere in salesforce.com.  Remove the usage and try again. : Lightning Web Component Bundle \"c:lwcTests\" - MODULE - lwcTests.",
-            "type": "LightningComponentBundle",
-            "filePath": "N/A"
-        }
-    ],
-    "stack": "DeployFailed: Push failed.\n    at ALMError (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/dist/lib/core/almError.js:44:19)\n    at MetadataRegistry.initializeMetadataTypeInfos.then.catch.e (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/dist/lib/source/sourceApiCommand.js:57:31)\n    at tryCatcher (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/util.js:16:23)\n    at Promise._settlePromiseFromHandler (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/promise.js:510:31)\n    at Promise._settlePromise (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/promise.js:567:18)\n    at Promise._settlePromise0 (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/promise.js:612:10)\n    at Promise._settlePromises (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/promise.js:687:18)\n    at Async._drainQueue (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/async.js:138:16)\n    at Async._drainQueues (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/async.js:148:10)\n    at Immediate.Async.drainQueues [as _onImmediate] (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/node_modules/bluebird/js/release/async.js:17:14)\n    at runCallback (timers.js:705:18)\n    at tryOnImmediate (timers.js:676:5)\n    at processImmediate (timers.js:658:5)\nOuter stack:\n    at Function.wrap (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/@salesforce/core/lib/sfdxError.js:151:27)\n    at SourcePushCommand.catch (/Users/aperez/.local/share/sfdx/client/7.2.0-179c9078fc/node_modules/salesforce-alm/dist/ToolbeltCommand.js:216:46)",
-    "warnings": {}
+  "status": 0,
+  "result": {
+    "pushedSource": [
+      {
+        "state": "Changed",
+        "fullName": "AuraTests/AuraTests.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/deployableMetadata/main/default/aura/AuraTests/AuraTests.cmp"
+      },
+      {
+        "state": "Changed",
+        "fullName": "aNoUiEdit/aNoUiEdit.cmp",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUiEdit/aNoUiEdit.cmp"
+      },
+      {
+        "state": "Changed",
+        "fullName": "aNoUiEdit/aNoUiEdit.css",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUiEdit/aNoUiEdit.css"
+      },
+      {
+        "state": "Changed",
+        "fullName": "aNoUiEdit/aNoUiEditController.js",
+        "type": "AuraDefinitionBundle",
+        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUiEdit/aNoUiEditController.js"
+      }
+    ]
+  }
 }

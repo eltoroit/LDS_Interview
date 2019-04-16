@@ -1,85 +1,54 @@
 ({
-	doInit: function (component, event, helper) {
-		component.find("caseCreator").getNewRecord("Case", null, false,
-			$A.getCallback(() => {
-				component.set("v.loaded", true);
-				var rec = component.get("v.caseRecord");
-				var error = component.get("v.caseError");
-				if (error || (rec === null)) {
-					const message = `Error initializing record template: ${error}`;
-					component.set("v.caseError", message);
-					helper.showToast({
-						type: "error",
-						mode: "sticky",
-						title: "Failed",
-						message
-					});
-				}
-			})
-		);
-	},
-	saveRecord: function (component, event, helper) {
-		if (helper.validateCaseForm(component)) {
-			component.find("btnSave").set("v.disabled", true);
-			helper.spinnerVisible(component, true);
-			component.set("v.caseFields.ContactId", component.get("v.recordId"));
-			component.find("caseCreator").saveRecord((saveResult) => {
-				component.find("btnSave").set("v.disabled", false);
-				helper.spinnerVisible(component, false);
-				if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-					component.set("v.caseId", saveResult.recordId);
-					const message = `The record [${saveResult.recordId}] was saved.`;
-					helper.showToast({ type: "success", title: `Saved ${saveResult.state}`, message });
-					component.find("caseCreator").reloadRecord();
-				} else if (saveResult.state === "INCOMPLETE") {
-					helper.showToast({ type: "warning", title: "Offline", message: "User is offline, device doesn't support drafts." });
-				} else if (saveResult.state === "ERROR") {
-					let message = JSON.stringify(saveResult.error).replace(/,/g, ", ");
-					helper.showToast({
-						type: "error",
-						mode: "sticky",
-						title: "Failed",
-						message: 'Message is required, but will not be shown',
-						messageTemplate: 'Problem saving record: {0}',
-						messageTemplateData: [message],
-
-					});
-				} else {
-					let message = JSON.stringify(saveResult.error).replace(/,/g, ", ");
-					helper.showToast({
-						type: "error",
-						mode: "sticky",
-						title: "Unknown error",
-						message: 'Message is required, but will not be shown',
-						messageTemplate: "Unknown problem, state: {0}, error: {1}` })",
-						messageTemplateData: [saveResult.state, message]
-					});
-				}
-			});
-		}
-	},
-	caseUpdated: function (component, event, helper) {
+	recordUpdated: function (component, event, helper) {
 		var eventParams = event.getParams();
+		console.log(JSON.stringify(eventParams));
 		if (eventParams.changeType === "CHANGED") {
-			helper.showToast({ type: "info", title: "CHANGED", message: "Record is changed" });
+			console.log("Record is changed");
+			console.log('Fields that are changed: ' + JSON.stringify(eventParams.changedFields));
 		} else if (eventParams.changeType === "LOADED") {
-			helper.showToast({ type: "info", title: "LOADED", message: "Record is loaded in the cache" });
+			console.log("Record is loaded in the cache");
 		} else if (eventParams.changeType === "REMOVED") {
-			helper.showToast({ type: "info", title: "REMOVED", message: "Record is deleted" });
+			console.log("Record is deleted");
 		} else if (eventParams.changeType === "ERROR") {
-			if (component.get("v.loaded") === true) {
-				helper.showToast({ type: "error", title: "ERROR", message: "There’s an error while loading, saving, or deleting the record" });
-			}
+			console.log("There’s an error while loading, saving, or deleting the record");
 		} else {
-			helper.showToast({ type: "error", title: "Unknown State", message: `What changed type? [${eventParams.changeType}]` });
+			alert("What changed type? [" + eventParams.changeType + "]");
 		}
+		console.log("BirthDate: " + component.get("v.targetFields").Birthdate);
+		console.log(JSON.parse(JSON.stringify(component.get("v.targetFields"))));
 	},
-	goToCase: function (component, event, helper) {
-		var navEvt = $A.get("e.force:navigateToSObject");
-		navEvt.setParams({
-			recordId: component.get("v.caseId"),
-			slideDevName: "related"
-		});
-		navEvt.fire();
+	save: function (component, event, helper) {
+		// Fields can be modified in code...
+		var fields = component.get("v.targetFields");
+		var dt = new Date(fields.Birthdate);
+		dt.setDate(dt.getDate() + 1);
+		fields.Birthdate = dt;
+
+		var recordData = component.find("recordData");
+		recordData.saveRecord(
+			$A.getCallback(
+				function (saveResult) {
+					if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+						// record is saved successfully
+						var resultsToast = $A.get("e.force:showToast");
+						resultsToast.setParams({
+							type: "success",
+							title: "Saved",
+							message: "The record was saved."
+						});
+						resultsToast.fire();
+					} else if (saveResult.state === "INCOMPLETE") {
+						// handle the incomplete state
+						alert("User is offline, device doesn't support drafts.");
+					} else if (saveResult.state === "ERROR") {
+						// handle the error state
+						component.set("v.targetError", JSON.stringify(saveResult.error));
+						alert('Problem saving contact, error: ' + JSON.stringify(saveResult.error));
+					} else {
+						alert('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+					}
+				}
+			)
+		);
 	}
 })

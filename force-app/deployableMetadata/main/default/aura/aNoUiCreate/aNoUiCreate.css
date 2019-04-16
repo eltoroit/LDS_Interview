@@ -1,3 +1,9 @@
-.THIS .errorCard {
-    background-color: rgba(255, 0, 0, 0.1);
+.THIS td, .THIS th {
+	padding: 5px;
+	vertical-align: top;
+	border: solid 1px black;
+}
+
+.THIS th {
+	white-space: nowrap
 }
