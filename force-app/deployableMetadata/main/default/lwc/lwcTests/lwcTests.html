@@ -1,35 +1,38 @@
 <template>
-	<lightning-card title="Lightning Web Components">
-		<div class="slds-p-horizontal_medium">
-			<lightning-tabset variant="vertical" active-tab-value="defaultTab">
-				<lightning-tab label="Modal: Edit Record">
-					<c-we-edit-record record-id={recordId}></c-we-edit-record>
-				</lightning-tab>
-				<lightning-tab label="Modal: Create Record">
-					<c-we-create-record record-id={recordId}></c-we-create-record>
-				</lightning-tab>
-				<lightning-tab label="Component Lightning / Record Form">
-					<c-wl-record-form record-id={recordId}></c-wl-record-form>
-				</lightning-tab>
-				<lightning-tab label="Component Lightning / Record Form (2)">
-					<c-wl-record-form2 record-id={recordId}></c-wl-record-form2>
-				</lightning-tab>
-				<lightning-tab label="Component Lightning / Record View Form">
-					<c-wl-record-view-form record-id={recordId}></c-wl-record-view-form>
-				</lightning-tab>
-				<lightning-tab label="Component Lightning / Record Edit Form">
-					<c-wl-record-edit-form record-id={recordId}></c-wl-record-edit-form>
-				</lightning-tab>
-				<lightning-tab label="Without UI: Read" value="defaultTab">
-					<c-w-no-ui-read record-id={recordId}></c-w-no-ui-read>
-				</lightning-tab>
-				<lightning-tab label="Without UI: Edit" value="defaultTab">
-					<c-w-no-ui-edit record-id={recordId}></c-w-no-ui-edit>
-				</lightning-tab>
-				<!-- <lightning-tab label="Without UI: Create" value="defaultTab">
-					<c-w-no-ui record-id={recordId}></c-w-no-ui>
-				</lightning-tab> -->
-			</lightning-tabset>
-		</div>
-	</lightning-card>
+  <lightning-card title="Lightning Web Components">
+    <div class="slds-p-horizontal_medium">
+      <lightning-tabset variant="vertical" active-tab-value="defaultTab">
+        <lightning-tab label="Modal: Edit Record">
+          <c-we-edit-record record-id={recordId}></c-we-edit-record>
+        </lightning-tab>
+        <lightning-tab label="Modal: Create Record">
+          <c-we-create-record record-id={recordId}></c-we-create-record>
+        </lightning-tab>
+        <lightning-tab label="Component Lightning / Record Form">
+          <c-wl-record-form record-id={recordId}></c-wl-record-form>
+        </lightning-tab>
+        <lightning-tab label="Component Lightning / Record Form (2)">
+          <c-wl-record-form2 record-id={recordId}></c-wl-record-form2>
+        </lightning-tab>
+        <lightning-tab label="Component Lightning / Record View Form">
+          <c-wl-record-view-form record-id={recordId}></c-wl-record-view-form>
+        </lightning-tab>
+        <lightning-tab label="Component Lightning / Record Edit Form">
+          <c-wl-record-edit-form record-id={recordId}></c-wl-record-edit-form>
+        </lightning-tab>
+        <lightning-tab label="Without UI: Read" value="defaultTab">
+          <c-w-no-ui-read record-id={recordId}></c-w-no-ui-read>
+        </lightning-tab>
+        <lightning-tab label="Without UI: Edit">
+          <c-w-no-ui-edit record-id={recordId}></c-w-no-ui-edit>
+        </lightning-tab>
+        <lightning-tab label="Without UI: Create">
+          <c-w-no-ui-create record-id={recordId}></c-w-no-ui-create>
+        </lightning-tab>
+        <lightning-tab label="Without UI: Full">
+          <c-w-no-ui-full record-id={recordId}></c-w-no-ui-full>
+        </lightning-tab>
+      </lightning-tabset>
+    </div>
+  </lightning-card>
 </template>

@@ -1,49 +1,51 @@
 <aura:component implements="force:hasRecordId">
-	<aura:attribute name="targetRecord" type="Object" />
-	<aura:attribute name="targetFields" type="Object" />
-	<aura:attribute name="targetError" type="Object" />
+  <aura:attribute name="targetRecord" type="Object" />
+  <aura:attribute name="targetFields" type="Object" />
+  <aura:attribute name="targetError" type="Object" />
 
-	<force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="FULL" mode="VIEW"
-		fields="FirstName, LastName, AccountId, Account.Name, Account.Website, Birthdate, OtherPhone, Description"
-		targetRecord="{!v.targetRecord}" targetFields="{!v.targetFields}" targetError="{!v.targetError}"
-		recordUpdated="{!c.recordUpdated}" />
+  <force:recordData aura:id="F_RecordData" recordId="{!v.recordId}" layoutType="FULL" mode="VIEW"
+    fields="FirstName, LastName, AccountId, Account.Name, Account.Website, Birthdate, OtherPhone, Description"
+    targetRecord="{!v.targetRecord}" targetFields="{!v.targetFields}" targetError="{!v.targetError}"
+    recordUpdated="{!c.recordUpdated}" />
 
-	<table>
-		<tr>
-			<th>targetError</th>
-			<td>{!v.targetError}</td>
-		</tr>
-		<tr>
-			<th>First Name</th>
-			<td>{!v.targetFields.FirstName}</td>
-		</tr>
-		<tr>
-			<th>Last Name</th>
-			<td>{!v.targetRecord.fields.LastName.value}</td>
-		</tr>
-		<tr>
-			<th>Account Id</th>
-			<td>{!v.targetFields.AccountId}</td>
-		</tr>
-		<tr>
-			<th>Account Name</th>
-			<td>{!v.targetFields.Account.Name}</td>
-		</tr>
-		<tr>
-			<th>Account Website</th>
-			<td>{!v.targetFields.Account.Website}</td>
-		</tr>
-		<tr>
-			<th>Birthdate</th>
-			<td>{!v.targetFields.Birthdate}</td>
-		</tr>
-		<tr>
-			<th>Other Phone</th>
-			<td>{!v.targetFields.OtherPhone}</td>
-		</tr>
-		<tr>
-			<th>Description</th>
-			<td>{!v.targetFields.Description}</td>
-		</tr>
-	</table>
+  <table>
+    <tr>
+      <th>targetError</th>
+      <td>{!v.targetError}</td>
+    </tr>
+    <tr>
+      <th>First Name</th>
+      <td>{!v.targetFields.FirstName}</td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td>{!v.targetRecord.fields.LastName.value}</td>
+    </tr>
+    <tr>
+      <th>Account Id</th>
+      <td>{!v.targetFields.AccountId}</td>
+    </tr>
+    <tr>
+      <th>Account Name</th>
+      <td>{!v.targetFields.Account.Name}</td>
+    </tr>
+    <tr>
+      <th>Account Website</th>
+      <td>{!v.targetFields.Account.Website}</td>
+    </tr>
+    <tr>
+      <th>Birthdate</th>
+      <td>{!v.targetFields.Birthdate}</td>
+    </tr>
+    <tr>
+      <th>Other Phone</th>
+      <td>{!v.targetFields.OtherPhone}</td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td>
+        <lightning:formattedRichText value="{!v.targetFields.Description}" />
+      </td>
+    </tr>
+  </table>
 </aura:component>

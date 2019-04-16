@@ -4,27 +4,9 @@
     "pushedSource": [
       {
         "state": "Changed",
-        "fullName": "AuraTests/AuraTests.cmp",
-        "type": "AuraDefinitionBundle",
-        "filePath": "force-app/deployableMetadata/main/default/aura/AuraTests/AuraTests.cmp"
-      },
-      {
-        "state": "Changed",
-        "fullName": "aNoUiEdit/aNoUiEdit.cmp",
-        "type": "AuraDefinitionBundle",
-        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUiEdit/aNoUiEdit.cmp"
-      },
-      {
-        "state": "Changed",
-        "fullName": "aNoUiEdit/aNoUiEdit.css",
-        "type": "AuraDefinitionBundle",
-        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUiEdit/aNoUiEdit.css"
-      },
-      {
-        "state": "Changed",
-        "fullName": "aNoUiEdit/aNoUiEditController.js",
-        "type": "AuraDefinitionBundle",
-        "filePath": "force-app/deployableMetadata/main/default/aura/aNoUiEdit/aNoUiEditController.js"
+        "fullName": "lwcTests/lwcTests.html",
+        "type": "LightningComponentBundle",
+        "filePath": "force-app/deployableMetadata/main/default/lwc/lwcTests/lwcTests.html"
       }
     ]
   }

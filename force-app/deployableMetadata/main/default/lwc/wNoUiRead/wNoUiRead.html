@@ -1,46 +1,48 @@
 <template>
-	<template if:true={error}>
-		<table>
-			<tr>
-				<th>Error</th>
-				<td>{error}</td>
-			</tr>
-		</table>
-	</template>
-	<template if:true={contact}>
-		<table>
-			<tr>
-				<th>First Name</th>
-				<td>{contact.FirstName}</td>
-			</tr>
-			<tr>
-				<th>Last Name</th>
-				<td>{contact.LastName}</td>
-			</tr>
-			<tr>
-				<th>Account Id</th>
-				<td>{contact.AccountId}</td>
-			</tr>
-			<tr>
-				<th>Account Name</th>
-				<td>{contact.Account.Name}</td>
-			</tr>
-			<tr>
-				<th>Account Website</th>
-				<td>{contact.Account.Website}</td>
-			</tr>
-			<tr>
-				<th>Birthdate</th>
-				<td>{contact.Birthdate}</td>
-			</tr>
-			<tr>
-				<th>Other Phone</th>
-				<td>{contact.OtherPhone}</td>
-			</tr>
-			<tr>
-				<th>Description</th>
-				<td>{contact.Description}</td>
-			</tr>
-		</table>
-	</template>
+  <template if:true={error}>
+    <table>
+      <tr>
+        <th>Error</th>
+        <td>{error}</td>
+      </tr>
+    </table>
+  </template>
+  <template if:true={contact}>
+    <table>
+      <tr>
+        <th>First Name</th>
+        <td>{contact.FirstName}</td>
+      </tr>
+      <tr>
+        <th>Last Name</th>
+        <td>{contact.LastName}</td>
+      </tr>
+      <tr>
+        <th>Account Id</th>
+        <td>{contact.AccountId}</td>
+      </tr>
+      <tr>
+        <th>Account Name</th>
+        <td>{contact.Account.Name}</td>
+      </tr>
+      <tr>
+        <th>Account Website</th>
+        <td>{contact.Account.Website}</td>
+      </tr>
+      <tr>
+        <th>Birthdate</th>
+        <td>{contact.Birthdate}</td>
+      </tr>
+      <tr>
+        <th>Other Phone</th>
+        <td>{contact.OtherPhone}</td>
+      </tr>
+      <tr>
+        <th>Description</th>
+        <td>
+          <lightning-formatted-rich-text value={contact.Description}></lightning-formatted-rich-text>
+        </td>
+      </tr>
+    </table>
+  </template>
 </template>

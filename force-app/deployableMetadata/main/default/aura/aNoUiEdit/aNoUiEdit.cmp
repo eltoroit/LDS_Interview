@@ -4,7 +4,7 @@
 
 	<force:recordData aura:id="recordData" recordId="{!v.recordId}" layoutType="FULL" mode="EDIT"
 		fields="FirstName, LastName, Birthdate, OtherPhone, Description" targetFields="{!v.targetFields}"
-		targetError="{!v.targetError}" recordUpdated="{!c.recordUpdated}" />
+		targetError="{!v.targetError}" />
 
 	<table>
 		<tr>
@@ -38,7 +38,7 @@
 		<tr>
 			<th>Description</th>
 			<td>
-				<lightning:input type="text" value="{!v.targetFields.Description}" />
+				<lightning:inputRichText value="{!v.targetFields.Description}" />
 			</td>
 		</tr>
 		<tr>

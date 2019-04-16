@@ -29,13 +29,13 @@
 				<lightning:tab label="Without UI: Read">
 					<c:aNoUiRead recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Without UI: Edit" id="defaultTab">
+				<lightning:tab label="Without UI: Edit">
 					<c:aNoUIEdit recordId="{!v.recordId}" />
 				</lightning:tab>
 				<lightning:tab label="Without UI: Create">
 					<c:aNoUiCreate recordId="{!v.recordId}" />
 				</lightning:tab>
-				<lightning:tab label="Without UI: Full">
+				<lightning:tab label="Without UI: Full" id="defaultTab">
 					<c:aNoUiFull recordId="{!v.recordId}" />
 				</lightning:tab>
 			</lightning:tabset>

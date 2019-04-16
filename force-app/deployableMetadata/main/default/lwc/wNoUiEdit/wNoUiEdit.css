@@ -1,0 +1,9 @@
+td, th {
+	padding: 5px;
+	vertical-align: top;
+	border: solid 1px black;
+}
+
+th {
+	white-space: nowrap
+}

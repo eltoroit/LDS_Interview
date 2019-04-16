@@ -6,6 +6,18 @@
             "c/lwcTests": [
                 "lwcTests/lwcTests.js"
             ],
+            "c/wNoUiCreate": [
+                "wNoUiCreate/wNoUiCreate.js"
+            ],
+            "c/wNoUiEdit": [
+                "wNoUiEdit/wNoUiEdit.js"
+            ],
+            "c/wNoUiFull": [
+                "wNoUiFull/wNoUiFull.js"
+            ],
+            "c/wNoUiRead": [
+                "wNoUiRead/wNoUiRead.js"
+            ],
             "c/weCreateRecord": [
                 "weCreateRecord/weCreateRecord.js"
             ],
@@ -23,12 +35,6 @@
             ],
             "c/wlRecordViewForm": [
                 "wlRecordViewForm/wlRecordViewForm.js"
-            ],
-            "c/wNoUiRead": [
-                "wNoUiRead/wNoUiRead.js"
-            ],
-            "c/wNoUiEdit": [
-                "wNoUiEdit/wNoUiEdit.js"
             ]
         }
     },
