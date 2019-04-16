@@ -20,7 +20,13 @@
 				<lightning-tab label="Component Lightning / Record Edit Form">
 					<c-wl-record-edit-form record-id={recordId}></c-wl-record-edit-form>
 				</lightning-tab>
-				<lightning-tab label="Without UI" value="defaultTab">
+				<lightning-tab label="Without UI: Read" value="defaultTab">
+					<c-w-no-ui-read record-id={recordId}></c-w-no-ui-read>
+				</lightning-tab>
+				<lightning-tab label="Without UI: Edit" value="defaultTab">
+					<c-w-no-ui record-id={recordId}></c-w-no-ui>
+				</lightning-tab>
+				<lightning-tab label="Without UI: Create" value="defaultTab">
 					<c-w-no-ui record-id={recordId}></c-w-no-ui>
 				</lightning-tab>
 			</lightning-tabset>

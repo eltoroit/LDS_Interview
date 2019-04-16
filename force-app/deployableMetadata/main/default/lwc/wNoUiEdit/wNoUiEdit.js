@@ -2,7 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { createRecord } from 'lightning/uiRecordApi'
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class WNoUi2 extends LightningElement {
+export default class wNoUiRead extends LightningElement {
 	@api recordId;
 	@track caseId;
 	@track caseError;

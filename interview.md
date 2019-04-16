@@ -1,7 +1,9 @@
-# --- DRAFT ---
+# --- DRAFT --- <!-- omit in toc -->
 # A Conversation With EL TORO About Lightning Data Service (Updated for Lightning Web Components) <!-- omit in toc -->
 
-- [--- DRAFT ---](#----draft----)
+- [Welcome](#welcome)
+	- [How to work with the SFDX Project?](#how-to-work-with-the-sfdx-project)
+- [Interview](#interview)
 - [Modal: Edit Record](#modal-edit-record)
 	- [Aura Components](#aura-components)
 	- [Lightning Web Components](#lightning-web-components)
@@ -21,22 +23,52 @@
 - [Components: Lightning / Record Edit Form](#components-lightning--record-edit-form)
 	- [Aura Components](#aura-components-6)
 	- [Lightning Web Components](#lightning-web-components-4)
-- [Without UI](#without-ui)
-	- [Aura Components: Reading Data](#aura-components-reading-data)
-	- [Lightning Web Components: Reading Data](#lightning-web-components-reading-data)
-	- [Aura Components: Editing Data](#aura-components-editing-data)
-	- [Web Components: Creating a new record](#web-components-creating-a-new-record)
+- [Without UI: Reading Data](#without-ui-reading-data)
 	- [Aura Components](#aura-components-7)
 	- [Lightning Web Components](#lightning-web-components-5)
+- [Without UI: Editing Data](#without-ui-editing-data)
+	- [Aura Components](#aura-components-8)
+	- [Lightning Web Components](#lightning-web-components-6)
+- [Without UI: Creating a new record](#without-ui-creating-a-new-record)
+	- [Aura Components](#aura-components-9)
+	- [Lightning Web Components](#lightning-web-components-7)
 
+---
+# Welcome
+For a long time I have had an idea of writing a document explaining **Lightning Data Services** and the different ways that you can work with data in Salesforce with and without writing Apex code.
 
+Since this is a complex and lengthy topic, I decided to write it in the form of an interview, where the reader (you) is interviewing me. Hopefully this is fun to read as it was to write.
+
+I have also included all the sample code in a [Github repository](https://github.com/eltoroit/LDS_Interview), and you can download it and play with the SFDX project and VS Code.
+
+## How to work with the SFDX Project?
+These are instructions for a Mac, but they can easily be executd in a Windows machine.
+
+1. Clone the repo `git clone https://github.com/eltoroit/LDS_Interview.git`
+2. Open the project in VS Code.
+3. Execute this Mac script `./@ELTORO.IT/scripts/CreateOrg.sh`
+4. In the Org, use the *App Launcher* to open the `LDS` app
+5. Navigate to the contact which was created by the script
+
+Once the contact (Andrés Pérez) is displayed, you should see a tabset with two tabs: Aura and LWC. Each of these tabs has a vertical sub-tab to change between different demos.
+
+This script will perform several tasks:  
+   1. Creates and opens a scratch Org
+   2. Pushes the metadata to the new org
+   3. Assigns the permission set to your user
+   4. Executes some Apex code to set up the users
+   5. Imports the data using `ETCopyData`
+
+You can find the `ETCopyData` SFDX plugin [here](https://github.com/eltoroit/ETCopyData).
+
+# Interview
 **READER:** El Toro, I have heard that a Lightning Component runs on the client side, without requiring Apex... is that true?
 
 **EL TORO:** Actually, that is 100% true. That’s what makes it run “lightning fast” ;-) *(Pun intended)*
 
 **READER:** Ok, so if I do not make calls to the server how do I work with Salesforce data? Do I need to write Apex controllers?
 
-**EL TORO:** Great question, I am glad you asked. You may get access to data using Apex or using LDS.
+**EL TORO:** Great question, I am glad you asked. You may get access to data using Apex or using LDS. *(interrupted)*
 
 **READER:** Sorry to interrupt, what is LDS?
 
@@ -44,19 +76,19 @@
 
 **READER:** Ok, thanks... Please continue.
 
-**EL TORO:** Oh yes, you can get access to data using either Apex or LDS. You will use Apex if you want to bring more than one record, but if you need to work with only a single record, for example, to create a new `Contact` or if you have the Id of an existing `MyObject__c`, then you can use LDS which has many benefits including:
+**EL TORO:** Oh yes, you can get access to data using either Apex or LDS. You will use Apex if you want to work with more than one record, but if you need to work with only a single record, for example, to create a new `Contact` or if you have the Id of an existing `MyObject__c`, then you can use LDS which has many benefits including:
 
 - Data is cached. If multiple components in the page need to get access to the same record, the server will only be reached once.
 - If two components on the same page use the same record and one of those components makes a change to the record, then the other component(s) will be notified.
 - Data access is secured.
 
-**READER:** What do you mean by secure? Doesn't Salesforce manage security using CRUD, FLS and Record Access?
+**READER:** What do you mean by secure? Doesn't Salesforce manage security using CRUD (object), FLS (field) and Record Access?
 
 **EL TORO:** Salesforce does have really good security, and page layouts and Visualforce respect that. But when you are using Apex you will need to control the security yourself.
 
 **READER:** But if I use `with sharing` in my Apex classes, then the security gets controlled, right?
 
-**EL TORO:** Oh... be very careful with that thinking! `with sharing` only respect record access, but Apex will always ignore restrictions on CRUD and FLS.
+**EL TORO:** Oh... be very careful with that thinking! `with sharing` only respect record access, but Apex will always disrespect restrictions on CRUD (object) and FLS (field). Basically, it runs with an elevated access for CRUD and FLS, but only for those records the user has access to.
 
 **READER:** But when I have built Visualforce pages in the past, the data was secured. Including CRUD and FLS, I do not understand.
 
@@ -66,7 +98,7 @@
 
 **EL TORO:** That's a really important question, I am glad you asked... The short answer, take a peek at this library I wrote a while back: https://github.com/eltoroit/ETLC_ApexBridge/blob/master/ApexBride_Library/Library/main/default/classes/ETLC_SecuredDB.cls. But remember, if you use LDS then Salesforce will protect you!
 
-**READER:** Why not use LDS all the time and not bother with Apex? why bother having all this code to protect yourself?
+**READER:** Why not use LDS all the time and not bother with Apex? why bother having all this code to protect you?
 
 **EL TORO:** Have you been paying attention? LDS = 1 record, Apex = multiple records.
 
@@ -76,15 +108,15 @@
 
 **READER:** Why is that a warning?
 
-**EL TORO:** Well, it can be confusing when trying to choose the best method for your needs. The difference is basically a trade off between how much you want to control the UI and how much code you want to write. The most basic method is a modal dialog which shows the page layout, there is another method to use the page layout but without a modal dialog, and finally a method where there is no UI provided by LDS and you can control the UI in which ever manner you choose.
+**EL TORO:** Well, it can be confusing when trying to choose the best method for your needs. The difference is basically a trade off between how much you want to control the UI and how much code you want to write. The most basic method is a modal dialog which shows the page layout, there is another way to use the page layout but without a modal dialog, yet another way where there is no UI provided by LDS and you can control the UI in which ever manner you choose.
 
 **READER:** OK, I have been warned :-) I guess the more I want to control the UI, the more code I need to write, right? 
 
-**EL TORO:** Yes, but no Apex unless you need to work with multiple records. Couple more things before we get started. I have created this repo with the examples for each technique, so that you can see how they are implemented. I am going to override the view for the contact record with a component build on **Lightning Aura Components** and one build on **Lightning Web Components** so you can compare the similarities and differences between them when dealing with data.
+**EL TORO:** Yes, but no Apex unless you need to work with multiple records. Couple more things before we get started. I have created this repo with the examples for each technique, so that you can see how they are implemented. I am going to override the view for the contact record with a component build on **Lightning Aura Components** and one build on **Lightning Web Components** so you can compare the similarities and differences between them when working with data.
 
 **READER:** So, are we going to be comparing both Aura and Web components? Cool!
 
-**EL TORO:** yes, very cool indeed. I will try to keep the codes as similar as possible in order to make it easier to compare. So let's get started!
+**EL TORO:** yes, very cool indeed! I will try to keep the codes as similar as possible in order to make it easier to compare. So let's get started!
 
 # Modal: Edit Record
 > **Aura Components:**
@@ -103,12 +135,46 @@
 **EL TORO:** In Aura components, you fire an event like this:
 
 ```
-var editRecordEvent = $A.get("e.force:editRecord");
-editRecordEvent.setParams({
-   recordId: component.get("v.recordId")
-});
-editRecordEvent.fire();
+var ev = $A.get("e.force:editRecord");
+if (ev) {
+  ev.setParams({
+    recordId: component.get("v.recordId")
+  });
+  ev.fire();
+} else {
+  alert('Event [e.force:editRecord] not available');
+}
 ```
+
+**READER:** This code does not make sense...
+
+**EL TORO:** You are using `$A` to get a reference to the standard `e.force:editRecord`, then you set a parameter with the Id of the record you want to edit and then you fire it. Simple!
+
+**READER:** Actually, that part I do understand.
+
+**EL TORO:** That's all we are doing...
+
+**READER:** the variable `ev` is a reference tothe event, right?
+
+**EL TORO:** yeah...
+
+**READER:** But why is it a boolean?
+
+**EL TORO:** Oh, that's a JavaScript "cool" feature (not really). JavaScript is not a type language like Apex, so there is no concept of boolean, integer, event, string, ... everything is just the same for JavaScript. So in this case, you are testing for the existence of the event.
+
+**READER:** The existence of the standard event?
+
+**EL TORO:** Correct.
+
+**READER:** Why would the event not exist?
+
+**EL TORO:** Well, if you are building something inside Lightning Experience, Salesforce mobile device, or Communities, then the event does exist.
+
+**READER:** So why are you testing if it exists, if it always does.
+
+**EL TORO:** Not always, what if you were building a custom application, or using Lightning out?
+
+**READER:** Then it would not exist. Got it!
 
 ## Lightning Web Components
 
@@ -116,11 +182,11 @@ editRecordEvent.fire();
 
 ```
 this[NavigationMixin.Navigate]({
-   type: 'standard__recordPage',
-   attributes: {
-      recordId: this.recordId,
-      actionName: 'edit'
-   }
+  type: 'standard__recordPage',
+  attributes: {
+    recordId: this.recordId,
+    actionName: 'edit'
+  }
 });
 ```
 
@@ -136,17 +202,17 @@ import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class weEditRecord extends NavigationMixin(LightningElement) {
-   @api recordId;
+  @api recordId;
 
-   EditRecord() {
-      this[NavigationMixin.Navigate]({
-         type: 'standard__recordPage',
-         attributes: {
-            recordId: this.recordId,
-            actionName: 'edit'
-         }
-      });
-   }
+  EditRecord() {
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+        recordId: this.recordId,
+        actionName: 'edit'
+      }
+    });
+  }
 }
 ```
 
@@ -171,30 +237,34 @@ export default class weEditRecord extends NavigationMixin(LightningElement) {
 
 ## Aura Components
 
-Let's take a look at the code in Aura components:
+**EL TORO:** Let's take a look at the code in Aura components:
 
 ```
-var createRecordEvent = $A.get("e.force:createRecord");
-createRecordEvent.setParams({
-   entityApiName: "Contact",
-   defaultFieldValues: {
-      AccountId: component.get("v.recordId")
-   }
-});
-createRecordEvent.fire();
+var ev = $A.get("e.force:createRecord");
+if (ev) {
+	ev.setParams({
+		entityApiName: "Case",
+		defaultFieldValues: {
+			ContactId: component.get("v.recordId")
+		}
+	});
+	ev.fire();
+} else {
+	alert('Event [e.force:createRecord] not available');
+}
 ```
 
 ## Lightning Web Components
 
-With LWC, the code is pretty similar to above where you needed to import the `NavigationMixin`. This is the JavaScript controller code for the navigation:
+**EL TORO:** With LWC, the code is pretty similar to above where you needed to import the `NavigationMixin`. This is the JavaScript controller code for the navigation:
 
 ```
 this[NavigationMixin.Navigate]({
-   type: 'standard__objectPage',
-   attributes: {
-      objectApiName: 'Case',
-      actionName: 'new'
-   }
+	type: 'standard__objectPage',
+	attributes: {
+		objectApiName: 'Case',
+		actionName: 'new'
+	}
 });
 ```
 
@@ -208,7 +278,7 @@ this[NavigationMixin.Navigate]({
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:recordView/documentation
 > - **Sample:** [afRecordView](./force-app/Lds/main/default/aura/afRecordView)
 > 
-> **Update:** This component was deprecated in Aura, do not use `<Force:recordView/>` instead please use`<lightning:recordForm/>`
+> **Update:** This component was deprecated in Aura, do not use `<Force:recordView/>` instead please use `<lightning:recordForm/>`
 
 **EL TORO:** This is possible the easiest way to display a record. This component displays the record using it’s page layout on the screen.
 
@@ -253,7 +323,7 @@ this[NavigationMixin.Navigate]({
 **EL TORO:** This is how the markup for Aura looks:
 
 ```
-<force:recordEdit aura:id="RE" recordId="{!v.recordId}"/>
+<force:recordEdit aura:id="RecordEdit" recordId="{!v.recordId}"/>
 ```
 
 **READER:** Which fields are being edited?
@@ -265,16 +335,16 @@ this[NavigationMixin.Navigate]({
 **EL TORO:** Great question... You are pretty smart! Actually, you do have to add a button to save the changes done by the user. The button could look something like this:
 
 ```
-<lightning:button label="Save" onclick="{!c.RE_Save}"/>
+<lightning:button label="Save" onclick="{!c.save}"/>
 ```
 
-**READER:** What does the code for the `RE_Save` controller function look like?
+**READER:** What does the code for the `save` controller function look like?
 
 **EL TORO:** Simple, you write something like this:
 
 ```
-RE_Save: function(component, event, helper) {
-   component.find("RE").get("e.recordSave").fire();
+save: function(component, event, helper) {
+   component.find("RecordEdit").get("e.recordSave").fire();
 }
 ```
 
@@ -283,13 +353,13 @@ RE_Save: function(component, event, helper) {
 **EL TORO:** Actually, yes you can. You need to write this handler on the markup
 
 ```
-<aura:handler name="onSaveSuccess" event="force:recordSaveSuccess" action="{!c.RE_SaveSuccess}"/>
+<aura:handler name="onSaveSuccess" event="force:recordSaveSuccess" action="{!c.saveSuccess}"/>
 ```
 
 **EL TORO:** And before you ask, this is what the controller function would look like:
 
 ```
-RE_SaveSuccess: function(component, event, helper) {
+saveSuccess: function(component, event, helper) {
    $A.get('e.force:refreshView').fire();
 }
 ```
@@ -304,7 +374,11 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** These last 2 components are pretty cool, but if they are deprecated ... I should not be using them, right?
 
-**EL TORO:** Correct. I prefer you start using the other cool components provided by LDS. 
+**EL TORO:** Correct. I would recommend you start using the other cool components provided by LDS. 
+
+**READER:** Which other cool components?
+
+**EL TORO:** Let's discuss them...
 
 # Component: Lightning / Record Form
 
@@ -318,7 +392,7 @@ RE_SaveSuccess: function(component, event, helper) {
 > - **Sample:** [wlRecordForm](./force-app/Lds/main/default/lwc/wlRecordForm)
 > - **Sample:** [wlRecordForm2](./force-app/Lds/main/default/lwc/wlRecordForm2)
 
-**EL TORO:** The next technique 'we'll talk about is `<lightning:recordForm />`. With a little bit of code, you can get a lot out of this component. It's like the Visualforce `<apex:detail />` component that you are familiar with.
+**EL TORO:** The next technique we'll talk about is `<lightning:recordForm />`. With a little bit of code, you can get a lot out of this component. It's like the Visualforce `<apex:detail />` component that you are familiar with.
 
 ## Aura Components
 
@@ -339,14 +413,10 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **EL TORO:** True, but I was just getting started with the list
 
-- You can specify how many columns you want to see
+- You can specify how many columns you want to see. In the previous example we were using four columns.
 - It allows you to decide which fields you want to see / edit. *(interrupted)*
 
-**READER:** Can you specify the number of columns? Not just one or two as defined by the page layout?
-
-**EL TORO:** Absolutely! in the previous example we were using four columns.
-
-**READER:** But I am confused, you said it uses page layouts but you are stating you can control the fields displayed! And the number of columns! Aren't you contradicting yourself?
+**READER:** Hold on... But I am confused... you said it uses page layouts but you are stating you can control the fields displayed! And the number of columns! Aren't you contradicting yourself?
 
 **EL TORO:** Let me explain. You can decide which fields to use based on a different things, including: The page layout (which is based on profile, record type and FLS), the compact layout, or providing the list of fields. Actually you can have both the layout (full or compact) and a list of fields.
 
@@ -356,7 +426,7 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** That's cool... Many times I wished the `<apex:detail />` would give me the ability to use compact layouts.
 
-**EL TORO:** Now you can.
+**EL TORO:** Now you can!
 
 **READER:** Also, few times, I've had to write tons of code because I did not wanted all the fields in the page layout.
 
@@ -411,7 +481,7 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** Right, I keep forgetting that part... *(interrupted)*
 
-**EL TORO:** There is a simple component named `<lightning:recordViewForm/>` which allows you to build the screen that you want, it's similar to the `<apex:outputField />` components you had in Visualforce.
+**EL TORO:** There is a simple component named `<lightning:recordViewForm/>` which allows you to build the screen that you want. It uses `<lightning:outputField />` which is similar to the `<apex:outputField />` component you had in Visualforce.
 
 ## Aura Components
 
@@ -504,9 +574,9 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** I see there is a bit more attributes being used here
 
-**EL TORO:** Yes, but look closely we already talked about the different events and the record Id, so there is nothing new
+**EL TORO:** Yes, but look closely we already talked about the different events and the record Id, so there is nothing new.
 
-**READER:** Oh, but there is.
+**READER:** Oh, but there is!
 
 **EL TORO:** What do you mean?
 
@@ -555,7 +625,7 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** That looks a bit more complex!
 
-**EL TORO:** Well, saving a record is a bit more complex than querying for it. Plus you can hook up your code with this component in several parts, and layout the `<lightning:inputField />` in any way you wan on the screen. Let’s take a look at the details... As you can see, we are using <lightning:inputField/> to edit the values of the fields.
+**EL TORO:** Well, saving a record is a bit more complex than querying for it. Plus you can hook up your code with this component in several parts, and layout the `<lightning:inputField />` in any way you wan on the screen. Let’s take a look at the details... As you can see, we are using `<lightning:inputField/>` to edit the values of the fields.
 
 **READER:** And I would assume the widget used to edit the value depends on the type of the field, correct?
 
@@ -563,7 +633,7 @@ RE_SaveSuccess: function(component, event, helper) {
 
 **READER:** I see there is a `<lightning:button />`, but it does not have an onclick event? How does it work?
 
-**EL TORO:** You are a very good observer, actually if you nest a `<lightning:button/>` with a `type=”Submit”` attribute inside the `<lightning:recordEditForm />` then when the user clicks on such button the form is submitted and the data saved in the record. But you could also "manually submit" the form, and manually submit the form when you detect an event. Something like this:
+**EL TORO:** You are a very good observer, actually if you nest a `<lightning:button/>` with a `type=”Submit”` attribute inside the `<lightning:recordEditForm />` then when the user clicks on such button the form is submitted and the data saved in the record. But you could also "manually submit" the form, for example when you detect an event. Something like this:
 
 ```
 onManualSubmit: function(component, event, helper) {
@@ -647,7 +717,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** Absolutely.
 
-# Without UI
+# Without UI: Reading Data
 
 > **Aura Components:**
 > - **Documentation:** https://developer.salesforce.com/docs/component-library/bundle/force:recordData/documentation
@@ -664,7 +734,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **READER:** I am afraid to ask you the next question...
 
-**EL TORO:** Why?
+**EL TORO:** Afraid? Why?
 
 **READER:** Because I think you are going to tell me that it needs much more code...
 
@@ -680,9 +750,9 @@ export default class WlRecordEditForm extends LightningElement {
 
 **READER:** Sorry. I just remember a funny story. A crazy user thought the value "1" was for their best leads because those are the leads he wants to call first. I guess it kind of make sense... but I would prefer to have a picklist or a set of radio buttons but so far I have not seen this is possible. Can this be accompished?
 
-**EL TORO:** That is funny. Have you thought about converting this field in the database from a number to a piclist? Because if I understand correctly that's what you would like to have, right?
+**EL TORO:** That is funny. Have you thought about converting this field in the database from a number to a picklist? Because if I understand correctly that's what you would like to have, right?
 
-**READER:** Yes, I tried that, but they are also doing math (averages, max, min) with the value so it needs to be a number not a pick list. I just do not want it to display a textbox!
+**READER:** Yes, I tried that, but they are also doing math (averages, max, min) with the value so it needs to be a number not a picklist. I just do not want it to display a textbox!
 
 **EL TORO:** Oh yes, this is a very common issue where you need toal control of the UI. This can definetly be done using the `<force:recordData />` component in Aura, which was actually the first components we had with LDS. Unlike all the components we have seen, this component does not provide any UI, so you have full control.
 
@@ -700,7 +770,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **READER:** I like the idea... I am ready!
 
-## Aura Components: Reading Data
+## Aura Components
 
 **EL TORO:** Let me show you first how to read data with Aura.
 
@@ -761,7 +831,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** Actually, this is one of the cool things. If you just want to read the data there is no controller.
 
-**READER:** No controller? Awesome! 
+**READER:** No controller? Awesome!
 
 **EL TORO:** For just reading a record, yes. But... *(interrupted)*
 
@@ -794,7 +864,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **READER:** Wow... cool! Can you then please explain the other attributes being used here?
 
-**EL TORO:** We already saw the `layoutType` attribute when we saw the `<lightning:RecordForm />` and it works on the same way, except that here the values for the `layoutType` are uppercase `FULL` and `COMPACT` (uppercase letters).
+**EL TORO:** We already saw the `layoutType` attribute when we saw the `<lightning:RecordForm />` and it works on the same way, except that for this component the values for the `layoutType` are uppercase `FULL` and `COMPACT` (uppercase letters).
 
 **READER:** Hold on, I have few questions before you move on. What exactly does the layoutType do in this particular case? You are talking about page layouts, but you said `<force:recordData />` does not have a UI component.
 
@@ -828,7 +898,7 @@ export default class WlRecordEditForm extends LightningElement {
 
 **EL TORO:** Ok, let's take a different approach. Open up the developer console and execute this query `SELECT FirstName, LastName, AccountId, Account.Name, Account.Website, Birthdate, OtherPhone, Description FROM Contact LIMIT 1`. When you execute it, how many rows are shown?
 
-**READER:**  Just one, but this does not sound right, there are two objects. This could be the developer console rendering it like that.
+**READER:**  Just one, but this does not sound right, there are two objects. This could be the developer console rendering it just like that.
 
 **EL TORO:** I understand your confusion. It's a weird behaviour in Salesforce. Let's take a different approach. In the developer console, open the Execute Anonimous window and execute this code
 
@@ -870,7 +940,11 @@ System.debug([SELECT Name, Website, (SELECT Id, FirstName, LastName, AccountId, 
 
 **READER:** Just when I was getting the hung of this, but plese continue...
 
-**EL TORO:** Let's go back to Apex and you make the query for 1 single record. The contact record and you bring information about the parent record. The first example when we were getting only one record. Let's suppose and you want to edit both records.
+**EL TORO:** Let's go back to Apex and you make the query for 1 single record. The contact record and you bring information about the account record. This was the first example we discussed, remember that we were getting only one record?
+
+**READER:** Yes, I remember.
+
+**EL TORO:**  Let's suppose and you want to edit both records.
 
 **READER:** OK, I am listening...
 
@@ -983,7 +1057,7 @@ System.debug([SELECT Name, Website, (SELECT Id, FirstName, LastName, AccountId, 
 
 **READER:** Duh, of course!
 
-## Lightning Web Components: Reading Data
+## Lightning Web Components
 
 **READER:** Can we use a component like that in LWC?
 
@@ -1024,7 +1098,7 @@ System.debug([SELECT Name, Website, (SELECT Id, FirstName, LastName, AccountId, 
 
 **READER:** The markup code above does not really reference any record as we were seeing before.
 
-**EL TORO:** You are right. The logic is all handled in JavaScript, in the controller. 
+**EL TORO:** You are right. The logic is all handled in JavaScript, in the controller. And it looks like this:
 
 ```
 import { LightningElement, api, wire, track } from 'lwc';
@@ -1096,13 +1170,17 @@ export default class wNoUi extends LightningElement {
 
 **EL TORO:** Exactly, it's a lot better to use this format when referencing the fields rather than hard coding their names in the code because this format is actually verified at compilation time.
 
-**READER:** Nice! I also see there is a function imported named `getFieldDisplayValue`. What is this about?
+**READER:** Nice!
+
+**EL TORO:** And that's the reason I prefer to use this shortcut, because it's compiled!
+
+**READER:** Makes total sense. I also see there is a function imported named `getFieldDisplayValue`. What is this about?
 
 **EL TORO:** `getFieldDisplayValue` is similar to the `getFieldValue` but for some fields, like dates for example, the value in the database and the value displayed is not the same.
 
 **READER:** How can they be different dates?
 
-**EL TORO:** Not different dates, the value is the same! The way it's displayed is different. For example `1968-10-03` could be displaed as `October 3, 1968`.
+**EL TORO:** Not different dates, the value is the same! The way it's displayed is different. For example `1968-10-03` could be displayed as `October 3, 1968`.
 
 **READER:** Oh, that makes sense!
 
@@ -1148,30 +1226,30 @@ wired_getContact
 
 **READER:** But, on the second line, you left out `() { ... }`. Was that to make the example simpler?
 
-**EL TORO:** Not only to make the code simpler, but show a difference in the code. You can have decorated properties or decorated functions. In the later case, we are using a decorated property.
+**EL TORO:** Not only to make the code simpler, but show an important difference in the code. You can have decorated properties or decorated functions. In the later example, we are using a decorated property.
 
-**READER:** Was the original example was a decorated function?
+**READER:** Was the original example a decorated function?
 
-**EL TORO:** Correct. I like to use functions because you have more control, and you can also but a breakpoint when you are running your code to inspect the data that is being returned. 
+**EL TORO:** Correct. I like to use functions because you have more control, and you can also put a breakpoint when you are running your code to inspect the data that is being returned. 
 
 **READER:** That is a great idea.
 
-**EL TORO:** Thanks. Let's add a bit more code to the previous example.
+**EL TORO:** Thanks. Let's add more pieces from the original expression, so we can discuss it.
 
 ```
 @wire(getRecord, { recordId: '$recordId', fields: [FIELD_Contact_FirstName, FIELD_Contact_LastName, ...] })
 wired_getContact
 ```
 
-**READER:** Why does the recordId variable is prefixed with $?
+**READER:** Why does the recordId variable is prefixed with `$` and surrounded in single quotes?
 
-**EL TORO:** This is an important feature of the `@wire` decorator. This basically passes the recordId by reference. So any update to the value of the recordId gets the new record!
+**EL TORO:** This is an important feature of the `@wire` decorator. This is like passing the `recordId` variable by reference. So any update to the value of the recordId gets the new record!
 
 **READER:** Really, without having to manually requery?
 
 **EL TORO:** Really! One more thing, I do not like the word 'requery' because that implies that Salesforce servers are invoked to bring the data.
 
-**READER:** True, but where else is the data? You have to call the server.
+**READER:** True, but where else is the data? You have to call the server!
 
 **EL TORO:** Not necesarily, it could use the cache.
 
@@ -1181,7 +1259,7 @@ wired_getContact
 
 **READER:** Yes, we talked about that.
 
-**EL TORO:** Let's add more code to the previous example:
+**EL TORO:** Let's add put back all the code we had on the original expression:
 
 ```
 @wire(getRecord, { recordId: '$recordId', fields: [...] })
@@ -1240,7 +1318,9 @@ if (data) {
 
 **READER:** Ok, Thanks. I will be careful with that.
 
-## Aura Components: Editing Data
+# Without UI: Editing Data
+## Aura Components
+## Lightning Web Components
 
 **EL TORO:** 
 **READER:** 
@@ -1299,7 +1379,7 @@ if (data) {
 **EL TORO:** 
 
 
-## Web Components: Creating a new record
+# Without UI: Creating a new record
 ## Aura Components
 ## Lightning Web Components
 
