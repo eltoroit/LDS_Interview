@@ -1,77 +1,70 @@
 <template>
-	<template if:true={caseError}>
-		<div class="slds-notify_alert slds-theme_error">
-			{caseError}
-		</div>
-	</template>
+  <template if:true={caseError}>
+    <div class="slds-notify_alert slds-theme_error">
+      {caseError}
+    </div>
+  </template>
 
-	<template if:true={caseId}>
-		<table>
-			<tr>
-				<th>Case Id</th>
-				<td>
-					<lightning-button label={goToCaseBtnLabel} variant="base" onclick={goToCase}></lightning-button>
-				</td>
-			</tr>
-			<tr>
-				<th>Case Number</th>
-				<td>{caseFields.CaseNumber}</td>
-			</tr>
-			<tr>
-				<th>Subject</th>
-				<td>{caseFields.Subject}</td>
-			</tr>
-			<tr>
-				<th>Origin</th>
-				<td>{caseFields.Origin}</td>
-			</tr>
-			<tr>
-				<th>Description</th>
-				<td>
-					<lightning-formatted-rich-text value={caseFields.Description}></lightning-formatted-rich-text>
-				</td>
-			</tr>
-		</table>
-	</template>
+  <template if:true={spinnerShown}>
+    <lightning-spinner variant="brand"></lightning-spinner>
+  </template>
 
+  <template if:false={editForm}>
+    <table>
+      <tr>
+        <th>Case Id</th>
+        <td>
+          <lightning-button label={goToCaseBtnLabel} variant="base" onclick={goToCase}></lightning-button>
+        </td>
+      </tr>
+      <tr>
+        <th>Contact</th>
+        <td>{caseRecord.ContactId}</td>
+      </tr>
+      <tr>
+        <th>Case Number</th>
+        <td>{caseRecord.CaseNumber}</td>
+      </tr>
+      <tr>
+        <th>Subject</th>
+        <td>{caseRecord.Subject}</td>
+      </tr>
+      <tr>
+        <th>Origin</th>
+        <td>{caseRecord.Origin}</td>
+      </tr>
+      <tr>
+        <th>Description</th>
+        <td>
+          <lightning-formatted-rich-text value={caseRecord.Description}></lightning-formatted-rich-text>
+        </td>
+      </tr>
+    </table>
+  </template>
 
+  <template if:true={editForm}>
+    <div class="slds-form" style="position:relative">
+      <div class="slds-form-element slds-form-element_stacked">
+        <lightning-input label="Subject" onchange={subjectChanged} value={caseRecord.Subject}></lightning-input>
+      </div>
 
+      <div class="slds-form-element slds-form-element_stacked">
+        <lightning-combobox label="Origin" value={caseRecord.Origin} placeholder="choose one..." options={origins}
+          onchange={originChanged}></lightning-combobox>
+      </div>
 
-	<template if:false={caseId}>
-		<div class="slds-form" style="position:relative">
-			<div class="slds-form-element slds-form-element_stacked">
-				<lightning-input label="Subject" onchange={subjectChanged}></lightning-input>
-			</div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label">Description</label>
+        <lightning-input-rich-text class="slds-form-element__control" onchange={descriptionChanged}
+          value={caseRecord.Description}></lightning-input-rich-text>
+      </div>
 
-			<div class="slds-form-element slds-form-element_stacked">
-				<label class="slds-form-element__label">Origin</label>
-				<div class="slds-form-element__control">
-					<select class="slds-select" onchange={originChanged}>
-						<option value="">choose one...</option>
-						<option value="Lightning Component">Lightning Component</option>
-						<option value="Phone">Phone</option>
-						<option value="Email">Email</option>
-						<option value="Web">Web</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="slds-form-element slds-form-element_stacked">
-				<label class="slds-form-element__label">Description</label>
-				<lightning-input-rich-text class="slds-form-element__control" onchange={descriptionChanged}>
-				</lightning-input-rich-text>
-			</div>
-
-			<div class="slds-form-element slds-form-element_stacked">
-				<div class="slds-form-element__control">
-					<lightning-button label="Save" variant="brand" onclick={saveRecord}
-						class="slds-m-top_x-small slds-align_absolute-center"></lightning-button>
-				</div>
-			</div>
-
-			<template if:true={spinnerShown}>
-				<lightning-spinner variant="brand"></lightning-spinner>
-			</template>
-		</div>
-	</template>
+      <div class="slds-form-element slds-form-element_stacked">
+        <div class="slds-form-element__control">
+          <lightning-button label="Save" variant="brand" onclick={saveRecord}
+            class="slds-m-top_x-small slds-align_absolute-center"></lightning-button>
+        </div>
+      </div>
+    </div>
+  </template>
 </template>

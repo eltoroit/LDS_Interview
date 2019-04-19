@@ -4,9 +4,15 @@
     "pushedSource": [
       {
         "state": "Changed",
-        "fullName": "lwcTests/lwcTests.html",
+        "fullName": "wNoUiFull/wNoUiFull.html",
         "type": "LightningComponentBundle",
-        "filePath": "force-app/deployableMetadata/main/default/lwc/lwcTests/lwcTests.html"
+        "filePath": "force-app/deployableMetadata/main/default/lwc/wNoUiFull/wNoUiFull.html"
+      },
+      {
+        "state": "Changed",
+        "fullName": "wNoUiFull/wNoUiFull.js",
+        "type": "LightningComponentBundle",
+        "filePath": "force-app/deployableMetadata/main/default/lwc/wNoUiFull/wNoUiFull.js"
       }
     ]
   }

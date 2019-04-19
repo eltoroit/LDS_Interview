@@ -29,18 +29,6 @@ export default class WNoUiEdit extends LightningElement {
     }
   }
 
-  _getDisplayValue(data, field, forceValue = false) {
-    let output;
-    if (forceValue) {
-      output = getFieldValue(data, field);
-    } else {
-      const dispVal = getFieldDisplayValue(data, field);
-      output = dispVal ? dispVal : getFieldValue(data, field);
-    }
-
-    return output;
-  }
-
   saveRecord() {
     // Fields can be modified in code...
     const fieldBirthdate = this.template.querySelector("[data-field='Birthdate']");
@@ -60,23 +48,21 @@ export default class WNoUiEdit extends LightningElement {
 
     updateRecord(recordInput)
       .then(() => {
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: 'Success',
-            message: 'Contact updated',
-            variant: 'success'
-          })
-        );
-      })
-      .catch(error => {
+        this.dispatchEvent(new ShowToastEvent({ title: 'Success', message: 'Contact updated', variant: 'success' }));
+      }).catch(error => {
         console.log(JSON.stringify(error));
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: 'Error creating record',
-            message: error.body.message,
-            variant: 'error'
-          })
-        );
+        this.dispatchEvent(new ShowToastEvent({ title: 'Error updating record', message: error.body.message, variant: 'error' }));
       });
+  }
+
+  _getDisplayValue(data, field, forceValue = false) {
+    let output;
+    if (forceValue) {
+      output = getFieldValue(data, field);
+    } else {
+      const dispVal = getFieldDisplayValue(data, field);
+      output = dispVal ? dispVal : getFieldValue(data, field);
+    }
+    return output;
   }
 }

@@ -1,3 +1,52 @@
 <template>
-    
+  <template if:true={error}>
+    <div class="slds-notify_alert slds-theme_error">
+      {error}
+    </div>
+  </template>
+
+  <lightning-layout multiple-rows="true">
+    <lightning-layout-item padding="around-medium">
+      <lightning-radio-group name="Mode" label="Mode" options={optsMode} value={valMode} onchange={modeChanged}
+        type="button"></lightning-radio-group>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-medium">
+      <lightning-radio-group name="Fields" label="Fields" options={optsFields} value={valFields}
+        onchange={fieldsChanged} type="button"></lightning-radio-group>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-medium">
+      <legend class="slds-form-element__legend slds-form-element__label">Operation</legend>
+      <lightning-button-group>
+        <lightning-button label="New" onclick={newRecord} disabled={isView}></lightning-button>
+        <lightning-button label="Save" onclick={saveRecord} disabled={isView}></lightning-button>
+        <lightning-button label="Reload" onclick={reloadRecord}></lightning-button>
+        <lightning-button label="Delete" onclick={deleteRecord}></lightning-button>
+      </lightning-button-group>
+    </lightning-layout-item>
+  </lightning-layout>
+
+  <table>
+    <tr>
+      <th>First Name</th>
+      <td>
+        <lightning-input type="text" value={contact.FirstName} onchange={firstNameChanged} disabled={isView}>
+        </lightning-input>
+      </td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td>
+        <lightning-input type="text" value={contact.LastName} onchange={lastNameChanged} disabled={isView}>
+        </lightning-input>
+      </td>
+    </tr>
+    <tr>
+      <th>Birthdate</th>
+      <td>
+        <lightning-input type="date" value={contact.Birthdate} onchange={birthNameChanged} disabled={isView}>
+        </lightning-input>
+      </td>
+    </tr>
+  </table>
+
 </template>

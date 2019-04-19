@@ -36,7 +36,14 @@ export default class WNoUiRead extends LightningElement {
     }
   }
 
-  _getDisplayValue(data, field) {
-    return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
+  _getDisplayValue(data, field, forceValue = false) {
+    let output;
+    if (forceValue) {
+      output = getFieldValue(data, field);
+    } else {
+      const dispVal = getFieldDisplayValue(data, field);
+      output = dispVal ? dispVal : getFieldValue(data, field);
+    }
+    return output;
   }
 }
