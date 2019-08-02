@@ -13,14 +13,9 @@ export default class WNoUiFull extends LightningElement {
     LastName: undefined,
     Birthdate: undefined
   }
-  @track valMode = "VIEW";
   @track valFields = "FULL"
 
   fields = ["Id"];
-  optsMode = [
-    { label: 'View', value: 'VIEW' },
-    { label: 'Edit', value: 'EDIT' }
-  ];
   optsFields = [
     { label: 'Full', value: 'FULL' },
     { label: 'Compact', value: 'COMPACT' },
@@ -29,7 +24,10 @@ export default class WNoUiFull extends LightningElement {
     { label: 'Compact + Fields', value: 'COMPACT_Fields' }
   ];
 
-  @wire(getRecord, { recordId: '$recordId', fields: [FIELD_FirstName, FIELD_LastName, FIELD_Birthdate] })
+  @wire(getRecord, {
+    recordId: '$recordId',
+    fields: [FIELD_FirstName, FIELD_LastName, FIELD_Birthdate]
+  })
   wired_getContact({ data, error }) {
     if (data) {
       this.contact = {
@@ -43,14 +41,6 @@ export default class WNoUiFull extends LightningElement {
       this.contact = undefined;
       this.error = JSON.stringify(error);
     }
-  }
-
-  get isView() {
-    return this.valMode === 'VIEW';
-  }
-
-  modeChanged(event) {
-    this.valMode = event.detail.value;
   }
 
   fieldsChanged(event) {
